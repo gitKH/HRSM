@@ -1,0 +1,67 @@
+﻿@model IEnumerable<JqueryAndAjaxExample.Models.Employee>
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>List</title>
+    <script src="~/Scripts/jquery-2.2.3.js"></script>
+
+    <script type="text/javascript">
+
+        $(function () {
+
+            $(":button").click(function () {
+
+                var id = $(this).attr("id");
+
+                $.ajax({
+                    type: "POST",
+                    url: "/Home/Remove",
+                    data: { 'id': id },
+                    success: function (msg) {
+                        alert(msg);
+                    }
+                });
+
+
+                $("#r-" + id).remove();
+
+
+            });
+        });
+    </script>
+</head>
+<body>
+    <table>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Name)
+            </th>
+            <th></th>
+        </tr>
+
+        @foreach (var item in Model)
+        {
+            <tr id="r-@item.ID">
+                <td>
+                    @Html.DisplayFor(modelItem => item.Name)
+                </td>
+                <td>
+                    @using (Ajax.BeginForm("Remove","Home",new AjaxOptions() { HttpMethod = "POST", Url = "/Home/Remove", OnSuccess="alert('Hello')" }))
+                    {
+                        <input type="hidden" value="@item.ID" name="id" />
+                        <input type="submit" value="deletenew" />
+                    }
+                    <input id="@item.ID" type="button" value="Delete" />
+                </td>
+            </tr>
+        }
+    </table>
+</body>
+</html>

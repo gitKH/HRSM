@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+
+<html>
+<head>
+    <title>Main Menu</title>
+    <link href="~/Style/navbar-fixed-top.css" rel="stylesheet" />
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.9.1.min.js"></script>
+    <script src="~/Scripts/bootstrap.min.js"></script>
+</head>
+<body>
+    <div>
+        <!-- Fixed navbar -->
+        <nav class="navbar navbar-default navbar-fixed-top">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+                    @*<a class="navbar-brand" href="#">HRSM</a>*@
+                    <img class="navbar-brand" src="~/Images/power-hellas.png" />
+                </div>
+                <div id="navbar" class="navbar-collapse collapse">
+                    <ul class="nav navbar-nav">
+                        <li class="active"><a href="#">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Προσωπικό<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Λίστα Προσωπικού</a></li>
+                                <li><a href="#">Πρόσωπο</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Φυλάξεις<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Λίστα Φυλάξεων</a></li>
+                                <li><a href="#">Φύλαξη</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Πρόγραμμα<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Χειροκίνητη Εισαγωγή</a></li>
+                                <li><a href="#">Αντιγραφή Προγράμματος</a></li>
+                                <li><a href="#">Εκτύπωση Προγράμματος</a></li>
+                                <li><a href="#">Ανέβασμα Προγράμματος στο PORTAL</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Επιθεώρηση Εργ.<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Εξαγωγή XML Πινάκων Προσωπικού</a></li>
+                                <li><a href="#">Εξαγωγή XML έντυπο Ε3</a></li>
+                                <li><a href="#">Εξαγωγή XML έντυπο Ε5</a></li>
+                                <li><a href="#">Εξαγωγή XML έντυπο Ε7</a></li>
+                                <li><a href="#">Εξαγωγή XML έντυπο Ε8</a></li>
+                                <li><a href="#">Εξαγωγή XML έντυπο Ε9</a></li>
+                                <li><a href="#">Εξαγωγή XML έντυπο Γνωστοποίηση Ετήσιων Αδειών</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Μισθοδοσία<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Υπολογισμός Μηνιαίας</a></li>
+                                <li><a href="#">Εξαγωγή</a></li>
+                            </ul>
+                        </li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Κοστολόγηση<span class="caret"></span></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="#">Νέα Κοστολόγηση</a></li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div><!--/.nav-collapse -->
+            </div>
+        </nav>
+
+        <div class="container">
+        </div>
+        <hr />
+        <div>
+            @RenderBody();
+        </div>
+</body>
+</html>
