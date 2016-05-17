@@ -1,0 +1,288 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="HRSMContext.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2008" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="HRSMContextStoreContainer">
+    <EntitySet Name="EMPLOYEES" EntityType="HRSMContext.Store.EMPLOYEES" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ADDRESSES" EntityType="HRSMContext.Store.ADDRESSES" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="CONTACTINFOS" EntityType="HRSMContext.Store.CONTACTINFOS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="EMPLOYEEDETAILS" EntityType="HRSMContext.Store.EMPLOYEEDETAILS" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="EMPLOYEEADDRESS" Association="HRSMContext.Store.EMPLOYEEADDRESS">
+      <End Role="EMPLOYEE" EntitySet="EMPLOYEES" />
+      <End Role="ADDRESS" EntitySet="ADDRESSES" />
+    </AssociationSet>
+    <AssociationSet Name="EMPLOYEECONTACTINFO" Association="HRSMContext.Store.EMPLOYEECONTACTINFO">
+      <End Role="EMPLOYEE" EntitySet="EMPLOYEES" />
+      <End Role="CONTACTINFO" EntitySet="CONTACTINFOS" />
+    </AssociationSet>
+    <AssociationSet Name="EMPLOYEEEMPLOYEEDETAIL" Association="HRSMContext.Store.EMPLOYEEEMPLOYEEDETAIL">
+      <End Role="EMPLOYEE" EntitySet="EMPLOYEES" />
+      <End Role="EMPLOYEEDETAIL" EntitySet="EMPLOYEEDETAILS" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="EMPLOYEES">
+    <Key>
+      <PropertyRef Name="RGUID" />
+    </Key>
+    <Property Name="RGUID" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RCODE" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="LASTNAME" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="FIRSTNAME" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ADDRESS_RGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="CONTACTINFO_RGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="EMPLOYEEDETAIL_RGUID" Type="uniqueidentifier" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ADDRESSES">
+    <Key>
+      <PropertyRef Name="RGUID" />
+    </Key>
+    <Property Name="RGUID" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="CITY" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="STREET" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="STATE" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="POSTALCODE" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="CONTACTINFOS">
+    <Key>
+      <PropertyRef Name="RGUID" />
+    </Key>
+    <Property Name="RGUID" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="PHONE1" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="PHONE2" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="EMAIL" Type="nvarchar(max)" Nullable="true" />
+  </EntityType>
+  <EntityType Name="EMPLOYEEDETAILS">
+    <Key>
+      <PropertyRef Name="RGUID" />
+    </Key>
+    <Property Name="RGUID" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="AT" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="AFM" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="GENDER" Type="int" Nullable="true" />
+    <Property Name="BIRTHDATE" Type="datetime" Nullable="true" />
+    <Property Name="MARITALSTATUS" Type="bit" Nullable="true" />
+    <Property Name="SECLICEXPDATE" Type="datetime" Nullable="true" />
+  </EntityType>
+  <Association Name="EMPLOYEEADDRESS">
+    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="*" />
+    <End Role="ADDRESS" Type="HRSMContext.Store.ADDRESSES" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="ADDRESS">
+        <PropertyRef Name="RGUID" />
+      </Principal>
+      <Dependent Role="EMPLOYEE">
+        <PropertyRef Name="ADDRESS_RGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EMPLOYEECONTACTINFO">
+    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="*" />
+    <End Role="CONTACTINFO" Type="HRSMContext.Store.CONTACTINFOS" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="CONTACTINFO">
+        <PropertyRef Name="RGUID" />
+      </Principal>
+      <Dependent Role="EMPLOYEE">
+        <PropertyRef Name="CONTACTINFO_RGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="EMPLOYEEEMPLOYEEDETAIL">
+    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="*" />
+    <End Role="EMPLOYEEDETAIL" Type="HRSMContext.Store.EMPLOYEEDETAILS" Multiplicity="1" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEEDETAIL">
+        <PropertyRef Name="RGUID" />
+      </Principal>
+      <Dependent Role="EMPLOYEE">
+        <PropertyRef Name="EMPLOYEEDETAIL_RGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="HRSMContext" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="HRSMContextContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="EMPLOYEES" EntityType="HRSMContext.EMPLOYEE" />
+          <EntitySet Name="ADDRESSES" EntityType="HRSMContext.ADDRESS" />
+          <AssociationSet Name="EMPLOYEEADDRESS" Association="HRSMContext.EMPLOYEEADDRESS">
+            <End Role="EMPLOYEE" EntitySet="EMPLOYEES" />
+            <End Role="ADDRESS" EntitySet="ADDRESSES" />
+          </AssociationSet>
+          <EntitySet Name="CONTACTINFOS" EntityType="HRSMContext.CONTACTINFO" />
+          <AssociationSet Name="EMPLOYEECONTACTINFO" Association="HRSMContext.EMPLOYEECONTACTINFO">
+            <End Role="EMPLOYEE" EntitySet="EMPLOYEES" />
+            <End Role="CONTACTINFO" EntitySet="CONTACTINFOS" />
+          </AssociationSet>
+          <EntitySet Name="EMPLOYEEDETAILS" EntityType="HRSMContext.EMPLOYEEDETAIL" />
+          <AssociationSet Name="EMPLOYEEEMPLOYEEDETAIL" Association="HRSMContext.EMPLOYEEEMPLOYEEDETAIL">
+            <End EntitySet="EMPLOYEES" Role="EMPLOYEE" />
+            <End EntitySet="EMPLOYEEDETAILS" Role="EMPLOYEEDETAIL" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="EMPLOYEE">
+          <Key>
+            <PropertyRef Name="RGUID" />
+          </Key>
+          <Property Name="RGUID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RCODE" Type="String" Nullable="false" />
+          <Property Name="LASTNAME" Type="String" Nullable="false" />
+          <Property Name="FIRSTNAME" Type="String" Nullable="false" />
+          <NavigationProperty Name="ADDRESS" Relationship="HRSMContext.EMPLOYEEADDRESS" FromRole="EMPLOYEE" ToRole="ADDRESS" />
+          <NavigationProperty Name="CONTACTINFO" Relationship="HRSMContext.EMPLOYEECONTACTINFO" FromRole="EMPLOYEE" ToRole="CONTACTINFO" />
+          <NavigationProperty Name="EMPLOYEEDETAIL" Relationship="HRSMContext.EMPLOYEEEMPLOYEEDETAIL" FromRole="EMPLOYEE" ToRole="EMPLOYEEDETAIL" />
+        </EntityType>
+        <EntityType Name="ADDRESS">
+          <Key>
+            <PropertyRef Name="RGUID" />
+          </Key>
+          <Property Name="RGUID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CITY" Type="String" Nullable="true" />
+          <Property Name="STREET" Type="String" Nullable="true" />
+          <Property Name="STATE" Type="String" Nullable="true" />
+          <Property Name="POSTALCODE" Type="String" Nullable="true" />
+          <NavigationProperty Name="EMPLOYEE" Relationship="HRSMContext.EMPLOYEEADDRESS" FromRole="ADDRESS" ToRole="EMPLOYEE" />
+        </EntityType>
+        <Association Name="EMPLOYEEADDRESS">
+          <End Type="HRSMContext.EMPLOYEE" Role="EMPLOYEE" Multiplicity="1" >
+          </End>
+          <End Type="HRSMContext.ADDRESS" Role="ADDRESS" Multiplicity="1" />
+        </Association>
+        <EntityType Name="CONTACTINFO">
+          <Key>
+            <PropertyRef Name="RGUID" />
+          </Key>
+          <Property Name="RGUID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="PHONE1" Type="String" Nullable="true" />
+          <Property Name="PHONE2" Type="String" Nullable="true" />
+          <Property Name="EMAIL" Type="String" Nullable="true" />
+          <NavigationProperty Name="EMPLOYEE" Relationship="HRSMContext.EMPLOYEECONTACTINFO" FromRole="CONTACTINFO" ToRole="EMPLOYEE" />
+        </EntityType>
+        <Association Name="EMPLOYEECONTACTINFO">
+          <End Type="HRSMContext.EMPLOYEE" Role="EMPLOYEE" Multiplicity="1" >
+          </End>
+          <End Type="HRSMContext.CONTACTINFO" Role="CONTACTINFO" Multiplicity="1" />
+        </Association>
+        <EntityType Name="EMPLOYEEDETAIL">
+          <Key>
+            <PropertyRef Name="RGUID" />
+          </Key>
+          <Property Name="RGUID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="AT" Type="String" Nullable="true" />
+          <Property Name="AFM" Type="String" Nullable="true" />
+          <Property Name="GENDER" Type="HRSMContext.Gender" Nullable="true" />
+          <Property Name="BIRTHDATE" Type="DateTime" Nullable="true" />
+          <Property Name="MARITALSTATUS" Nullable="true" Type="Boolean" />
+          <Property Name="SECLICEXPDATE" Type="DateTime" Nullable="true" />
+          <NavigationProperty Name="EMPLOYEE" Relationship="HRSMContext.EMPLOYEEEMPLOYEEDETAIL" FromRole="EMPLOYEEDETAIL" ToRole="EMPLOYEE" />
+        </EntityType>
+        <EnumType Name="Gender">
+          <Member Name="Male" Value="0" />
+          <Member Name="Female" Value="1" />
+        </EnumType>
+        <Association Name="EMPLOYEEEMPLOYEEDETAIL">
+          <End Type="HRSMContext.EMPLOYEE" Multiplicity="1" Role="EMPLOYEE">
+          </End>
+          <End Type="HRSMContext.EMPLOYEEDETAIL" Multiplicity="1" Role="EMPLOYEEDETAIL" />
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="HRSMContextStoreContainer" CdmEntityContainer="HRSMContextContainer">
+    <EntitySetMapping Name="EMPLOYEES">
+      <EntityTypeMapping TypeName="IsTypeOf(HRSMContext.EMPLOYEE)">
+        <MappingFragment StoreEntitySet="EMPLOYEES">
+          <ScalarProperty Name="RGUID" ColumnName="RGUID" />
+          <ScalarProperty Name="RCODE" ColumnName="RCODE" />
+          <ScalarProperty Name="LASTNAME" ColumnName="LASTNAME" />
+          <ScalarProperty Name="FIRSTNAME" ColumnName="FIRSTNAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ADDRESSES">
+      <EntityTypeMapping TypeName="IsTypeOf(HRSMContext.ADDRESS)">
+        <MappingFragment StoreEntitySet="ADDRESSES">
+          <ScalarProperty Name="RGUID" ColumnName="RGUID" />
+          <ScalarProperty Name="CITY" ColumnName="CITY" />
+          <ScalarProperty Name="STREET" ColumnName="STREET" />
+          <ScalarProperty Name="STATE" ColumnName="STATE" />
+          <ScalarProperty Name="POSTALCODE" ColumnName="POSTALCODE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="CONTACTINFOS">
+      <EntityTypeMapping TypeName="IsTypeOf(HRSMContext.CONTACTINFO)">
+        <MappingFragment StoreEntitySet="CONTACTINFOS">
+          <ScalarProperty Name="RGUID" ColumnName="RGUID" />
+          <ScalarProperty Name="PHONE1" ColumnName="PHONE1" />
+          <ScalarProperty Name="PHONE2" ColumnName="PHONE2" />
+          <ScalarProperty Name="EMAIL" ColumnName="EMAIL" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EMPLOYEEDETAILS">
+      <EntityTypeMapping TypeName="IsTypeOf(HRSMContext.EMPLOYEEDETAIL)">
+        <MappingFragment StoreEntitySet="EMPLOYEEDETAILS">
+          <ScalarProperty Name="RGUID" ColumnName="RGUID" />
+          <ScalarProperty Name="AT" ColumnName="AT" />
+          <ScalarProperty Name="AFM" ColumnName="AFM" />
+          <ScalarProperty Name="GENDER" ColumnName="GENDER" />
+          <ScalarProperty Name="BIRTHDATE" ColumnName="BIRTHDATE" />
+          <ScalarProperty Name="MARITALSTATUS" ColumnName="MARITALSTATUS" />
+          <ScalarProperty Name="SECLICEXPDATE" ColumnName="SECLICEXPDATE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <AssociationSetMapping Name="EMPLOYEEADDRESS" TypeName="HRSMContext.EMPLOYEEADDRESS" StoreEntitySet="EMPLOYEES">
+      <EndProperty Name="ADDRESS">
+        <ScalarProperty Name="RGUID" ColumnName="ADDRESS_RGUID" />
+      </EndProperty>
+      <EndProperty Name="EMPLOYEE">
+        <ScalarProperty Name="RGUID" ColumnName="RGUID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="EMPLOYEECONTACTINFO" TypeName="HRSMContext.EMPLOYEECONTACTINFO" StoreEntitySet="EMPLOYEES">
+      <EndProperty Name="CONTACTINFO">
+        <ScalarProperty Name="RGUID" ColumnName="CONTACTINFO_RGUID" />
+      </EndProperty>
+      <EndProperty Name="EMPLOYEE">
+        <ScalarProperty Name="RGUID" ColumnName="RGUID" />
+      </EndProperty>
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="EMPLOYEEEMPLOYEEDETAIL" TypeName="HRSMContext.EMPLOYEEEMPLOYEEDETAIL" StoreEntitySet="EMPLOYEES">
+      <EndProperty Name="EMPLOYEEDETAIL">
+        <ScalarProperty Name="RGUID" ColumnName="EMPLOYEEDETAIL_RGUID" />
+      </EndProperty>
+      <EndProperty Name="EMPLOYEE">
+        <ScalarProperty Name="RGUID" ColumnName="RGUID" />
+      </EndProperty>
+    </AssociationSetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
