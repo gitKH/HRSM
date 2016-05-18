@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/17/2016 13:37:48
+-- Date Created: 05/18/2016 18:28:07
 -- Generated from EDMX file: C:\HRSM\HRSM.DATAMODEL\HRSM.DATAMODEL\HRSMContext.edmx
 -- --------------------------------------------------
 
@@ -18,13 +18,13 @@ GO
 -- --------------------------------------------------
 
 IF OBJECT_ID(N'[dbo].[FK_EMPLOYEEADDRESS]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[ADDRESSES] DROP CONSTRAINT [FK_EMPLOYEEADDRESS];
+    ALTER TABLE [dbo].[EMPLOYEES] DROP CONSTRAINT [FK_EMPLOYEEADDRESS];
 GO
 IF OBJECT_ID(N'[dbo].[FK_EMPLOYEECONTACTINFO]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[CONTACTINFOS] DROP CONSTRAINT [FK_EMPLOYEECONTACTINFO];
+    ALTER TABLE [dbo].[EMPLOYEES] DROP CONSTRAINT [FK_EMPLOYEECONTACTINFO];
 GO
 IF OBJECT_ID(N'[dbo].[FK_EMPLOYEEEMPLOYEEDETAIL]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EMPLOYEEDETAILS] DROP CONSTRAINT [FK_EMPLOYEEEMPLOYEEDETAIL];
+    ALTER TABLE [dbo].[EMPLOYEES] DROP CONSTRAINT [FK_EMPLOYEEEMPLOYEEDETAIL];
 GO
 
 -- --------------------------------------------------
@@ -53,10 +53,7 @@ CREATE TABLE [dbo].[EMPLOYEES] (
     [RGUID] uniqueidentifier  NOT NULL default newsequentialid(),
     [RCODE] nvarchar(max)  NOT NULL,
     [LASTNAME] nvarchar(max)  NOT NULL,
-    [FIRSTNAME] nvarchar(max)  NOT NULL,
-    [ADDRESS_RGUID] uniqueidentifier  NOT NULL,
-    [CONTACTINFO_RGUID] uniqueidentifier  NOT NULL,
-    [EMPLOYEEDETAIL_RGUID] uniqueidentifier  NOT NULL
+    [FIRSTNAME] nvarchar(max)  NOT NULL
 );
 GO
 
@@ -66,7 +63,8 @@ CREATE TABLE [dbo].[ADDRESSES] (
     [CITY] nvarchar(max)  NULL,
     [STREET] nvarchar(max)  NULL,
     [STATE] nvarchar(max)  NULL,
-    [POSTALCODE] nvarchar(max)  NULL
+    [POSTALCODE] nvarchar(max)  NULL,
+    [EMPLOYEE_RGUID] uniqueidentifier  NOT NULL
 );
 GO
 
@@ -75,7 +73,8 @@ CREATE TABLE [dbo].[CONTACTINFOS] (
     [RGUID] uniqueidentifier  NOT NULL default newsequentialid(),
     [PHONE1] nvarchar(max)  NULL,
     [PHONE2] nvarchar(max)  NULL,
-    [EMAIL] nvarchar(max)  NULL
+    [EMAIL] nvarchar(max)  NULL,
+    [EMPLOYEE_RGUID] uniqueidentifier  NOT NULL
 );
 GO
 
@@ -87,7 +86,8 @@ CREATE TABLE [dbo].[EMPLOYEEDETAILS] (
     [GENDER] int  NULL,
     [BIRTHDATE] datetime  NULL,
     [MARITALSTATUS] bit  NULL,
-    [SECLICEXPDATE] datetime  NULL
+    [SECLICEXPDATE] datetime  NULL,
+    [EMPLOYEE_RGUID] uniqueidentifier  NOT NULL
 );
 GO
 
@@ -123,49 +123,49 @@ GO
 -- Creating all FOREIGN KEY constraints
 -- --------------------------------------------------
 
--- Creating foreign key on [ADDRESS_RGUID] in table 'EMPLOYEES'
-ALTER TABLE [dbo].[EMPLOYEES]
+-- Creating foreign key on [EMPLOYEE_RGUID] in table 'ADDRESSES'
+ALTER TABLE [dbo].[ADDRESSES]
 ADD CONSTRAINT [FK_EMPLOYEEADDRESS]
-    FOREIGN KEY ([ADDRESS_RGUID])
-    REFERENCES [dbo].[ADDRESSES]
+    FOREIGN KEY ([EMPLOYEE_RGUID])
+    REFERENCES [dbo].[EMPLOYEES]
         ([RGUID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_EMPLOYEEADDRESS'
 CREATE INDEX [IX_FK_EMPLOYEEADDRESS]
-ON [dbo].[EMPLOYEES]
-    ([ADDRESS_RGUID]);
+ON [dbo].[ADDRESSES]
+    ([EMPLOYEE_RGUID]);
 GO
 
--- Creating foreign key on [CONTACTINFO_RGUID] in table 'EMPLOYEES'
-ALTER TABLE [dbo].[EMPLOYEES]
+-- Creating foreign key on [EMPLOYEE_RGUID] in table 'CONTACTINFOS'
+ALTER TABLE [dbo].[CONTACTINFOS]
 ADD CONSTRAINT [FK_EMPLOYEECONTACTINFO]
-    FOREIGN KEY ([CONTACTINFO_RGUID])
-    REFERENCES [dbo].[CONTACTINFOS]
+    FOREIGN KEY ([EMPLOYEE_RGUID])
+    REFERENCES [dbo].[EMPLOYEES]
         ([RGUID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_EMPLOYEECONTACTINFO'
 CREATE INDEX [IX_FK_EMPLOYEECONTACTINFO]
-ON [dbo].[EMPLOYEES]
-    ([CONTACTINFO_RGUID]);
+ON [dbo].[CONTACTINFOS]
+    ([EMPLOYEE_RGUID]);
 GO
 
--- Creating foreign key on [EMPLOYEEDETAIL_RGUID] in table 'EMPLOYEES'
-ALTER TABLE [dbo].[EMPLOYEES]
+-- Creating foreign key on [EMPLOYEE_RGUID] in table 'EMPLOYEEDETAILS'
+ALTER TABLE [dbo].[EMPLOYEEDETAILS]
 ADD CONSTRAINT [FK_EMPLOYEEEMPLOYEEDETAIL]
-    FOREIGN KEY ([EMPLOYEEDETAIL_RGUID])
-    REFERENCES [dbo].[EMPLOYEEDETAILS]
+    FOREIGN KEY ([EMPLOYEE_RGUID])
+    REFERENCES [dbo].[EMPLOYEES]
         ([RGUID])
-    ON DELETE NO ACTION ON UPDATE NO ACTION;
+    ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_EMPLOYEEEMPLOYEEDETAIL'
 CREATE INDEX [IX_FK_EMPLOYEEEMPLOYEEDETAIL]
-ON [dbo].[EMPLOYEES]
-    ([EMPLOYEEDETAIL_RGUID]);
+ON [dbo].[EMPLOYEEDETAILS]
+    ([EMPLOYEE_RGUID]);
 GO
 
 -- --------------------------------------------------

@@ -31,9 +31,6 @@
     <Property Name="RCODE" Type="nvarchar(max)" Nullable="false" />
     <Property Name="LASTNAME" Type="nvarchar(max)" Nullable="false" />
     <Property Name="FIRSTNAME" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="ADDRESS_RGUID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="CONTACTINFO_RGUID" Type="uniqueidentifier" Nullable="false" />
-    <Property Name="EMPLOYEEDETAIL_RGUID" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="ADDRESSES">
     <Key>
@@ -44,6 +41,7 @@
     <Property Name="STREET" Type="nvarchar(max)" Nullable="true" />
     <Property Name="STATE" Type="nvarchar(max)" Nullable="true" />
     <Property Name="POSTALCODE" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="EMPLOYEE_RGUID" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="CONTACTINFOS">
     <Key>
@@ -53,6 +51,7 @@
     <Property Name="PHONE1" Type="nvarchar(max)" Nullable="true" />
     <Property Name="PHONE2" Type="nvarchar(max)" Nullable="true" />
     <Property Name="EMAIL" Type="nvarchar(max)" Nullable="true" />
+    <Property Name="EMPLOYEE_RGUID" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <EntityType Name="EMPLOYEEDETAILS">
     <Key>
@@ -65,40 +64,47 @@
     <Property Name="BIRTHDATE" Type="datetime" Nullable="true" />
     <Property Name="MARITALSTATUS" Type="bit" Nullable="true" />
     <Property Name="SECLICEXPDATE" Type="datetime" Nullable="true" />
+    <Property Name="EMPLOYEE_RGUID" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <Association Name="EMPLOYEEADDRESS">
-    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="*" />
-    <End Role="ADDRESS" Type="HRSMContext.Store.ADDRESSES" Multiplicity="1" />
+    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ADDRESS" Type="HRSMContext.Store.ADDRESSES" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="ADDRESS">
+      <Principal Role="EMPLOYEE">
         <PropertyRef Name="RGUID" />
       </Principal>
-      <Dependent Role="EMPLOYEE">
-        <PropertyRef Name="ADDRESS_RGUID" />
+      <Dependent Role="ADDRESS">
+        <PropertyRef Name="EMPLOYEE_RGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="EMPLOYEECONTACTINFO">
-    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="*" />
-    <End Role="CONTACTINFO" Type="HRSMContext.Store.CONTACTINFOS" Multiplicity="1" />
+    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CONTACTINFO" Type="HRSMContext.Store.CONTACTINFOS" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="CONTACTINFO">
+      <Principal Role="EMPLOYEE">
         <PropertyRef Name="RGUID" />
       </Principal>
-      <Dependent Role="EMPLOYEE">
-        <PropertyRef Name="CONTACTINFO_RGUID" />
+      <Dependent Role="CONTACTINFO">
+        <PropertyRef Name="EMPLOYEE_RGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
   <Association Name="EMPLOYEEEMPLOYEEDETAIL">
-    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="*" />
-    <End Role="EMPLOYEEDETAIL" Type="HRSMContext.Store.EMPLOYEEDETAILS" Multiplicity="1" />
+    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="EMPLOYEEDETAIL" Type="HRSMContext.Store.EMPLOYEEDETAILS" Multiplicity="*" />
     <ReferentialConstraint>
-      <Principal Role="EMPLOYEEDETAIL">
+      <Principal Role="EMPLOYEE">
         <PropertyRef Name="RGUID" />
       </Principal>
-      <Dependent Role="EMPLOYEE">
-        <PropertyRef Name="EMPLOYEEDETAIL_RGUID" />
+      <Dependent Role="EMPLOYEEDETAIL">
+        <PropertyRef Name="EMPLOYEE_RGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -149,6 +155,7 @@
         </EntityType>
         <Association Name="EMPLOYEEADDRESS">
           <End Type="HRSMContext.EMPLOYEE" Role="EMPLOYEE" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
           </End>
           <End Type="HRSMContext.ADDRESS" Role="ADDRESS" Multiplicity="1" />
         </Association>
@@ -164,6 +171,7 @@
         </EntityType>
         <Association Name="EMPLOYEECONTACTINFO">
           <End Type="HRSMContext.EMPLOYEE" Role="EMPLOYEE" Multiplicity="1" >
+            <OnDelete Action="Cascade" />
           </End>
           <End Type="HRSMContext.CONTACTINFO" Role="CONTACTINFO" Multiplicity="1" />
         </Association>
@@ -186,6 +194,7 @@
         </EnumType>
         <Association Name="EMPLOYEEEMPLOYEEDETAIL">
           <End Type="HRSMContext.EMPLOYEE" Multiplicity="1" Role="EMPLOYEE">
+            <OnDelete Action="Cascade" />
           </End>
           <End Type="HRSMContext.EMPLOYEEDETAIL" Multiplicity="1" Role="EMPLOYEEDETAIL" />
         </Association>
@@ -239,27 +248,27 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <AssociationSetMapping Name="EMPLOYEEADDRESS" TypeName="HRSMContext.EMPLOYEEADDRESS" StoreEntitySet="EMPLOYEES">
+    <AssociationSetMapping Name="EMPLOYEEADDRESS" TypeName="HRSMContext.EMPLOYEEADDRESS" StoreEntitySet="ADDRESSES">
+      <EndProperty Name="EMPLOYEE">
+        <ScalarProperty Name="RGUID" ColumnName="EMPLOYEE_RGUID" />
+      </EndProperty>
       <EndProperty Name="ADDRESS">
-        <ScalarProperty Name="RGUID" ColumnName="ADDRESS_RGUID" />
-      </EndProperty>
-      <EndProperty Name="EMPLOYEE">
         <ScalarProperty Name="RGUID" ColumnName="RGUID" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="EMPLOYEECONTACTINFO" TypeName="HRSMContext.EMPLOYEECONTACTINFO" StoreEntitySet="EMPLOYEES">
+    <AssociationSetMapping Name="EMPLOYEECONTACTINFO" TypeName="HRSMContext.EMPLOYEECONTACTINFO" StoreEntitySet="CONTACTINFOS">
+      <EndProperty Name="EMPLOYEE">
+        <ScalarProperty Name="RGUID" ColumnName="EMPLOYEE_RGUID" />
+      </EndProperty>
       <EndProperty Name="CONTACTINFO">
-        <ScalarProperty Name="RGUID" ColumnName="CONTACTINFO_RGUID" />
-      </EndProperty>
-      <EndProperty Name="EMPLOYEE">
         <ScalarProperty Name="RGUID" ColumnName="RGUID" />
       </EndProperty>
     </AssociationSetMapping>
-    <AssociationSetMapping Name="EMPLOYEEEMPLOYEEDETAIL" TypeName="HRSMContext.EMPLOYEEEMPLOYEEDETAIL" StoreEntitySet="EMPLOYEES">
-      <EndProperty Name="EMPLOYEEDETAIL">
-        <ScalarProperty Name="RGUID" ColumnName="EMPLOYEEDETAIL_RGUID" />
-      </EndProperty>
+    <AssociationSetMapping Name="EMPLOYEEEMPLOYEEDETAIL" TypeName="HRSMContext.EMPLOYEEEMPLOYEEDETAIL" StoreEntitySet="EMPLOYEEDETAILS">
       <EndProperty Name="EMPLOYEE">
+        <ScalarProperty Name="RGUID" ColumnName="EMPLOYEE_RGUID" />
+      </EndProperty>
+      <EndProperty Name="EMPLOYEEDETAIL">
         <ScalarProperty Name="RGUID" ColumnName="RGUID" />
       </EndProperty>
     </AssociationSetMapping>

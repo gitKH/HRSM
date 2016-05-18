@@ -17,6 +17,8 @@
                 <th>Όνομα</th>
                 <th>Επώνυμο</th>
                 <th>Τηλέφωνο</th>
+                <th>Email</th>
+                <th>Ημ.Λήξη Αδείας</th>
                 <th></th>
             </tr>
         </thead>
@@ -28,6 +30,8 @@
                     <td><p>@employee.FIRSTNAME</p></td>
                     <td><p>@employee.LASTNAME</p></td>
                     <td><p>@employee.CONTACTINFO.PHONE1</p></td>
+                    <td><p>@employee.CONTACTINFO.EMAIL</p></td>
+                    <td><p>@employee.EMPLOYEEDETAIL.SECLICEXPDATE.Value.ToShortDateString()</p></td>
                     <td>
                         <button id="delete" name="delete" value="@employee.RGUID" type="button" class="btn btn-danger">Διαγραφή</button>
                     </td>
@@ -47,8 +51,39 @@
                     <h4 class="modal-title"><p id="modalHeader"></p></h4>
                 </div>
                 <div class="modal-body">
-                    <p><input type="text" class="input-sm" id="txtfname" /></p>
-                    <p><input type="text" class="input-sm" id="txtlname" /></p>
+                    <p><input type="hidden" id="RGUID" name="RGUID" /></p>
+                    <label for="RCODE">Κωδικός</label>
+                    <p><input type="text" class="form-control" name="RCODE " id="RCODE" /></p>
+                    <label for="FIRSTNAME">Όνομα</label>
+                    <p><input type="text" class="form-control" name="FIRSTNAME" id="FIRSTNAME" /></p>
+                    <label for="LASTNAME">Επώνυμο</label>
+                    <p><input type="text" class="form-control" name="LASTNAME" id="LASTNAME" /></p>
+                    <label for="ADDRESS.CITY">Πόλη</label>
+                    <p><input type="text" class="form-control" name="ADDRESS.CITY" id="ADDRESS.CITY" /></p>
+                    <label for="ADDRESS.STREET">Οδός</label>
+                    <p><input type="text" class="form-control" name="ADDRESS.STREET" id="ADDRESS.STREET" /></p>
+                    <label for="ADDRESS.STATE">Νομός</label>
+                    <p><input type="text" class="form-control" name="ADDRESS.STATE" id="ADDRESS.STATE" /></p>
+                    <label for="ADDRESS.POSTALCODE">Τ.Κ.</label>
+                    <p><input type="text" class="form-control" name="ADDRESS.POSTALCODE" id="ADDRESS.POSTALCODE" /></p>
+                    <label for="CONTACTINFO.PHONE1">Τηλέφωνο Σταθερό</label>
+                    <p><input type="text" class="form-control" name="CONTACTINFO.PHONE1" id="CONTACTINFO.PHONE1" /></p>
+                    <label for="CONTACTINFO.PHONE2">Τηλέφωνο Κινητό</label>
+                    <p><input type="text" class="form-control" name="CONTACTINFO.PHONE2" id="CONTACTINFO.PHONE2" /></p>
+                    <label for="CONTACTINFO.EMAIL">Email</label>
+                    <p><input type="text" class="form-control" name="CONTACTINFO.EMAIL" id="CONTACTINFO.EMAIL" /></p>
+                    <label for="EMPLOYEEDETAIL.AT">ΑΤ</label>
+                    <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.AT" id="EMPLOYEEDETAIL.AT" /></p>
+                    <label for="EMPLOYEEDETAIL.AFM">ΑΦΜ</label>
+                    <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.AFM" id="EMPLOYEEDETAIL.AFM" /></p>
+                    <label for="EMPLOYEEDETAIL.GENDER">Φύλο</label>
+                    <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.GENDER" id="EMPLOYEEDETAIL.GENDER" /></p>
+                    <label for="EMPLOYEEDETAIL.BIRTHDATE">Ημερομηνία Γέννησης</label>
+                    <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.BIRTHDATE" id="EMPLOYEEDETAIL.BIRTHDATE" /></p>
+                    <label for="EMPLOYEEDETAIL.MARITALSTATUS">Έγγαμος</label>
+                    <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.MARITALSTATUS" id="EMPLOYEEDETAIL.MARITALSTATUS" /></p>
+                    <label for="EMPLOYEEDETAIL.SECLICEXPDATE">Ημερομηνία Λήξης Αδείας</label>
+                    <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.SECLICEXPDATE" id="EMPLOYEEDETAIL.SECLICEXPDATE" /></p>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -60,19 +95,50 @@
 
 
 </div>
+@*<script src="~/Scripts/jquery-1.9.1.min.js"></script>*@
 <script>
-    $('table tbody tr  td p').on('click', function () {
-        $("#modalHeader").text($(this).closest('tr').children()[1].textContent);
-        $("#myModal").modal("show");
-        $("#txtfname").val($(this).closest('tr').children()[0].textContent);
-        $("#txtlname").val($(this).closest('tr').children()[1].textContent);
+
+
+    $('table tbody tr td p').on('click', function () {
+
+        //Get RGUID from table
+        var rowGuid = $(this).closest('tr').attr('id');
+
+        //Fetch Asynchronous EMPLOYEE
+        $.ajax({
+            type: "POST",
+            url: "@Url.Content("~/Employee/Details")",
+            data: { 'GUID': rowGuid },
+            dataType: 'json',
+            success: function (data) {
+                $("#myModal").modal("show");
+                $("#modalHeader").text(data.RCODE + " " + data.LASTNAME + " " + data.FIRSTNAME);
+
+                $("RGUID").val(data.RGUID);
+                $("#RCODE").val(data.RCODE);
+                $("#FIRSTNAME").val(data.FIRSTNAME);
+                $("#LASTNAME").val(data.LASTNAME);
+                $("#ADDRESS\\.CITY").val(data.ADDRESS.CITY);
+                $("#ADDRESS\\.STREET").val(data.ADDRESS.STREET);
+                $("#ADDRESS\\.STATE").val(data.ADDRESS.STATE);
+                $("#ADDRESS\\.POSTALCODE").val(data.ADDRESS.POSTALCODE);
+                $("#CONTACTINFO\\.PHONE1").val(data.CONTACTINFO.PHONE1);
+                $("#CONTACTINFO\\.PHONE2").val(data.CONTACTINFO.PHONE2);
+                $("#CONTACTINFO\\.EMAIL").val(data.CONTACTINFO.EMAIL);
+                $("#EMPLOYEEDETAIL\\.AT").val(data.EMPLOYEEDETAIL.AT);
+                $("#EMPLOYEEDETAIL\\.AFM").val(data.EMPLOYEEDETAIL.AFM);
+                $("#EMPLOYEEDETAIL\\.GENDER").val(data.EMPLOYEEDETAIL.GENDER);
+                $("#EMPLOYEEDETAIL\\.BIRTHDATE").val(data.EMPLOYEEDETAIL.BIRTHDATE);
+                $("#EMPLOYEEDETAIL\\.MARITALSTATUS").val(data.EMPLOYEEDETAIL.MARITALSTATUS);
+                $("#EMPLOYEEDETAIL\\.SECLICEXPDATE").val(data.EMPLOYEEDETAIL.SECLICEXPDATE);
+            }
+        });
     });
 
 
-    $("#delete").click(function () {
+    //Delete row from database and view.
+    $('button[name=delete]').click(function () {
         var guid = $(this).val();
-
-        //alert(guid);
 
         $.ajax({
             type: "POST",
