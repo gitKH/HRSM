@@ -81,7 +81,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>HRSMContext.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Marital.cs">
+      <DependentUpon>HRSMContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="P_EMPLOYEE.cs" />
     <Compile Include="P_HRSMCOntextContainer.cs" />
   </ItemGroup>
   <ItemGroup>

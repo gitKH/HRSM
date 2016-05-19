@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRSM.DATAMODEL", "HRSM.DATA
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "HRSM.DATAMODELTests", "HRSM.DATAMODELTests\HRSM.DATAMODELTests.csproj", "{F055F2D5-DE53-4C94-A401-161BC93794A9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Testing", "Testing\Testing.csproj", "{4E926ACD-EFF2-490C-9C32-79D45CD1DB0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F055F2D5-DE53-4C94-A401-161BC93794A9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F055F2D5-DE53-4C94-A401-161BC93794A9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F055F2D5-DE53-4C94-A401-161BC93794A9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4E926ACD-EFF2-490C-9C32-79D45CD1DB0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4E926ACD-EFF2-490C-9C32-79D45CD1DB0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4E926ACD-EFF2-490C-9C32-79D45CD1DB0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4E926ACD-EFF2-490C-9C32-79D45CD1DB0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

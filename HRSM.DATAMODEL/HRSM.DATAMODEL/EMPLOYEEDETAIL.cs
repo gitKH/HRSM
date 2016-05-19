@@ -19,7 +19,7 @@ namespace HRSM.DATAMODEL
         public string AFM { get; set; }
         public Nullable<Gender> GENDER { get; set; }
         public Nullable<System.DateTime> BIRTHDATE { get; set; }
-        public Nullable<bool> MARITALSTATUS { get; set; }
+        public Nullable<Marital> MARITALSTATUS { get; set; }
         public Nullable<System.DateTime> SECLICEXPDATE { get; set; }
     
         public virtual EMPLOYEE EMPLOYEE { get; set; }

@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/18/2016 18:28:07
+-- Date Created: 05/19/2016 14:20:48
 -- Generated from EDMX file: C:\HRSM\HRSM.DATAMODEL\HRSM.DATAMODEL\HRSMContext.edmx
 -- --------------------------------------------------
 
@@ -18,13 +18,13 @@ GO
 -- --------------------------------------------------
 
 IF OBJECT_ID(N'[dbo].[FK_EMPLOYEEADDRESS]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EMPLOYEES] DROP CONSTRAINT [FK_EMPLOYEEADDRESS];
+    ALTER TABLE [dbo].[ADDRESSES] DROP CONSTRAINT [FK_EMPLOYEEADDRESS];
 GO
 IF OBJECT_ID(N'[dbo].[FK_EMPLOYEECONTACTINFO]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EMPLOYEES] DROP CONSTRAINT [FK_EMPLOYEECONTACTINFO];
+    ALTER TABLE [dbo].[CONTACTINFOS] DROP CONSTRAINT [FK_EMPLOYEECONTACTINFO];
 GO
 IF OBJECT_ID(N'[dbo].[FK_EMPLOYEEEMPLOYEEDETAIL]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[EMPLOYEES] DROP CONSTRAINT [FK_EMPLOYEEEMPLOYEEDETAIL];
+    ALTER TABLE [dbo].[EMPLOYEEDETAILS] DROP CONSTRAINT [FK_EMPLOYEEEMPLOYEEDETAIL];
 GO
 
 -- --------------------------------------------------
@@ -85,7 +85,7 @@ CREATE TABLE [dbo].[EMPLOYEEDETAILS] (
     [AFM] nvarchar(max)  NULL,
     [GENDER] int  NULL,
     [BIRTHDATE] datetime  NULL,
-    [MARITALSTATUS] bit  NULL,
+    [MARITALSTATUS] int  NULL,
     [SECLICEXPDATE] datetime  NULL,
     [EMPLOYEE_RGUID] uniqueidentifier  NOT NULL
 );

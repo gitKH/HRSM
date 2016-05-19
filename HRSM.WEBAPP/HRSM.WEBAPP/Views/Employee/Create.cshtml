@@ -1,0 +1,182 @@
+﻿@model HRSM.DATAMODEL.EMPLOYEE
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="container">
+    <form class="form-horizontal" action="~/Employee/Create" method="post">
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend>Νέο Πρόσωπο</legend>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="RCODE">Κωδικός</label>
+                <div class="col-md-4">
+                    <input id="RCODE" name="RCODE" placeholder="Κωδικός" class="form-control input-md" required="" type="text">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="FIRSTNAME">Όνομα</label>
+                <div class="col-md-4">
+                    <input id="FIRSTNAME" name="FIRSTNAME" placeholder="Όνομα" class="form-control input-md" required="" type="text">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="LASTNAME">Επώνυμο</label>
+                <div class="col-md-4">
+                    <input id="LASTNAME" name="LASTNAME" placeholder="Επώνυμο" class="form-control input-md" required="" type="text">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="ADDRESS.CITY">Πόλη</label>
+                <div class="col-md-4">
+                    <input id="ADDRESS.CITY" name="ADDRESS.CITY" placeholder="Πόλη" class="form-control input-md" required="" type="text">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="ADDRESS.STREET">Οδός</label>
+                <div class="col-md-4">
+                    <input id="ADDRESS.STREET" name="ADDRESS.STREET" placeholder="Οδός" class="form-control input-md" type="text">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="ADDRESS.STATE">Νομός</label>
+                <div class="col-md-4">
+                    <input id="ADDRESS.STATE" name="ADDRESS.STATE" placeholder="Νομός" class="form-control input-md" type="text">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="ADDRESS.POSTALCODE">Τ.Κ.</label>
+                <div class="col-md-4">
+                    <input id="ADDRESS.POSTALCODE" name="ADDRESS.POSTALCODE" placeholder="Τ.Κ." class="form-control input-md" type="text">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="CONTACTINFO.PHONE1">Τηλέφωνο Σταθερό</label>
+                <div class="col-md-4">
+                    <input id="CONTACTINFO.PHONE1" name="CONTACTINFO.PHONE1" placeholder="Τηλέφωνο Σταθερό" class="form-control input-md" type="text">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="CONTACTINFO.PHONE2">Τηλέφωνο Κινητό</label>
+                <div class="col-md-4">
+                    <input id="CONTACTINFO.PHONE2" name="CONTACTINFO.PHONE2" placeholder="Τηλέφωνο Κινητό" class="form-control input-md" type="text">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="CONTACTINFO.EMAIL">Email</label>
+                <div class="col-md-4">
+                    <input id="CONTACTINFO.EMAIL" name="CONTACTINFO.EMAIL" placeholder="Email" class="form-control input-md" type="text">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="EMPLOYEEDETAIL.AT">ΑΤ</label>
+                <div class="col-md-4">
+                    <input id="EMPLOYEEDETAIL.AT" name="EMPLOYEEDETAIL.AT" placeholder="ΑΤ" class="form-control input-md" type="text">
+
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="EMPLOYEEDETAIL.AFM">ΑΦΜ</label>
+                <div class="col-md-4">
+                    <input id="EMPLOYEEDETAIL.AFM" name="EMPLOYEEDETAIL.AFM" placeholder="ΑΦΜ" class="form-control input-md" type="text">
+
+                </div>
+            </div>
+
+            <!-- Select Basic -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="EMPLOYEEDETAIL.GENDER">Φύλο</label>
+                <div class="col-md-4">
+                    <select id="EMPLOYEEDETAIL.GENDER" name="EMPLOYEEDETAIL.GENDER" class="form-control">
+                        <option value="0">Άνδρας</option>
+                        <option value="1">Γυναίκα</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="EMPLOYEEDETAIL.BIRTHDATE">Ημερομηνία Γέννησης</label>
+                <div class="col-md-4">
+                    <input id="EMPLOYEEDETAIL.BIRTHDATE" name="EMPLOYEEDETAIL.BIRTHDATE" placeholder="Ημερομηνία Γέννησης" class="form-control input-md" type="text">
+
+                </div>
+            </div>
+
+            <!-- Multiple Radios -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="EMPLOYEEDETAIL.MARITALSTATUS">Έγγαμος</label>
+                <div class="col-md-4">
+                    <div class="radio">
+                        <label for="EMPLOYEEDETAIL.MARITALSTATUS-0">
+                            <input name="EMPLOYEEDETAIL.MARITALSTATUS" id="EMPLOYEEDETAIL.MARITALSTATUS-0" value="0" checked="checked" type="radio">
+                            Όχι
+                        </label>
+                    </div>
+                    <div class="radio">
+                        <label for="EMPLOYEEDETAIL.MARITALSTATUS-1">
+                            <input name="EMPLOYEEDETAIL.MARITALSTATUS" id="EMPLOYEEDETAIL.MARITALSTATUS-1" value="1" type="radio">
+                            Ναί
+                        </label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Text input-->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="EMPLOYEEDETAIL.SECLICEXPDATE">Ημερομηνία Λήξης Αδείας</label>
+                <div class="col-md-4">
+                    <input id="EMPLOYEEDETAIL.SECLICEXPDATE" name="EMPLOYEEDETAIL.SECLICEXPDATE" placeholder="Ημερομηνία Λήξης Αδείας" class="form-control input-md" type="text">
+
+                </div>
+            </div>
+
+            <!-- Button -->
+            <div class="form-group">
+                <label class="col-md-4 control-label" for="submit"></label>
+                <div class="col-md-4">
+                    <input type="submit" name="submit" class="btn btn-primary" value="Αποθήκευση">
+                </div>
+            </div>
+
+        </fieldset>
+    </form>
+</div>
+

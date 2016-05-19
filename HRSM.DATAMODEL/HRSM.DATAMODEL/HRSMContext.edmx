@@ -62,7 +62,7 @@
     <Property Name="AFM" Type="nvarchar(max)" Nullable="true" />
     <Property Name="GENDER" Type="int" Nullable="true" />
     <Property Name="BIRTHDATE" Type="datetime" Nullable="true" />
-    <Property Name="MARITALSTATUS" Type="bit" Nullable="true" />
+    <Property Name="MARITALSTATUS" Type="int" Nullable="true" />
     <Property Name="SECLICEXPDATE" Type="datetime" Nullable="true" />
     <Property Name="EMPLOYEE_RGUID" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
@@ -184,7 +184,7 @@
           <Property Name="AFM" Type="String" Nullable="true" />
           <Property Name="GENDER" Type="HRSMContext.Gender" Nullable="true" />
           <Property Name="BIRTHDATE" Type="DateTime" Nullable="true" />
-          <Property Name="MARITALSTATUS" Nullable="true" Type="Boolean" />
+          <Property Name="MARITALSTATUS" Nullable="true" Type="HRSMContext.Marital" />
           <Property Name="SECLICEXPDATE" Type="DateTime" Nullable="true" />
           <NavigationProperty Name="EMPLOYEE" Relationship="HRSMContext.EMPLOYEEEMPLOYEEDETAIL" FromRole="EMPLOYEEDETAIL" ToRole="EMPLOYEE" />
         </EntityType>
@@ -198,6 +198,10 @@
           </End>
           <End Type="HRSMContext.EMPLOYEEDETAIL" Multiplicity="1" Role="EMPLOYEEDETAIL" />
         </Association>
+        <EnumType Name="Marital">
+          <Member Name="No" Value="0" />
+          <Member Name="Yes" Value="1" />
+        </EnumType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

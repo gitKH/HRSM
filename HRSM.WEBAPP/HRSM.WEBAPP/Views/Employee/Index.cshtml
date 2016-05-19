@@ -6,9 +6,11 @@
     Layout = "~/Views/Shared/Layout.cshtml";
 }
 
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<script src="~/Scripts/jquery.mask.min.js"></script>
 
 <div class="container-fluid">
-    <h2>Λίστα Πρωσοπικού</h2>
+    <h2>Λίστα Προσωπικού</h2>
 
     <table class="table table-hover">
         <thead>
@@ -25,13 +27,21 @@
         <tbody>
             @foreach (EMPLOYEE employee in Model)
             {
-                <tr id="@employee.RGUID">
+                <tr style="cursor: pointer;" id="@employee.RGUID">
                     <td><p>@employee.RCODE</p></td>
                     <td><p>@employee.FIRSTNAME</p></td>
                     <td><p>@employee.LASTNAME</p></td>
                     <td><p>@employee.CONTACTINFO.PHONE1</p></td>
                     <td><p>@employee.CONTACTINFO.EMAIL</p></td>
-                    <td><p>@employee.EMPLOYEEDETAIL.SECLICEXPDATE.Value.ToShortDateString()</p></td>
+                    <td>
+                        <p>
+                            @if (employee.EMPLOYEEDETAIL.SECLICEXPDATE != null)
+                            {
+                                @employee.EMPLOYEEDETAIL.SECLICEXPDATE.Value.ToShortDateString()
+
+                            }
+                        </p>
+                    </td>
                     <td>
                         <button id="delete" name="delete" value="@employee.RGUID" type="button" class="btn btn-danger">Διαγραφή</button>
                     </td>
@@ -44,67 +54,100 @@
 
     <!-- Modal-->
     <div class="modal fade" id="myModal">
-        <div class="modal-dialog">
+        <div class="modal-dialog modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title"><p id="modalHeader"></p></h4>
                 </div>
-                <div class="modal-body">
-                    <p><input type="hidden" id="RGUID" name="RGUID" /></p>
-                    <label for="RCODE">Κωδικός</label>
-                    <p><input type="text" class="form-control" name="RCODE " id="RCODE" /></p>
-                    <label for="FIRSTNAME">Όνομα</label>
-                    <p><input type="text" class="form-control" name="FIRSTNAME" id="FIRSTNAME" /></p>
-                    <label for="LASTNAME">Επώνυμο</label>
-                    <p><input type="text" class="form-control" name="LASTNAME" id="LASTNAME" /></p>
-                    <label for="ADDRESS.CITY">Πόλη</label>
-                    <p><input type="text" class="form-control" name="ADDRESS.CITY" id="ADDRESS.CITY" /></p>
-                    <label for="ADDRESS.STREET">Οδός</label>
-                    <p><input type="text" class="form-control" name="ADDRESS.STREET" id="ADDRESS.STREET" /></p>
-                    <label for="ADDRESS.STATE">Νομός</label>
-                    <p><input type="text" class="form-control" name="ADDRESS.STATE" id="ADDRESS.STATE" /></p>
-                    <label for="ADDRESS.POSTALCODE">Τ.Κ.</label>
-                    <p><input type="text" class="form-control" name="ADDRESS.POSTALCODE" id="ADDRESS.POSTALCODE" /></p>
-                    <label for="CONTACTINFO.PHONE1">Τηλέφωνο Σταθερό</label>
-                    <p><input type="text" class="form-control" name="CONTACTINFO.PHONE1" id="CONTACTINFO.PHONE1" /></p>
-                    <label for="CONTACTINFO.PHONE2">Τηλέφωνο Κινητό</label>
-                    <p><input type="text" class="form-control" name="CONTACTINFO.PHONE2" id="CONTACTINFO.PHONE2" /></p>
-                    <label for="CONTACTINFO.EMAIL">Email</label>
-                    <p><input type="text" class="form-control" name="CONTACTINFO.EMAIL" id="CONTACTINFO.EMAIL" /></p>
-                    <label for="EMPLOYEEDETAIL.AT">ΑΤ</label>
-                    <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.AT" id="EMPLOYEEDETAIL.AT" /></p>
-                    <label for="EMPLOYEEDETAIL.AFM">ΑΦΜ</label>
-                    <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.AFM" id="EMPLOYEEDETAIL.AFM" /></p>
-                    <label for="EMPLOYEEDETAIL.GENDER">Φύλο</label>
-                    <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.GENDER" id="EMPLOYEEDETAIL.GENDER" /></p>
-                    <label for="EMPLOYEEDETAIL.BIRTHDATE">Ημερομηνία Γέννησης</label>
-                    <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.BIRTHDATE" id="EMPLOYEEDETAIL.BIRTHDATE" /></p>
-                    <label for="EMPLOYEEDETAIL.MARITALSTATUS">Έγγαμος</label>
-                    <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.MARITALSTATUS" id="EMPLOYEEDETAIL.MARITALSTATUS" /></p>
-                    <label for="EMPLOYEEDETAIL.SECLICEXPDATE">Ημερομηνία Λήξης Αδείας</label>
-                    <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.SECLICEXPDATE" id="EMPLOYEEDETAIL.SECLICEXPDATE" /></p>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
+                @using (Ajax.BeginForm("Edit", "Employee", new AjaxOptions() { HttpMethod = "POST", OnSuccess = "onEditFinished" }))
+                {
+
+                    <div id="modalBody" class="modal-body">
+
+                        <p><input type="hidden" id="RGUID" name="RGUID" /></p>
+                        <p><input type="hidden" id="ADDRESS.RGUID" name="ADDRESS.RGUID" /></p>
+                        <p><input type="hidden" id="CONTACTINFO.RGUID" name="CONTACTINFO.RGUID" /></p>
+                        <p><input type="hidden" id="EMPLOYEEDETAIL.RGUID" name="EMPLOYEEDETAIL.RGUID" /></p>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label for="RCODE">Κωδικός</label>
+                                <p><input type="text" class="form-control" name="RCODE" id="RCODE" /></p>
+                                <label for="FIRSTNAME">Όνομα</label>
+                                <p><input type="text" class="form-control" name="FIRSTNAME" id="FIRSTNAME" /></p>
+                                <label for="LASTNAME">Επώνυμο</label>
+                                <p><input type="text" class="form-control" name="LASTNAME" id="LASTNAME" /></p>
+                                <label for="ADDRESS.CITY">Πόλη</label>
+                                <p><input type="text" class="form-control" name="ADDRESS.CITY" id="ADDRESS.CITY" /></p>
+                                <label for="ADDRESS.STREET">Οδός</label>
+                                <p><input type="text" class="form-control" name="ADDRESS.STREET" id="ADDRESS.STREET" /></p>
+                                <label for="ADDRESS.STATE">Νομός</label>
+                                <p><input type="text" class="form-control" name="ADDRESS.STATE" id="ADDRESS.STATE" /></p>
+                                <label for="ADDRESS.POSTALCODE">Τ.Κ.</label>
+                                <p><input type="text" class="form-control" name="ADDRESS.POSTALCODE" id="ADDRESS.POSTALCODE" /></p>
+                                <label for="CONTACTINFO.PHONE1">Τηλέφωνο Σταθερό</label>
+                                <p><input type="text" class="form-control" name="CONTACTINFO.PHONE1" id="CONTACTINFO.PHONE1" /></p>
+                                <label for="CONTACTINFO.PHONE2">Τηλέφωνο Κινητό</label>
+                                <p><input type="text" class="form-control" name="CONTACTINFO.PHONE2" id="CONTACTINFO.PHONE2" /></p>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="CONTACTINFO.EMAIL">Email</label>
+                                <p><input type="text" class="form-control" name="CONTACTINFO.EMAIL" id="CONTACTINFO.EMAIL" /></p>
+                                <label for="EMPLOYEEDETAIL.AT">ΑΤ</label>
+                                <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.AT" id="EMPLOYEEDETAIL.AT" /></p>
+                                <label for="EMPLOYEEDETAIL.AFM">ΑΦΜ</label>
+                                <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.AFM" id="EMPLOYEEDETAIL.AFM" /></p>
+                                <label for="EMPLOYEEDETAIL.GENDER">Φύλο</label>
+                                <p>
+                                    <select id="EMPLOYEEDETAIL.GENDER" name="EMPLOYEEDETAIL.GENDER" class="form-control">
+                                        <option value="0">Άνδρας</option>
+                                        <option value="1">Γυναίκα</option>
+                                    </select>
+                                </p>
+                                <label for="EMPLOYEEDETAIL.BIRTHDATE">Ημερομηνία Γέννησης</label>
+                                <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.BIRTHDATE" id="EMPLOYEEDETAIL.BIRTHDATE" /></p>
+                                <label for="EMPLOYEEDETAIL.MARITALSTATUS">Έγγαμος</label>
+                                <p>
+                                    <select id="EMPLOYEEDETAIL.MARITALSTATUS" name="EMPLOYEEDETAIL.MARITALSTATUS" class="form-control">
+                                        <option value="0">Όχι</option>
+                                        <option value="1">Ναί</option>
+                                    </select>
+                                </p>
+                                <label for="EMPLOYEEDETAIL.SECLICEXPDATE">Ημερομηνία Λήξης Αδείας</label>
+                                <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.SECLICEXPDATE" id="EMPLOYEEDETAIL.SECLICEXPDATE" /></p>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Κλείσιμο</button>
+                        <input id="submit" type="submit" class="btn btn-primary" value="Αποθήκευση">
+
+                    </div>
+                }
             </div><!-- /.modal-content -->
         </div><!-- /.modal-dialog -->
     </div><!-- /.modal -->
 
 
+
 </div>
-@*<script src="~/Scripts/jquery-1.9.1.min.js"></script>*@
 <script>
 
+    //Masking
+    $(document).ready(function () {
+        $("#EMPLOYEEDETAIL\\.SECLICEXPDATE").mask('00/00/0000');
+        $("#RCODE").mask('00-00-0000');
+    });
 
     $('table tbody tr td p').on('click', function () {
 
         //Get RGUID from table
         var rowGuid = $(this).closest('tr').attr('id');
 
-        //Fetch Asynchronous EMPLOYEE
+        //Fetch Asynchronous EMPLOYEE to MODAL
         $.ajax({
             type: "POST",
             url: "@Url.Content("~/Employee/Details")",
@@ -114,7 +157,11 @@
                 $("#myModal").modal("show");
                 $("#modalHeader").text(data.RCODE + " " + data.LASTNAME + " " + data.FIRSTNAME);
 
-                $("RGUID").val(data.RGUID);
+                $("#RGUID").val(data.RGUID);
+                $("#ADDRESS\\.RGUID").val(data.ADDRESS.RGUID);
+                $("#CONTACTINFO\\.RGUID").val(data.CONTACTINFO.RGUID);
+                $("#EMPLOYEEDETAIL\\.RGUID").val(data.EMPLOYEEDETAIL.RGUID);
+
                 $("#RCODE").val(data.RCODE);
                 $("#FIRSTNAME").val(data.FIRSTNAME);
                 $("#LASTNAME").val(data.LASTNAME);
@@ -150,5 +197,16 @@
             }
         });
     });
+
+    function onEditFinished(data) {
+        $("#myModal").modal("hide");
+        var row = $("#" + data.RGUID);
+        row.children('td:eq(0)').children('P').text(data.RCODE);
+        row.children('td:eq(1)').children('P').text(data.FIRSTNAME);
+        row.children('td:eq(2)').children('P').text(data.LASTNAME);
+        row.children('td:eq(3)').children('P').text(data.PHONE1);
+        row.children('td:eq(4)').children('P').text(data.EMAIL);
+        row.children('td:eq(5)').children('P').text(data.SECLICEXPDATE);
+    }
 
 </script>
