@@ -1,5 +1,6 @@
 ﻿@model IEnumerable<HRSM.DATAMODEL.EMPLOYEE>
 @using HRSM.DATAMODEL;
+@using HRSM.WEBAPP.Models;
 
 @{
     ViewBag.Title = "Index";
@@ -7,7 +8,7 @@
 }
 
 <script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
-<script src="~/Scripts/jquery.mask.min.js"></script>
+<link href="~/Style/TalbeHover.css" rel="stylesheet" />
 
 <div class="container-fluid">
     <h2>Λίστα Προσωπικού</h2>
@@ -38,7 +39,6 @@
                             @if (employee.EMPLOYEEDETAIL.SECLICEXPDATE != null)
                             {
                                 @employee.EMPLOYEEDETAIL.SECLICEXPDATE.Value.ToShortDateString()
-
                             }
                         </p>
                     </td>
@@ -60,7 +60,7 @@
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                     <h4 class="modal-title"><p id="modalHeader"></p></h4>
                 </div>
-                @using (Ajax.BeginForm("Edit", "Employee", new AjaxOptions() { HttpMethod = "POST", OnSuccess = "onEditFinished" }))
+                @using (Ajax.BeginForm("Edit", "Employee", new AjaxOptions() { HttpMethod = "POST", OnSuccess = "onAjaxEditSuccess" }))
                 {
 
                     <div id="modalBody" class="modal-body">
@@ -72,7 +72,11 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <label for="RCODE">Κωδικός</label>
-                                <p><input type="text" class="form-control" name="RCODE" id="RCODE" /></p>
+                                <p>
+                                    @*<input type="text" class="form-control" name="RCODE" id="RCODE" />*@
+                                    @Html.TextBoxFor(x => x.FirstOrDefault().RCODE, new { @class = "form-control input-md", @placeholder = "Κωδικός" })
+                                    @Html.ValidationMessageFor(x => x.FirstOrDefault().RCODE, null, new { @class = "val" })
+                                </p>
                                 <label for="FIRSTNAME">Όνομα</label>
                                 <p><input type="text" class="form-control" name="FIRSTNAME" id="FIRSTNAME" /></p>
                                 <label for="LASTNAME">Επώνυμο</label>
@@ -92,7 +96,11 @@
                             </div>
                             <div class="col-md-6">
                                 <label for="CONTACTINFO.EMAIL">Email</label>
-                                <p><input type="text" class="form-control" name="CONTACTINFO.EMAIL" id="CONTACTINFO.EMAIL" /></p>
+                                <p>
+                                    @*<input type="text" class="form-control" name="CONTACTINFO.EMAIL" id="CONTACTINFO.EMAIL" />*@
+                                    @Html.TextBoxFor(x => x.FirstOrDefault().CONTACTINFO.EMAIL, new { @class = "form-control input-md", @placeholder = "Email" })
+                                    @Html.ValidationMessageFor(x => x.FirstOrDefault().CONTACTINFO.EMAIL, null, new { @class = "val" })
+                                </p>
                                 <label for="EMPLOYEEDETAIL.AT">ΑΤ</label>
                                 <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.AT" id="EMPLOYEEDETAIL.AT" /></p>
                                 <label for="EMPLOYEEDETAIL.AFM">ΑΦΜ</label>
@@ -134,13 +142,10 @@
 
 
 </div>
-<script>
 
-    //Masking
-    $(document).ready(function () {
-        $("#EMPLOYEEDETAIL\\.SECLICEXPDATE").mask('00/00/0000');
-        $("#RCODE").mask('00-00-0000');
-    });
+@jQuery.Mask.Employee()
+
+<script>
 
     $('table tbody tr td p').on('click', function () {
 
@@ -198,7 +203,7 @@
         });
     });
 
-    function onEditFinished(data) {
+    function onAjaxEditSuccess(data) {
         $("#myModal").modal("hide");
         var row = $("#" + data.RGUID);
         row.children('td:eq(0)').children('P').text(data.RCODE);

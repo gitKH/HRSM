@@ -1,11 +1,14 @@
 ﻿@model HRSM.DATAMODEL.EMPLOYEE
+@using HRSM.WEBAPP.Models;
 
 @{
     ViewBag.Title = "Create";
     Layout = "~/Views/Shared/Layout.cshtml";
 }
 
+<link href="~/Style/Validation.css" rel="stylesheet" />
 <div class="container">
+
     <form class="form-horizontal" action="~/Employee/Create" method="post">
         <fieldset>
 
@@ -16,8 +19,8 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="RCODE">Κωδικός</label>
                 <div class="col-md-4">
-                    <input id="RCODE" name="RCODE" placeholder="Κωδικός" class="form-control input-md" required="" type="text">
-
+                    @Html.TextBoxFor(x => x.RCODE, new { @class = "form-control input-md", @placeholder = "Κωδικός" })
+                    @Html.ValidationMessageFor(x => x.RCODE, null, new { @class = "val" })
                 </div>
             </div>
 
@@ -25,8 +28,9 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="FIRSTNAME">Όνομα</label>
                 <div class="col-md-4">
-                    <input id="FIRSTNAME" name="FIRSTNAME" placeholder="Όνομα" class="form-control input-md" required="" type="text">
-
+                    @*<input id="FIRSTNAME" name="FIRSTNAME" placeholder="Όνομα" class="form-control input-md" type="text">*@
+                    @Html.TextBoxFor(x => x.FIRSTNAME, new { @class = "form-control input-md", @placeholder = "Όνομα" })
+                    @Html.ValidationMessageFor(x => x.FIRSTNAME, null, new { @class = "val" })
                 </div>
             </div>
 
@@ -34,8 +38,9 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="LASTNAME">Επώνυμο</label>
                 <div class="col-md-4">
-                    <input id="LASTNAME" name="LASTNAME" placeholder="Επώνυμο" class="form-control input-md" required="" type="text">
-
+                    @*<input id="LASTNAME" name="LASTNAME" placeholder="Επώνυμο" class="form-control input-md" type="text">*@
+                    @Html.TextBoxFor(x => x.LASTNAME, new { @class = "form-control input-md", @placeholder = "Επώνυμο" })
+                    @Html.ValidationMessageFor(x => x.LASTNAME, null, new { @class = "val" })
                 </div>
             </div>
 
@@ -43,7 +48,7 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="ADDRESS.CITY">Πόλη</label>
                 <div class="col-md-4">
-                    <input id="ADDRESS.CITY" name="ADDRESS.CITY" placeholder="Πόλη" class="form-control input-md" required="" type="text">
+                    <input id="ADDRESS.CITY" name="ADDRESS.CITY" placeholder="Πόλη" class="form-control input-md" type="text">
 
                 </div>
             </div>
@@ -97,7 +102,10 @@
             <div class="form-group">
                 <label class="col-md-4 control-label" for="CONTACTINFO.EMAIL">Email</label>
                 <div class="col-md-4">
-                    <input id="CONTACTINFO.EMAIL" name="CONTACTINFO.EMAIL" placeholder="Email" class="form-control input-md" type="text">
+                    @*<input id="CONTACTINFO.EMAIL" name="CONTACTINFO.EMAIL" placeholder="Email" class="form-control input-md" type="text">*@
+
+                    @Html.TextBoxFor(x => x.CONTACTINFO.EMAIL, new { @class = "form-control input-md", @placeholder = "Email" })
+                    @Html.ValidationMessageFor(x => x.CONTACTINFO.EMAIL, null, new { @class = "val" })
 
                 </div>
             </div>
@@ -179,4 +187,6 @@
         </fieldset>
     </form>
 </div>
+
+@jQuery.Mask.Employee()
 

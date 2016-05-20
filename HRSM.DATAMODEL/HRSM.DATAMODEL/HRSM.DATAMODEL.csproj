@@ -53,6 +53,8 @@
     <Compile Include="ADDRESS.cs">
       <DependentUpon>HRSMContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="ContactInfoMetaData.cs" />
+    <Compile Include="P_CONTACTINFO.cs" />
     <Compile Include="CONTACTINFO.cs">
       <DependentUpon>HRSMContext.tt</DependentUpon>
     </Compile>
@@ -63,6 +65,7 @@
     <Compile Include="EMPLOYEEDETAIL.cs">
       <DependentUpon>HRSMContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="EmployeeMetaData.cs" />
     <Compile Include="Gender.cs">
       <DependentUpon>HRSMContext.tt</DependentUpon>
     </Compile>

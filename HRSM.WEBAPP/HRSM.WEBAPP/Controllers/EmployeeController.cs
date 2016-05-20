@@ -33,9 +33,16 @@ namespace HRSM.WEBAPP.Controllers
         [HttpPost]
         public ActionResult Create(EMPLOYEE newEmployee)
         {
-            database.EMPLOYEES.Add(newEmployee);
-            database.SaveChanges();
-            return View();
+            if (ModelState.IsValid)
+            {
+                database.EMPLOYEES.Add(newEmployee);
+                database.SaveChanges();
+            }
+            else
+            {
+                return View(newEmployee);
+            }
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
@@ -48,7 +55,7 @@ namespace HRSM.WEBAPP.Controllers
             }
             catch (Exception)
             {
-                
+
                 throw;
             }
 
@@ -118,6 +125,6 @@ namespace HRSM.WEBAPP.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
-        
+
     }
 }

@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace HRSM.DATAMODEL
 {
+    [MetadataType(typeof(EmployeeMetaData))]
     public partial class EMPLOYEE
     {
         public EMPLOYEE()
