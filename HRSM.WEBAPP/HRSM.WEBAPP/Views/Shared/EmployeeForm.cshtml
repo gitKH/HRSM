@@ -1,0 +1,62 @@
+﻿@model HRSM.DATAMODEL.EMPLOYEE
+
+<link href="~/Style/Validation.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-6">
+        @Html.LabelFor(x => x.RCODE, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.RCODE, new { @class = "form-control input-md", @placeholder = "Κωδικός" })
+        @Html.ValidationMessageFor(x => x.RCODE, null, new { @class = "val" })
+        <br />
+        @Html.LabelFor(x => x.FIRSTNAME, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.FIRSTNAME, new { @class = "form-control input-md", @placeholder = "Όνομα" })
+        @Html.ValidationMessageFor(x => x.FIRSTNAME, null, new { @class = "val" })
+        <br />
+        @Html.LabelFor(x => x.FIRSTNAME, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.LASTNAME, new { @class = "form-control input-md", @placeholder = "Επώνυμο" })
+        @Html.ValidationMessageFor(x => x.LASTNAME, null, new { @class = "val" })
+        <br />
+        @Html.LabelFor(x => x.ADDRESS.CITY, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.ADDRESS.CITY, new { @class = "form-control input-md", @placeholder = "Πόλη" })
+        <br />
+        @Html.LabelFor(x => x.ADDRESS.STREET, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.ADDRESS.STREET, new { @class = "form-control input-md", @placeholder = "Οδός" })
+        <br />
+        @Html.LabelFor(x => x.ADDRESS.STATE, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.ADDRESS.STATE, new { @class = "form-control input-md", @placeholder = "Νομός" })
+        <br />
+        @Html.LabelFor(x => x.ADDRESS.POSTALCODE, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.ADDRESS.POSTALCODE, new { @class = "form-control input-md", @placeholder = "Τ.Κ." })
+        <br />
+        @Html.LabelFor(x => x.CONTACTINFO.PHONE1, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.CONTACTINFO.PHONE1, new { @class = "form-control input-md", @placeholder = "Τηλέφωνο Σταθερό" })
+        <br />
+        @Html.LabelFor(x => x.CONTACTINFO.PHONE2, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.CONTACTINFO.PHONE2, new { @class = "form-control input-md", @placeholder = "Τηλέφωνο Κινητό" })
+    </div>
+    <div class="col-md-6">
+
+        @Html.LabelFor(x => x.CONTACTINFO.EMAIL, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.CONTACTINFO.EMAIL, new { @class = "form-control input-md", @placeholder = "Email" })
+        @Html.ValidationMessageFor(x => x.CONTACTINFO.EMAIL, null, new { @class = "val" })
+        <br />
+        @Html.LabelFor(x => x.EMPLOYEEDETAIL.AT, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.EMPLOYEEDETAIL.AT, new { @class = "form-control input-md", @placeholder = "ΑΤ" })
+        <br />
+        @Html.LabelFor(x => x.EMPLOYEEDETAIL.AFM, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.EMPLOYEEDETAIL.AFM, new { @class = "form-control input-md", @placeholder = "ΑΦΜ" })
+        <br />
+        @Html.LabelFor(x => x.EMPLOYEEDETAIL.GENDER, new { @class = "control-label" })
+        @Html.DropDownListFor(x => x.EMPLOYEEDETAIL.GENDER, new List<SelectListItem>() { new SelectListItem() { Text = "Άνδρας", Value = "0" }, new SelectListItem() { Text = "Γυναίκα", Value = "1" } }, new { @class = "form-control" })
+        <br />
+        @Html.LabelFor(x => x.EMPLOYEEDETAIL.BIRTHDATE, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.EMPLOYEEDETAIL.BIRTHDATE, new { @class = "form-control input-md", @placeholder = "Ημερομηνία Γέννησης" })
+        <br />
+        @Html.LabelFor(x => x.EMPLOYEEDETAIL.MARITALSTATUS, new { @class = "control-label" })
+        @Html.DropDownListFor(x => x.EMPLOYEEDETAIL.MARITALSTATUS, new List<SelectListItem>() { new SelectListItem() { Text = "Όχι", Value = "0" }, new SelectListItem() { Text = "Ναι", Value = "1" } }, new { @class = "form-control" })
+        <br />
+        @Html.LabelFor(x => x.EMPLOYEEDETAIL.SECLICEXPDATE, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.EMPLOYEEDETAIL.SECLICEXPDATE, new { @class = "form-control input-md", @placeholder = "Ημερομηνία Λήξης Αδείας" })
+    </div>
+</div>
+
+@HRSM.WEBAPP.Models.jQuery.Mask.Employee()
