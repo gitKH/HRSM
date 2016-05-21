@@ -22,7 +22,7 @@ namespace HRSM.WEBAPP.Models
                 builder.AppendLine("$(\"#CONTACTINFO_PHONE1\").mask('000 0000000');");
                 builder.AppendLine("$(\"#CONTACTINFO_PHONE2\").mask('0000000000');");
                 builder.AppendLine("});");
-                builder.Append("</script>");
+                builder.AppendLine("</script>");
                 return new HtmlString(builder.ToString());
             }
         }

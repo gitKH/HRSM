@@ -65,9 +65,9 @@
                         <p><input type="hidden" id="ADDRESS_RGUID" name="ADDRESS.RGUID" /></p>
                         <p><input type="hidden" id="CONTACTINFO_RGUID" name="CONTACTINFO.RGUID" /></p>
                         <p><input type="hidden" id="EMPLOYEEDETAIL_RGUID" name="EMPLOYEEDETAIL.RGUID" /></p>
-                        @if(Model.Count() > 0)
+                        @if (Model.Count() > 0)
                         {
-                            @Html.Partial("EmployeeForm",Model.FirstOrDefault());
+                            @Html.Partial("EmployeeForm", Model.FirstOrDefault());
                         }
                     </div>
 

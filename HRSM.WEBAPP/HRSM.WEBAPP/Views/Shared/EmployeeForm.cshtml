@@ -50,12 +50,14 @@
         <br />
         @Html.LabelFor(x => x.EMPLOYEEDETAIL.BIRTHDATE, new { @class = "control-label" })
         @Html.TextBoxFor(x => x.EMPLOYEEDETAIL.BIRTHDATE, new { @class = "form-control input-md", @placeholder = "Ημερομηνία Γέννησης" })
+        @Html.ValidationMessageFor(x => x.EMPLOYEEDETAIL.BIRTHDATE, null, new { @class = "val" })
         <br />
         @Html.LabelFor(x => x.EMPLOYEEDETAIL.MARITALSTATUS, new { @class = "control-label" })
         @Html.DropDownListFor(x => x.EMPLOYEEDETAIL.MARITALSTATUS, new List<SelectListItem>() { new SelectListItem() { Text = "Όχι", Value = "0" }, new SelectListItem() { Text = "Ναι", Value = "1" } }, new { @class = "form-control" })
         <br />
         @Html.LabelFor(x => x.EMPLOYEEDETAIL.SECLICEXPDATE, new { @class = "control-label" })
         @Html.TextBoxFor(x => x.EMPLOYEEDETAIL.SECLICEXPDATE, new { @class = "form-control input-md", @placeholder = "Ημερομηνία Λήξης Αδείας" })
+        @Html.ValidationMessageFor(x => x.EMPLOYEEDETAIL.SECLICEXPDATE, null, new { @class = "val" })
     </div>
 </div>
 
