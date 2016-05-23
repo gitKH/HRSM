@@ -15,12 +15,12 @@ namespace HRSM.DATAMODEL
         public string AFM { get; set; }
         [Display(Name = "Φύλο")]
         public Nullable<Gender> GENDER { get; set; }
-        [RegularExpression(@"(^((((0[1-9])|([1-2][0-9])|(3[0-1]))|([1-9]))/(((0[1-9])|(1[0-2]))|([1-9]))/(([0-9]{2})|(((19)|([2]([0]{1})))([0-9]{2}))))$)")]
+        //[RegularExpression(@"(^((((0[1-9])|([1-2][0-9])|(3[0-1]))|([1-9]))/(((0[1-9])|(1[0-2]))|([1-9]))/(([0-9]{2})|(((19)|([2]([0]{1})))([0-9]{2}))))$)")]
         [Display(Name = "Ημερομηνία Γέννησης")]
         public Nullable<System.DateTime> BIRTHDATE { get; set; }
         [Display(Name = "Έγγαμος")]
         public Nullable<Marital> MARITALSTATUS { get; set; }
-        [RegularExpression(@"(^((((0[1-9])|([1-2][0-9])|(3[0-1]))|([1-9]))/(((0[1-9])|(1[0-2]))|([1-9]))/(([0-9]{2})|(((19)|([2]([0]{1})))([0-9]{2}))))$)")]
+        //[RegularExpression(@"(^((((0[1-9])|([1-2][0-9])|(3[0-1]))|([1-9]))/(((0[1-9])|(1[0-2]))|([1-9]))/(([0-9]{2})|(((19)|([2]([0]{1})))([0-9]{2}))))$)")]
         [Display(Name = "Ημερομηνία Λήξης Αδείας")]
         public Nullable<System.DateTime> SECLICEXPDATE { get; set; }
     }

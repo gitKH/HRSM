@@ -10,17 +10,10 @@
 namespace HRSM.DATAMODEL
 {
     using System;
-    using System.Collections.Generic;
     
-    public partial class ADDRESS
+    public enum STATUS : int
     {
-        public System.Guid RGUID { get; set; }
-        public string CITY { get; set; }
-        public string STREET { get; set; }
-        public string STATE { get; set; }
-        public string POSTALCODE { get; set; }
-    
-        public virtual EMPLOYEE EMPLOYEE { get; set; }
-        public virtual GUARDSITE GUARDSITE { get; set; }
+        INACTIVE = 0,
+        ACTIVE = 1
     }
 }

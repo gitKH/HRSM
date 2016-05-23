@@ -25,7 +25,7 @@ namespace HRSM.DATAMODEL.Tests
         public void EmployeesSeed()
         {
             List<EMPLOYEE> employees = new List<EMPLOYEE>();
-            //for (int i = 0; i < 25000; i++)
+            for (int i = 0; i < 4; i++)
             {
 
                 employees.Add(new EMPLOYEE()

@@ -56,6 +56,9 @@
     <Compile Include="AddressMetaData.cs" />
     <Compile Include="ContactInfoMetaData.cs" />
     <Compile Include="EmployeeDetailMetaData.cs" />
+    <Compile Include="GUARDSITE.cs">
+      <DependentUpon>HRSMContext.tt</DependentUpon>
+    </Compile>
     <Compile Include="P_ADDRESS.cs" />
     <Compile Include="P_CONTACTINFO.cs" />
     <Compile Include="CONTACTINFO.cs">
@@ -94,6 +97,12 @@
     <Compile Include="P_EMPLOYEE.cs" />
     <Compile Include="P_EMPLOYEEDETAIL.cs" />
     <Compile Include="P_HRSMCOntextContainer.cs" />
+    <Compile Include="SITEMANAGER.cs">
+      <DependentUpon>HRSMContext.tt</DependentUpon>
+    </Compile>
+    <Compile Include="STATUS.cs">
+      <DependentUpon>HRSMContext.tt</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EntityDeploy Include="HRSMContext.edmx">

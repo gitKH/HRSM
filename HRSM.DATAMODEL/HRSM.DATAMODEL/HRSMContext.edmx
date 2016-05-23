@@ -10,6 +10,8 @@
     <EntitySet Name="ADDRESSES" EntityType="HRSMContext.Store.ADDRESSES" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="CONTACTINFOS" EntityType="HRSMContext.Store.CONTACTINFOS" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="EMPLOYEEDETAILS" EntityType="HRSMContext.Store.EMPLOYEEDETAILS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="GUARDSITES" EntityType="HRSMContext.Store.GUARDSITES" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SITEMANAGERS" EntityType="HRSMContext.Store.SITEMANAGERS" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="EMPLOYEEADDRESS" Association="HRSMContext.Store.EMPLOYEEADDRESS">
       <End Role="EMPLOYEE" EntitySet="EMPLOYEES" />
       <End Role="ADDRESS" EntitySet="ADDRESSES" />
@@ -21,6 +23,18 @@
     <AssociationSet Name="EMPLOYEEEMPLOYEEDETAIL" Association="HRSMContext.Store.EMPLOYEEEMPLOYEEDETAIL">
       <End Role="EMPLOYEE" EntitySet="EMPLOYEES" />
       <End Role="EMPLOYEEDETAIL" EntitySet="EMPLOYEEDETAILS" />
+    </AssociationSet>
+    <AssociationSet Name="GUARDSITESITEMANAGER" Association="HRSMContext.Store.GUARDSITESITEMANAGER">
+      <End Role="GUARDSITE" EntitySet="GUARDSITES" />
+      <End Role="SITEMANAGER" EntitySet="SITEMANAGERS" />
+    </AssociationSet>
+    <AssociationSet Name="SITEMANAGERCONTACTINFO" Association="HRSMContext.Store.SITEMANAGERCONTACTINFO">
+      <End Role="SITEMANAGER" EntitySet="SITEMANAGERS" />
+      <End Role="CONTACTINFO" EntitySet="CONTACTINFOS" />
+    </AssociationSet>
+    <AssociationSet Name="GUARDSITEADDRESS" Association="HRSMContext.Store.GUARDSITEADDRESS">
+      <End Role="GUARDSITE" EntitySet="GUARDSITES" />
+      <End Role="ADDRESS" EntitySet="ADDRESSES" />
     </AssociationSet>
   </EntityContainer>
   <EntityType Name="EMPLOYEES">
@@ -41,7 +55,8 @@
     <Property Name="STREET" Type="nvarchar(max)" Nullable="true" />
     <Property Name="STATE" Type="nvarchar(max)" Nullable="true" />
     <Property Name="POSTALCODE" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="EMPLOYEE_RGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="EMPLOYEE_RGUID" Type="uniqueidentifier" Nullable="true" />
+    <Property Name="GUARDSITE_RID" Type="uniqueidentifier" Nullable="true" />
   </EntityType>
   <EntityType Name="CONTACTINFOS">
     <Key>
@@ -51,7 +66,8 @@
     <Property Name="PHONE1" Type="nvarchar(max)" Nullable="true" />
     <Property Name="PHONE2" Type="nvarchar(max)" Nullable="true" />
     <Property Name="EMAIL" Type="nvarchar(max)" Nullable="true" />
-    <Property Name="EMPLOYEE_RGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="EMPLOYEE_RGUID" Type="uniqueidentifier" Nullable="true" />
+    <Property Name="SITEMANAGER_RID" Type="uniqueidentifier" Nullable="true" />
   </EntityType>
   <EntityType Name="EMPLOYEEDETAILS">
     <Key>
@@ -64,10 +80,27 @@
     <Property Name="BIRTHDATE" Type="datetime" Nullable="true" />
     <Property Name="MARITALSTATUS" Type="int" Nullable="true" />
     <Property Name="SECLICEXPDATE" Type="datetime" Nullable="true" />
-    <Property Name="EMPLOYEE_RGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="EMPLOYEE_RGUID" Type="uniqueidentifier" Nullable="true" />
+  </EntityType>
+  <EntityType Name="GUARDSITES">
+    <Key>
+      <PropertyRef Name="RID" />
+    </Key>
+    <Property Name="RID" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RCODE" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="SITENAME" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="ISACTIVE" Type="int" Nullable="false" />
+  </EntityType>
+  <EntityType Name="SITEMANAGERS">
+    <Key>
+      <PropertyRef Name="RID" />
+    </Key>
+    <Property Name="RID" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="GUARDSITE_RID" Type="uniqueidentifier" Nullable="true" />
   </EntityType>
   <Association Name="EMPLOYEEADDRESS">
-    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="1">
+    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="ADDRESS" Type="HRSMContext.Store.ADDRESSES" Multiplicity="*" />
@@ -81,7 +114,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="EMPLOYEECONTACTINFO">
-    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="1">
+    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="CONTACTINFO" Type="HRSMContext.Store.CONTACTINFOS" Multiplicity="*" />
@@ -95,7 +128,7 @@
     </ReferentialConstraint>
   </Association>
   <Association Name="EMPLOYEEEMPLOYEEDETAIL">
-    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="1">
+    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="0..1">
       <OnDelete Action="Cascade" />
     </End>
     <End Role="EMPLOYEEDETAIL" Type="HRSMContext.Store.EMPLOYEEDETAILS" Multiplicity="*" />
@@ -105,6 +138,48 @@
       </Principal>
       <Dependent Role="EMPLOYEEDETAIL">
         <PropertyRef Name="EMPLOYEE_RGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GUARDSITESITEMANAGER">
+    <End Role="GUARDSITE" Type="HRSMContext.Store.GUARDSITES" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="SITEMANAGER" Type="HRSMContext.Store.SITEMANAGERS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GUARDSITE">
+        <PropertyRef Name="RID" />
+      </Principal>
+      <Dependent Role="SITEMANAGER">
+        <PropertyRef Name="GUARDSITE_RID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="SITEMANAGERCONTACTINFO">
+    <End Role="SITEMANAGER" Type="HRSMContext.Store.SITEMANAGERS" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="CONTACTINFO" Type="HRSMContext.Store.CONTACTINFOS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SITEMANAGER">
+        <PropertyRef Name="RID" />
+      </Principal>
+      <Dependent Role="CONTACTINFO">
+        <PropertyRef Name="SITEMANAGER_RID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GUARDSITEADDRESS">
+    <End Role="GUARDSITE" Type="HRSMContext.Store.GUARDSITES" Multiplicity="0..1">
+      <OnDelete Action="Cascade" />
+    </End>
+    <End Role="ADDRESS" Type="HRSMContext.Store.ADDRESSES" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GUARDSITE">
+        <PropertyRef Name="RID" />
+      </Principal>
+      <Dependent Role="ADDRESS">
+        <PropertyRef Name="GUARDSITE_RID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -129,6 +204,20 @@
             <End EntitySet="EMPLOYEES" Role="EMPLOYEE" />
             <End EntitySet="EMPLOYEEDETAILS" Role="EMPLOYEEDETAIL" />
           </AssociationSet>
+          <EntitySet Name="GUARDSITES" EntityType="HRSMContext.GUARDSITE" />
+          <EntitySet Name="SITEMANAGERS" EntityType="HRSMContext.SITEMANAGER" />
+          <AssociationSet Name="GUARDSITESITEMANAGER" Association="HRSMContext.GUARDSITESITEMANAGER">
+            <End Role="GUARDSITE" EntitySet="GUARDSITES" />
+            <End Role="SITEMANAGER" EntitySet="SITEMANAGERS" />
+          </AssociationSet>
+          <AssociationSet Name="SITEMANAGERCONTACTINFO" Association="HRSMContext.SITEMANAGERCONTACTINFO">
+            <End Role="SITEMANAGER" EntitySet="SITEMANAGERS" />
+            <End Role="CONTACTINFO" EntitySet="CONTACTINFOS" />
+          </AssociationSet>
+          <AssociationSet Name="GUARDSITEADDRESS" Association="HRSMContext.GUARDSITEADDRESS">
+            <End Role="GUARDSITE" EntitySet="GUARDSITES" />
+            <End Role="ADDRESS" EntitySet="ADDRESSES" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="EMPLOYEE">
           <Key>
@@ -152,12 +241,13 @@
           <Property Name="STATE" Type="String" Nullable="true" />
           <Property Name="POSTALCODE" Type="String" Nullable="true" />
           <NavigationProperty Name="EMPLOYEE" Relationship="HRSMContext.EMPLOYEEADDRESS" FromRole="ADDRESS" ToRole="EMPLOYEE" />
+          <NavigationProperty Name="GUARDSITE" Relationship="HRSMContext.GUARDSITEADDRESS" FromRole="ADDRESS" ToRole="GUARDSITE" />
         </EntityType>
         <Association Name="EMPLOYEEADDRESS">
-          <End Type="HRSMContext.EMPLOYEE" Role="EMPLOYEE" Multiplicity="1" >
+          <End Type="HRSMContext.EMPLOYEE" Role="EMPLOYEE" Multiplicity="0..1" >
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="HRSMContext.ADDRESS" Role="ADDRESS" Multiplicity="1" />
+          <End Type="HRSMContext.ADDRESS" Role="ADDRESS" Multiplicity="0..1" />
         </Association>
         <EntityType Name="CONTACTINFO">
           <Key>
@@ -168,12 +258,13 @@
           <Property Name="PHONE2" Type="String" Nullable="true" />
           <Property Name="EMAIL" Type="String" Nullable="true" />
           <NavigationProperty Name="EMPLOYEE" Relationship="HRSMContext.EMPLOYEECONTACTINFO" FromRole="CONTACTINFO" ToRole="EMPLOYEE" />
+          <NavigationProperty Name="SITEMANAGER" Relationship="HRSMContext.SITEMANAGERCONTACTINFO" FromRole="CONTACTINFO" ToRole="SITEMANAGER" />
         </EntityType>
         <Association Name="EMPLOYEECONTACTINFO">
-          <End Type="HRSMContext.EMPLOYEE" Role="EMPLOYEE" Multiplicity="1" >
+          <End Type="HRSMContext.EMPLOYEE" Role="EMPLOYEE" Multiplicity="0..1" >
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="HRSMContext.CONTACTINFO" Role="CONTACTINFO" Multiplicity="1" />
+          <End Type="HRSMContext.CONTACTINFO" Role="CONTACTINFO" Multiplicity="0..1" />
         </Association>
         <EntityType Name="EMPLOYEEDETAIL">
           <Key>
@@ -193,15 +284,57 @@
           <Member Name="Female" Value="1" />
         </EnumType>
         <Association Name="EMPLOYEEEMPLOYEEDETAIL">
-          <End Type="HRSMContext.EMPLOYEE" Multiplicity="1" Role="EMPLOYEE">
+          <End Type="HRSMContext.EMPLOYEE" Multiplicity="0..1" Role="EMPLOYEE">
             <OnDelete Action="Cascade" />
           </End>
-          <End Type="HRSMContext.EMPLOYEEDETAIL" Multiplicity="1" Role="EMPLOYEEDETAIL" />
+          <End Type="HRSMContext.EMPLOYEEDETAIL" Multiplicity="0..1" Role="EMPLOYEEDETAIL" />
         </Association>
         <EnumType Name="Marital">
           <Member Name="No" Value="0" />
           <Member Name="Yes" Value="1" />
         </EnumType>
+        <EntityType Name="GUARDSITE">
+          <Key>
+            <PropertyRef Name="RID" />
+          </Key>
+          <Property Name="RID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RCODE" Type="String" Nullable="false" />
+          <Property Name="SITENAME" Type="String" Nullable="false" />
+          <Property Name="ISACTIVE" Type="HRSMContext.STATUS" Nullable="false" />
+          <NavigationProperty Name="SITEMANAGER" Relationship="HRSMContext.GUARDSITESITEMANAGER" FromRole="GUARDSITE" ToRole="SITEMANAGER" />
+          <NavigationProperty Name="ADDRESS" Relationship="HRSMContext.GUARDSITEADDRESS" FromRole="GUARDSITE" ToRole="ADDRESS" />
+        </EntityType>
+        <EnumType Name="STATUS">
+          <Member Name="INACTIVE" Value="0" />
+          <Member Name="ACTIVE" Value="1" />
+        </EnumType>
+        <EntityType Name="SITEMANAGER">
+          <Key>
+            <PropertyRef Name="RID" />
+          </Key>
+          <Property Name="RID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NAME" Type="String" Nullable="false" />
+          <NavigationProperty Name="GUARDSITE" Relationship="HRSMContext.GUARDSITESITEMANAGER" FromRole="SITEMANAGER" ToRole="GUARDSITE" />
+          <NavigationProperty Name="CONTACTINFO" Relationship="HRSMContext.SITEMANAGERCONTACTINFO" FromRole="SITEMANAGER" ToRole="CONTACTINFO" />
+        </EntityType>
+        <Association Name="GUARDSITESITEMANAGER">
+          <End Type="HRSMContext.GUARDSITE" Role="GUARDSITE" Multiplicity="0..1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="HRSMContext.SITEMANAGER" Role="SITEMANAGER" Multiplicity="0..1" />
+        </Association>
+        <Association Name="SITEMANAGERCONTACTINFO">
+          <End Type="HRSMContext.SITEMANAGER" Role="SITEMANAGER" Multiplicity="0..1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="HRSMContext.CONTACTINFO" Role="CONTACTINFO" Multiplicity="0..1" />
+        </Association>
+        <Association Name="GUARDSITEADDRESS">
+          <End Type="HRSMContext.GUARDSITE" Role="GUARDSITE" Multiplicity="0..1" >
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="HRSMContext.ADDRESS" Role="ADDRESS" Multiplicity="0..1" />
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -252,6 +385,24 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
+    <EntitySetMapping Name="GUARDSITES">
+      <EntityTypeMapping TypeName="IsTypeOf(HRSMContext.GUARDSITE)">
+        <MappingFragment StoreEntitySet="GUARDSITES">
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="RCODE" ColumnName="RCODE" />
+          <ScalarProperty Name="SITENAME" ColumnName="SITENAME" />
+          <ScalarProperty Name="ISACTIVE" ColumnName="ISACTIVE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SITEMANAGERS">
+      <EntityTypeMapping TypeName="IsTypeOf(HRSMContext.SITEMANAGER)">
+        <MappingFragment StoreEntitySet="SITEMANAGERS">
+          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
     <AssociationSetMapping Name="EMPLOYEEADDRESS" TypeName="HRSMContext.EMPLOYEEADDRESS" StoreEntitySet="ADDRESSES">
       <EndProperty Name="EMPLOYEE">
         <ScalarProperty Name="RGUID" ColumnName="EMPLOYEE_RGUID" />
@@ -259,6 +410,7 @@
       <EndProperty Name="ADDRESS">
         <ScalarProperty Name="RGUID" ColumnName="RGUID" />
       </EndProperty>
+      <Condition ColumnName="EMPLOYEE_RGUID" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="EMPLOYEECONTACTINFO" TypeName="HRSMContext.EMPLOYEECONTACTINFO" StoreEntitySet="CONTACTINFOS">
       <EndProperty Name="EMPLOYEE">
@@ -267,6 +419,7 @@
       <EndProperty Name="CONTACTINFO">
         <ScalarProperty Name="RGUID" ColumnName="RGUID" />
       </EndProperty>
+      <Condition ColumnName="EMPLOYEE_RGUID" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="EMPLOYEEEMPLOYEEDETAIL" TypeName="HRSMContext.EMPLOYEEEMPLOYEEDETAIL" StoreEntitySet="EMPLOYEEDETAILS">
       <EndProperty Name="EMPLOYEE">
@@ -275,6 +428,34 @@
       <EndProperty Name="EMPLOYEEDETAIL">
         <ScalarProperty Name="RGUID" ColumnName="RGUID" />
       </EndProperty>
+      <Condition ColumnName="EMPLOYEE_RGUID" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GUARDSITESITEMANAGER" TypeName="HRSMContext.GUARDSITESITEMANAGER" StoreEntitySet="SITEMANAGERS">
+      <EndProperty Name="GUARDSITE">
+        <ScalarProperty Name="RID" ColumnName="GUARDSITE_RID" />
+      </EndProperty>
+      <EndProperty Name="SITEMANAGER">
+        <ScalarProperty Name="RID" ColumnName="RID" />
+      </EndProperty>
+      <Condition ColumnName="GUARDSITE_RID" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="SITEMANAGERCONTACTINFO" TypeName="HRSMContext.SITEMANAGERCONTACTINFO" StoreEntitySet="CONTACTINFOS">
+      <EndProperty Name="SITEMANAGER">
+        <ScalarProperty Name="RID" ColumnName="SITEMANAGER_RID" />
+      </EndProperty>
+      <EndProperty Name="CONTACTINFO">
+        <ScalarProperty Name="RGUID" ColumnName="RGUID" />
+      </EndProperty>
+      <Condition ColumnName="SITEMANAGER_RID" IsNull="false" />
+    </AssociationSetMapping>
+    <AssociationSetMapping Name="GUARDSITEADDRESS" TypeName="HRSMContext.GUARDSITEADDRESS" StoreEntitySet="ADDRESSES">
+      <EndProperty Name="GUARDSITE">
+        <ScalarProperty Name="RID" ColumnName="GUARDSITE_RID" />
+      </EndProperty>
+      <EndProperty Name="ADDRESS">
+        <ScalarProperty Name="RGUID" ColumnName="RGUID" />
+      </EndProperty>
+      <Condition ColumnName="GUARDSITE_RID" IsNull="false" />
     </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>
