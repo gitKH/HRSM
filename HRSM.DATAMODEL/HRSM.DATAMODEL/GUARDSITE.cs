@@ -12,15 +12,14 @@ namespace HRSM.DATAMODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class ADDRESS
+    public partial class GUARDSITE
     {
-        public System.Guid RGUID { get; set; }
-        public string CITY { get; set; }
-        public string STREET { get; set; }
-        public string STATE { get; set; }
-        public string POSTALCODE { get; set; }
+        public System.Guid RID { get; set; }
+        public string RCODE { get; set; }
+        public string SITENAME { get; set; }
+        public STATUS ISACTIVE { get; set; }
     
-        public virtual EMPLOYEE EMPLOYEE { get; set; }
-        public virtual GUARDSITE GUARDSITE { get; set; }
+        public virtual SITEMANAGER SITEMANAGER { get; set; }
+        public virtual ADDRESS ADDRESS { get; set; }
     }
 }

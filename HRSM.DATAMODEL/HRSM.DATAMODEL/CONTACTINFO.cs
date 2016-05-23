@@ -18,6 +18,8 @@ namespace HRSM.DATAMODEL
         public string PHONE1 { get; set; }
         public string PHONE2 { get; set; }
         public string EMAIL { get; set; }
-         public virtual EMPLOYEE EMPLOYEE { get; set; }
+    
+        public virtual EMPLOYEE EMPLOYEE { get; set; }
+        public virtual SITEMANAGER SITEMANAGER { get; set; }
     }
 }

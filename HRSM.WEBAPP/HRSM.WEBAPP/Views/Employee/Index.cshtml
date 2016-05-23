@@ -50,8 +50,6 @@
         </tbody>
     </table>
 
-
-
     <!-- Modal-->
     <div class="modal fade" id="myModal">
         <div class="modal-dialog modal-lg">
@@ -62,77 +60,20 @@
                 </div>
                 @using (Ajax.BeginForm("Edit", "Employee", new AjaxOptions() { HttpMethod = "POST", OnSuccess = "onAjaxEditSuccess" }))
                 {
-
                     <div id="modalBody" class="modal-body">
-
                         <p><input type="hidden" id="RGUID" name="RGUID" /></p>
-                        <p><input type="hidden" id="ADDRESS.RGUID" name="ADDRESS.RGUID" /></p>
-                        <p><input type="hidden" id="CONTACTINFO.RGUID" name="CONTACTINFO.RGUID" /></p>
-                        <p><input type="hidden" id="EMPLOYEEDETAIL.RGUID" name="EMPLOYEEDETAIL.RGUID" /></p>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <label for="RCODE">Κωδικός</label>
-                                <p>
-                                    @*<input type="text" class="form-control" name="RCODE" id="RCODE" />*@
-                                    @Html.TextBoxFor(x => x.FirstOrDefault().RCODE, new { @class = "form-control input-md", @placeholder = "Κωδικός" })
-                                    @Html.ValidationMessageFor(x => x.FirstOrDefault().RCODE, null, new { @class = "val" })
-                                </p>
-                                <label for="FIRSTNAME">Όνομα</label>
-                                <p><input type="text" class="form-control" name="FIRSTNAME" id="FIRSTNAME" /></p>
-                                <label for="LASTNAME">Επώνυμο</label>
-                                <p><input type="text" class="form-control" name="LASTNAME" id="LASTNAME" /></p>
-                                <label for="ADDRESS.CITY">Πόλη</label>
-                                <p><input type="text" class="form-control" name="ADDRESS.CITY" id="ADDRESS.CITY" /></p>
-                                <label for="ADDRESS.STREET">Οδός</label>
-                                <p><input type="text" class="form-control" name="ADDRESS.STREET" id="ADDRESS.STREET" /></p>
-                                <label for="ADDRESS.STATE">Νομός</label>
-                                <p><input type="text" class="form-control" name="ADDRESS.STATE" id="ADDRESS.STATE" /></p>
-                                <label for="ADDRESS.POSTALCODE">Τ.Κ.</label>
-                                <p><input type="text" class="form-control" name="ADDRESS.POSTALCODE" id="ADDRESS.POSTALCODE" /></p>
-                                <label for="CONTACTINFO.PHONE1">Τηλέφωνο Σταθερό</label>
-                                <p><input type="text" class="form-control" name="CONTACTINFO.PHONE1" id="CONTACTINFO.PHONE1" /></p>
-                                <label for="CONTACTINFO.PHONE2">Τηλέφωνο Κινητό</label>
-                                <p><input type="text" class="form-control" name="CONTACTINFO.PHONE2" id="CONTACTINFO.PHONE2" /></p>
-                            </div>
-                            <div class="col-md-6">
-                                <label for="CONTACTINFO.EMAIL">Email</label>
-                                <p>
-                                    @*<input type="text" class="form-control" name="CONTACTINFO.EMAIL" id="CONTACTINFO.EMAIL" />*@
-                                    @Html.TextBoxFor(x => x.FirstOrDefault().CONTACTINFO.EMAIL, new { @class = "form-control input-md", @placeholder = "Email" })
-                                    @Html.ValidationMessageFor(x => x.FirstOrDefault().CONTACTINFO.EMAIL, null, new { @class = "val" })
-                                </p>
-                                <label for="EMPLOYEEDETAIL.AT">ΑΤ</label>
-                                <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.AT" id="EMPLOYEEDETAIL.AT" /></p>
-                                <label for="EMPLOYEEDETAIL.AFM">ΑΦΜ</label>
-                                <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.AFM" id="EMPLOYEEDETAIL.AFM" /></p>
-                                <label for="EMPLOYEEDETAIL.GENDER">Φύλο</label>
-                                <p>
-                                    <select id="EMPLOYEEDETAIL.GENDER" name="EMPLOYEEDETAIL.GENDER" class="form-control">
-                                        <option value="0">Άνδρας</option>
-                                        <option value="1">Γυναίκα</option>
-                                    </select>
-                                </p>
-                                <label for="EMPLOYEEDETAIL.BIRTHDATE">Ημερομηνία Γέννησης</label>
-                                <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.BIRTHDATE" id="EMPLOYEEDETAIL.BIRTHDATE" /></p>
-                                <label for="EMPLOYEEDETAIL.MARITALSTATUS">Έγγαμος</label>
-                                <p>
-                                    <select id="EMPLOYEEDETAIL.MARITALSTATUS" name="EMPLOYEEDETAIL.MARITALSTATUS" class="form-control">
-                                        <option value="0">Όχι</option>
-                                        <option value="1">Ναί</option>
-                                    </select>
-                                </p>
-                                <label for="EMPLOYEEDETAIL.SECLICEXPDATE">Ημερομηνία Λήξης Αδείας</label>
-                                <p><input type="text" class="form-control" name="EMPLOYEEDETAIL.SECLICEXPDATE" id="EMPLOYEEDETAIL.SECLICEXPDATE" /></p>
-                            </div>
-                        </div>
-
-
+                        <p><input type="hidden" id="ADDRESS_RGUID" name="ADDRESS.RGUID" /></p>
+                        <p><input type="hidden" id="CONTACTINFO_RGUID" name="CONTACTINFO.RGUID" /></p>
+                        <p><input type="hidden" id="EMPLOYEEDETAIL_RGUID" name="EMPLOYEEDETAIL.RGUID" /></p>
+                        @if (Model.Count() > 0)
+                        {
+                            @Html.Partial("EmployeeForm", Model.FirstOrDefault());
+                        }
                     </div>
 
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">Κλείσιμο</button>
                         <input id="submit" type="submit" class="btn btn-primary" value="Αποθήκευση">
-
                     </div>
                 }
             </div><!-- /.modal-content -->
@@ -140,10 +81,8 @@
     </div><!-- /.modal -->
 
 
-
 </div>
 
-@jQuery.Mask.Employee()
 
 <script>
 
@@ -163,26 +102,26 @@
                 $("#modalHeader").text(data.RCODE + " " + data.LASTNAME + " " + data.FIRSTNAME);
 
                 $("#RGUID").val(data.RGUID);
-                $("#ADDRESS\\.RGUID").val(data.ADDRESS.RGUID);
-                $("#CONTACTINFO\\.RGUID").val(data.CONTACTINFO.RGUID);
-                $("#EMPLOYEEDETAIL\\.RGUID").val(data.EMPLOYEEDETAIL.RGUID);
+                $("#ADDRESS_RGUID").val(data.ADDRESS.RGUID);
+                $("#CONTACTINFO_RGUID").val(data.CONTACTINFO.RGUID);
+                $("#EMPLOYEEDETAIL_RGUID").val(data.EMPLOYEEDETAIL.RGUID);
 
                 $("#RCODE").val(data.RCODE);
                 $("#FIRSTNAME").val(data.FIRSTNAME);
                 $("#LASTNAME").val(data.LASTNAME);
-                $("#ADDRESS\\.CITY").val(data.ADDRESS.CITY);
-                $("#ADDRESS\\.STREET").val(data.ADDRESS.STREET);
-                $("#ADDRESS\\.STATE").val(data.ADDRESS.STATE);
-                $("#ADDRESS\\.POSTALCODE").val(data.ADDRESS.POSTALCODE);
-                $("#CONTACTINFO\\.PHONE1").val(data.CONTACTINFO.PHONE1);
-                $("#CONTACTINFO\\.PHONE2").val(data.CONTACTINFO.PHONE2);
-                $("#CONTACTINFO\\.EMAIL").val(data.CONTACTINFO.EMAIL);
-                $("#EMPLOYEEDETAIL\\.AT").val(data.EMPLOYEEDETAIL.AT);
-                $("#EMPLOYEEDETAIL\\.AFM").val(data.EMPLOYEEDETAIL.AFM);
-                $("#EMPLOYEEDETAIL\\.GENDER").val(data.EMPLOYEEDETAIL.GENDER);
-                $("#EMPLOYEEDETAIL\\.BIRTHDATE").val(data.EMPLOYEEDETAIL.BIRTHDATE);
-                $("#EMPLOYEEDETAIL\\.MARITALSTATUS").val(data.EMPLOYEEDETAIL.MARITALSTATUS);
-                $("#EMPLOYEEDETAIL\\.SECLICEXPDATE").val(data.EMPLOYEEDETAIL.SECLICEXPDATE);
+                $("#ADDRESS_CITY").val(data.ADDRESS.CITY);
+                $("#ADDRESS_STREET").val(data.ADDRESS.STREET);
+                $("#ADDRESS_STATE").val(data.ADDRESS.STATE);
+                $("#ADDRESS_POSTALCODE").val(data.ADDRESS.POSTALCODE);
+                $("#CONTACTINFO_PHONE1").val(data.CONTACTINFO.PHONE1);
+                $("#CONTACTINFO_PHONE2").val(data.CONTACTINFO.PHONE2);
+                $("#CONTACTINFO_EMAIL").val(data.CONTACTINFO.EMAIL);
+                $("#EMPLOYEEDETAIL_AT").val(data.EMPLOYEEDETAIL.AT);
+                $("#EMPLOYEEDETAIL_AFM").val(data.EMPLOYEEDETAIL.AFM);
+                $("#EMPLOYEEDETAIL_GENDER").val(data.EMPLOYEEDETAIL.GENDER);
+                $("#EMPLOYEEDETAIL_BIRTHDATE").val(data.EMPLOYEEDETAIL.BIRTHDATE);
+                $("#EMPLOYEEDETAIL_MARITALSTATUS").val(data.EMPLOYEEDETAIL.MARITALSTATUS);
+                $("#EMPLOYEEDETAIL_SECLICEXPDATE").val(data.EMPLOYEEDETAIL.SECLICEXPDATE);
             }
         });
     });

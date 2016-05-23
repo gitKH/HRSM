@@ -29,5 +29,7 @@ namespace HRSM.DATAMODEL
         public virtual DbSet<ADDRESS> ADDRESSES { get; set; }
         public virtual DbSet<CONTACTINFO> CONTACTINFOS { get; set; }
         public virtual DbSet<EMPLOYEEDETAIL> EMPLOYEEDETAILS { get; set; }
+        public virtual DbSet<GUARDSITE> GUARDSITES { get; set; }
+        public virtual DbSet<SITEMANAGER> SITEMANAGERS { get; set; }
     }
 }
