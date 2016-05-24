@@ -94,6 +94,19 @@ namespace HRSM.WEBAPP.Controllers
                 RCODE = detGuardSite.RCODE,
                 SITENAME = detGuardSite.SITENAME,
                 ISACTIVE = detGuardSite.ISACTIVE,
+                SITEMANAGER = new
+                {
+                    RID = detGuardSite.SITEMANAGER.RID,
+                    NAME = detGuardSite.SITEMANAGER.NAME,
+     
+                    CONTACTINFO = new 
+                    { 
+                        RGUID = detGuardSite.SITEMANAGER.CONTACTINFO.RGUID,
+                        PHONE1 = detGuardSite.SITEMANAGER.CONTACTINFO.PHONE1,
+                        PHONE2 = detGuardSite.SITEMANAGER.CONTACTINFO.PHONE2,
+                        EMAIL = detGuardSite.SITEMANAGER.CONTACTINFO.EMAIL
+                    }
+                },
                 ADDRESS = new
                 {
                     RGUID = detGuardSite.ADDRESS.RGUID,
@@ -101,13 +114,6 @@ namespace HRSM.WEBAPP.Controllers
                     STREET = detGuardSite.ADDRESS.STREET,
                     STATE = detGuardSite.ADDRESS.STATE,
                     POSTALCODE = detGuardSite.ADDRESS.POSTALCODE
-                },
-                CONTACTINFO = new
-                {
-                    RGUID = detGuardSite.SITEMANAGER.CONTACTINFO.RGUID,
-                    PHONE1 = detGuardSite.SITEMANAGER.CONTACTINFO.PHONE1,
-                    PHONE2 = detGuardSite.SITEMANAGER.CONTACTINFO.PHONE2,
-                    EMAIL = detGuardSite.SITEMANAGER.CONTACTINFO.EMAIL
                 }
             }, JsonRequestBehavior.AllowGet);
         }
