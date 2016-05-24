@@ -1,0 +1,46 @@
+﻿@model HRSM.DATAMODEL.GUARDSITE
+
+<link href="~/Style/Validation.css" rel="stylesheet" />
+<div class="row">
+    <div class="col-md-6">
+        @Html.LabelFor(x => x.RCODE, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.RCODE, new { @class = "form-control input-md", @placeholder = "Κωδικός" })
+        @Html.ValidationMessageFor(x => x.RCODE, null, new { @class = "val" })
+        <br />
+        @Html.LabelFor(x => x.SITENAME, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.SITENAME, new { @class = "form-control input-md", @placeholder = "Επιχείριση" })
+        @Html.ValidationMessageFor(x => x.SITENAME, null, new { @class = "val" })
+        <br />
+        @Html.LabelFor(x => x.ISACTIVE, new { @class = "control-label" })
+        @Html.DropDownListFor(x => x.ISACTIVE, new List<SelectListItem>() { new SelectListItem() { Text = "Ανενεργός", Value = "0" }, new SelectListItem() { Text = "Ενεργός", Value = "1" } }, new { @class = "form-control" })
+        <br />
+        @Html.LabelFor(x => x.SITEMANAGER.NAME, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.SITEMANAGER.NAME, new { @class = "form-control input-md", @placeholder = "Εκπρόσωπος" })
+        @Html.ValidationMessageFor(x => x.SITEMANAGER.NAME, null, new { @class = "val" })
+        <br />
+        @Html.LabelFor(x => x.ADDRESS.CITY, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.ADDRESS.CITY, new { @class = "form-control input-md", @placeholder = "Πόλη" })
+        <br />
+        @Html.LabelFor(x => x.ADDRESS.STREET, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.ADDRESS.STREET, new { @class = "form-control input-md", @placeholder = "Οδός" })
+        <br />
+        @Html.LabelFor(x => x.ADDRESS.STATE, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.ADDRESS.STATE, new { @class = "form-control input-md", @placeholder = "Νομός" })
+        <br />
+        @Html.LabelFor(x => x.ADDRESS.POSTALCODE, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.ADDRESS.POSTALCODE, new { @class = "form-control input-md", @placeholder = "Τ.Κ." })
+        <br />
+    </div>
+    <div class="col-md-6">
+        @Html.LabelFor(x => x.SITEMANAGER.CONTACTINFO.PHONE1, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.SITEMANAGER.CONTACTINFO.PHONE1, new { @class = "form-control input-md", @placeholder = "Τηλέφωνο Κινητό" })
+        <br />
+        @Html.LabelFor(x => x.SITEMANAGER.CONTACTINFO.PHONE2, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.SITEMANAGER.CONTACTINFO.PHONE2, new { @class = "form-control input-md", @placeholder = "Τηλέφωνο Σταθερό" })
+        <br />
+        @Html.LabelFor(x => x.SITEMANAGER.CONTACTINFO.EMAIL, new { @class = "control-label" })
+        @Html.TextBoxFor(x => x.SITEMANAGER.CONTACTINFO.EMAIL, new { @class = "form-control input-md", @placeholder = "Email" })
+    </div>
+</div>
+
+@HRSM.WEBAPP.Models.jQuery.Mask.GuardSite()

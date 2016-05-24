@@ -25,6 +25,20 @@ namespace HRSM.WEBAPP.Models
                 builder.AppendLine("</script>");
                 return new HtmlString(builder.ToString());
             }
+
+            public static HtmlString GuardSite()
+            {
+                StringBuilder builder = new StringBuilder();
+                builder.Append("<script>");
+                builder.AppendLine("$(document).ready(function () {");
+                builder.AppendLine("$(\"#RCODE\").mask('00-00-0000');");
+                builder.AppendLine("$(\"#ADDRESS_POSTALCODE\").mask('00 000');");
+                builder.AppendLine("$(\"#CONTACTINFO_PHONE1\").mask('000 0000000');");
+                builder.AppendLine("$(\"#CONTACTINFO_PHONE2\").mask('0000000000');");
+                builder.AppendLine("});");
+                builder.AppendLine("</script>");
+                return new HtmlString(builder.ToString());
+            }
         }
     }
 }

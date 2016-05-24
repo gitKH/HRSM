@@ -1,0 +1,30 @@
+﻿@model HRSM.DATAMODEL.GUARDSITE
+@using HRSM.WEBAPP.Models;
+
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<div class="container">
+
+    <form class="form-horizontal" action="~/GuardSite/Create" method="post">
+        <fieldset>
+
+            <!-- Form Name -->
+            <legend>Νέα φύλαξη</legend>
+            @Html.Partial("GuardSiteForm", Model)
+            <br />
+            <div class="row">
+                <div class="col-md-10">
+
+                </div>
+                <div class="col-md-2">
+                    <!-- Button -->
+                    <label class="col-md-2 control-label" for="submit"></label>
+                    <input type="submit" name="submit" class="btn btn-block btn-primary" value="Αποθήκευση">
+                </div>
+            </div>
+        </fieldset>
+    </form>
+</div>
