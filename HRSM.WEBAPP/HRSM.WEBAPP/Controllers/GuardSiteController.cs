@@ -60,6 +60,7 @@ namespace HRSM.WEBAPP.Controllers
         public JsonResult Edit(GUARDSITE editedGuardSite)
         {
             GUARDSITE guardSite = database.GUARDSITES.IncludeAll().Single(x => x.RID == editedGuardSite.RID);
+
             try
             {
                 TryUpdateModel<GUARDSITE>(guardSite);

@@ -30,7 +30,15 @@
                 <tr style="cursor: pointer;" id="@guardsite.RID">
                     <td><p>@guardsite.RCODE</p></td>
                     <td><p>@guardsite.SITENAME</p></td>
-                    <td><p>@guardsite.ISACTIVE</p></td>
+
+                    @if (guardsite.ISACTIVE == 0)
+                    {
+                        <td><p>Ανενεργός</p></td>
+                    }
+                    else
+                    {
+                        <td><p>Ενεργός</p></td>
+                    }
                     <td>
                         <button id="delete" name="delete" value="@guardsite.RID" type="button" class="btn btn-danger">Διαγραφή</button>
                     </td>
@@ -135,6 +143,11 @@
         var row = $("#" + data.RID);
         row.children('td:eq(0)').children('P').text(data.RCODE);
         row.children('td:eq(1)').children('P').text(data.SITENAME);
-        row.children('td:eq(2)').children('P').text(data.ISACTIVE);
+        if (data.ISACTIVE == 0) {
+            row.children('td:eq(2)').children('P').text("Ανενεργός");
+        }
+        else {
+            row.children('td:eq(2)').children('P').text("Ενεργός");
+        }
     }
 </script>
