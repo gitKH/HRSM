@@ -99,7 +99,7 @@
     <Compile Include="P_EMPLOYEEDETAIL.cs" />
     <Compile Include="P_GUARDSITE.cs" />
     <Compile Include="P_HRSMCOntextContainer.cs" />
-    <Compile Include="P__SITEMANAGER.cs" />
+    <Compile Include="P_SITEMANAGER.cs" />
     <Compile Include="SITEMANAGER.cs">
       <DependentUpon>HRSMContext.tt</DependentUpon>
     </Compile>
