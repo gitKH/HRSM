@@ -59,6 +59,7 @@
     <Compile Include="GUARDSITE.cs">
       <DependentUpon>HRSMContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="GuardSiteMetaData.cs" />
     <Compile Include="P_ADDRESS.cs" />
     <Compile Include="P_CONTACTINFO.cs" />
     <Compile Include="CONTACTINFO.cs">
@@ -96,10 +97,13 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="P_EMPLOYEE.cs" />
     <Compile Include="P_EMPLOYEEDETAIL.cs" />
+    <Compile Include="P_GUARDSITE.cs" />
     <Compile Include="P_HRSMCOntextContainer.cs" />
+    <Compile Include="P__SITEMANAGER.cs" />
     <Compile Include="SITEMANAGER.cs">
       <DependentUpon>HRSMContext.tt</DependentUpon>
     </Compile>
+    <Compile Include="SiteManagerMetaData.cs" />
     <Compile Include="STATUS.cs">
       <DependentUpon>HRSMContext.tt</DependentUpon>
     </Compile>

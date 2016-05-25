@@ -120,6 +120,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Controllers\EmployeeController.cs" />
+    <Compile Include="Controllers\GuardSiteController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -189,6 +190,9 @@
     <Content Include="Views\Employee\Index.cshtml" />
     <Content Include="Views\Employee\Create.cshtml" />
     <Content Include="Views\Shared\EmployeeForm.cshtml" />
+    <Content Include="Views\GuardSite\Index.cshtml" />
+    <Content Include="Views\GuardSite\Create.cshtml" />
+    <Content Include="Views\Shared\GuardSiteForm.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

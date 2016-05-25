@@ -1,0 +1,153 @@
+﻿@model IEnumerable<HRSM.DATAMODEL.GUARDSITE>
+@using HRSM.DATAMODEL;
+@using HRSM.WEBAPP.Models;
+
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<script src="~/Scripts/jquery.unobtrusive-ajax.min.js"></script>
+<link href="~/Style/TalbeHover.css" rel="stylesheet" />
+
+
+<div class="container-fluid">
+    <h2>Λίστα Φυλάξεων</h2>
+
+    <table class="table table-hover">
+        <thead>
+            <tr>
+                <th>Κωδικός Φύλαξης</th>
+                <th>Επιχείριση</th>
+                <th>Κατάσταση</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (GUARDSITE guardsite in Model)
+            {
+                <tr style="cursor: pointer;" id="@guardsite.RID">
+                    <td><p>@guardsite.RCODE</p></td>
+                    <td><p>@guardsite.SITENAME</p></td>
+
+                    @if (guardsite.ISACTIVE == 0)
+                    {
+                        <td><p>Ανενεργός</p></td>
+                    }
+                    else
+                    {
+                        <td><p>Ενεργός</p></td>
+                    }
+                    <td>
+                        <button id="delete" name="delete" value="@guardsite.RID" type="button" class="btn btn-danger">Διαγραφή</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="modal fade" id="myModal">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title"><p id="modalHeader"></p></h4>
+                </div>
+                @using (Ajax.BeginForm("Edit", "GuardSite", new AjaxOptions() { HttpMethod = "POST", OnSuccess = "onAjaxEditSuccess" }))
+                {
+                    <div id="modalBody" class="modal-body">
+                        <p><input type="hidden" id="RID" name="RID" /></p>
+                        <p><input type="hidden" id="SITEMANAGER_RID" name="SITEMANAGER.RID" /></p>
+                        <p><input type="hidden" id="ADDRESS_RGUID" name="ADDRESS.RGUID" /></p>
+                        <p><input type="hidden" id="SITEMANAGER_CONTACTINFO_RGUID" name="SITEMANAGER.CONTACTINFO.RGUID" /></p>
+                        @if (Model.Count() > 0)
+                        {
+                            @Html.Partial("GuardSiteForm", Model.FirstOrDefault());
+                        }
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Κλείσιμο</button>
+                        <input id="submit" type="submit" class="btn btn-primary" value="Αποθήκευση">
+                    </div>
+                }
+            </div><!-- /.modal-content -->
+        </div><!-- /.modal-dialog -->
+    </div><!-- /.modal -->
+
+</div>
+
+<script>
+
+    $('table tbody tr td p').on('click', function () {
+
+        //Get RID from table
+        var rowGuid = $(this).closest('tr').attr('id');
+
+        //Fetch Asynchronous GUARDSITE to MODAL
+        $.ajax({
+            type: "POST",
+            url: "@Url.Content("~/GuardSite/Details")",
+            data: { 'RID': rowGuid },
+            dataType: 'json',
+            success: function (data) {
+                $("#myModal").modal("show");
+                $("#modalHeader").text(data.RCODE + " " + data.SITENAME);
+
+                $("#RID").val(data.RID);
+                $("#SITEMANAGER_RID").val(data.SITEMANAGER.RID);
+                $("#SITEMANAGER_CONTACTINFO_RGUID").val(data.SITEMANAGER.CONTACTINFO.RGUID);
+                $("#ADDRESS_RGUID").val(data.ADDRESS.RGUID);
+
+                $("#RCODE").val(data.RCODE);
+                $("#SITENAME").val(data.SITENAME);
+                $("#ISACTIVE").val(data.ISACTIVE);
+                $("#SITEMANAGER_NAME").val(data.SITEMANAGER.NAME);
+                $("#ADDRESS_STREET").val(data.ADDRESS.STREET);
+                $("#ADDRESS_STATE").val(data.ADDRESS.STATE);
+                $("#ADDRESS_POSTALCODE").val(data.ADDRESS.POSTALCODE);
+                $("#SITEMANAGER_CONTACTINFO_PHONE1").val(data.SITEMANAGER.CONTACTINFO.PHONE1);
+                $("#SITEMANAGER_CONTACTINFO_PHONE2").val(data.SITEMANAGER.CONTACTINFO.PHONE2);
+                $("#SITEMANAGER_CONTACTINFO_EMAIL").val(data.SITEMANAGER.CONTACTINFO.EMAIL);
+            }
+        });
+    });
+
+    $('button[name=delete]').click(function () {
+        var guardSiteGuid = $(this).val();
+
+        var r = confirm("Είστε σίγουρος/η για την διαγραφή της φύλαξης της επιχείρισης ");
+
+        if (r == true) {
+            $.ajax({
+                type: "POST",
+                url: "@Url.Content("~/GuardSite/Delete")",
+                data: { 'RID': guardSiteGuid },
+                success: function (msg) {
+                    $("#" + guardSiteGuid).remove();
+                    alert(msg);
+                },
+                error: function (msg) {
+                    alert("Απετυχής διαγραφή");
+                }
+            });
+        }
+        else {
+            alert("Η διαδικασία ακυρώθηκε");
+        }
+    });
+
+    function onAjaxEditSuccess(data) {
+        $("#myModal").modal("hide");
+        var row = $("#" + data.RID);
+        row.children('td:eq(0)').children('P').text(data.RCODE);
+        row.children('td:eq(1)').children('P').text(data.SITENAME);
+        if (data.ISACTIVE == 0) {
+            row.children('td:eq(2)').children('P').text("Ανενεργός");
+        }
+        else {
+            row.children('td:eq(2)').children('P').text("Ενεργός");
+        }
+    }
+</script>
