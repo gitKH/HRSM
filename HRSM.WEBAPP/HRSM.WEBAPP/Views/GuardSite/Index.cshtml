@@ -104,6 +104,7 @@
                 $("#SITENAME").val(data.SITENAME);
                 $("#ISACTIVE").val(data.ISACTIVE);
                 $("#SITEMANAGER_NAME").val(data.SITEMANAGER.NAME);
+                $("#ADDRESS_CITY").val(data.ADDRESS.CITY);
                 $("#ADDRESS_STREET").val(data.ADDRESS.STREET);
                 $("#ADDRESS_STATE").val(data.ADDRESS.STATE);
                 $("#ADDRESS_POSTALCODE").val(data.ADDRESS.POSTALCODE);
@@ -143,10 +144,12 @@
         var row = $("#" + data.RID);
         row.children('td:eq(0)').children('P').text(data.RCODE);
         row.children('td:eq(1)').children('P').text(data.SITENAME);
-        if (data.ISACTIVE == 0) {
+        if (data.ISACTIVE == 0)
+        {
             row.children('td:eq(2)').children('P').text("Ανενεργός");
         }
-        else {
+        else
+        {
             row.children('td:eq(2)').children('P').text("Ενεργός");
         }
     }
