@@ -32,7 +32,7 @@ namespace HRSM.DATAMODEL.Tests
                 {
                     FIRSTNAME = "ΕΥΣΤΑΘΙΟΣ",
                     LASTNAME = "ΧΡΥΣΙΚΟΣ",
-                    RCODE = "30-00-1000",
+                    RCODE = "00010",
                     ADDRESS = new ADDRESS()
                     {
                         CITY = "ΝΕΟ ΗΡΑΚΛΕΙΟ",
@@ -61,7 +61,7 @@ namespace HRSM.DATAMODEL.Tests
                {
                    FIRSTNAME = "ΔΗΜΗΤΡΙΟΣ",
                    LASTNAME = "ΔΑΣΚΑΛΟΠΟΥΛΟΣ",
-                   RCODE = "30-00-2015",
+                   RCODE = "00020",
                    ADDRESS = new ADDRESS()
                    {
                        CITY = "ΚΑΛΥΒΙΑ",
@@ -89,7 +89,7 @@ namespace HRSM.DATAMODEL.Tests
                 {
                     FIRSTNAME = "ΓΙΑΝΝΗΣ",
                     LASTNAME = "ΧΑΙΝΤΑΡΗΣ",
-                    RCODE = "30-00-1100",
+                    RCODE = "01100",
                     ADDRESS = new ADDRESS()
                     {
                         CITY = "ΖΩΓΡΑΦΟΥ",
@@ -117,7 +117,7 @@ namespace HRSM.DATAMODEL.Tests
                 {
                     FIRSTNAME = "ΚΩΣΤΑΣ",
                     LASTNAME = "ΠΡΊΦΤΗΣ",
-                    RCODE = "30-00-1002",
+                    RCODE = "01002",
                     ADDRESS = new ADDRESS()
                     {
                         CITY = "ΝΕΟΣ ΚΟΣΜΟΣ",
