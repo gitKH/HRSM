@@ -13,7 +13,7 @@ namespace HRSM.DATAMODEL
     
     public enum Marital : int
     {
-        No = 0,
-        Yes = 1
+        No = 1,
+        Yes = 2
     }
 }

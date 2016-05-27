@@ -280,8 +280,8 @@
           <NavigationProperty Name="EMPLOYEE" Relationship="HRSMContext.EMPLOYEEEMPLOYEEDETAIL" FromRole="EMPLOYEEDETAIL" ToRole="EMPLOYEE" />
         </EntityType>
         <EnumType Name="Gender">
-          <Member Name="Male" Value="0" />
-          <Member Name="Female" Value="1" />
+          <Member Name="Male" Value="1" />
+          <Member Name="Female" Value="2" />
         </EnumType>
         <Association Name="EMPLOYEEEMPLOYEEDETAIL">
           <End Type="HRSMContext.EMPLOYEE" Multiplicity="0..1" Role="EMPLOYEE">
@@ -290,8 +290,8 @@
           <End Type="HRSMContext.EMPLOYEEDETAIL" Multiplicity="0..1" Role="EMPLOYEEDETAIL" />
         </Association>
         <EnumType Name="Marital">
-          <Member Name="No" Value="0" />
-          <Member Name="Yes" Value="1" />
+          <Member Name="No" Value="1" />
+          <Member Name="Yes" Value="2" />
         </EnumType>
         <EntityType Name="GUARDSITE">
           <Key>

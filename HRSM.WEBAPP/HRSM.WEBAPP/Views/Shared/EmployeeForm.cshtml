@@ -4,7 +4,12 @@
 <div class="row">
     <div class="col-md-6">
         @Html.LabelFor(x => x.RCODE, new { @class = "control-label" })
-        @Html.TextBoxFor(x => x.RCODE, new { @class = "form-control input-md", @placeholder = "Κωδικός" })
+        <div class="input-group">
+            @Html.TextBoxFor(x => x.RCODE, new { @class = "form-control input-md", @placeholder = "Κωδικός" })
+            <span class="input-group-btn">
+                <button id="erpCheck" name="erpCheck" class="btn btn-success" type="button">ERP Import</button>
+            </span>
+        </div>
         @Html.ValidationMessageFor(x => x.RCODE, null, new { @class = "val" })
         <br />
         @Html.LabelFor(x => x.FIRSTNAME, new { @class = "control-label" })
