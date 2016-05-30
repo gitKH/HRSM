@@ -25,8 +25,8 @@ namespace HRSM.DATAMODEL.Tests
         public void EmployeesSeed()
         {
             List<EMPLOYEE> employees = new List<EMPLOYEE>();
-            for (int i = 0; i < 4; i++)
-            {
+            //for (int i = 0; i < 4; i++)
+            //{
 
                 employees.Add(new EMPLOYEE()
                 {
@@ -145,7 +145,7 @@ namespace HRSM.DATAMODEL.Tests
 
 
 
-            }
+            //}
             database.EMPLOYEES.AddRange(employees);
             database.SaveChanges();
         }

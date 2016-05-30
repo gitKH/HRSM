@@ -50,6 +50,9 @@
     <Reference Include="HRSM.DATAMODEL">
       <HintPath>..\..\HRSM.DATAMODEL\HRSM.DATAMODEL\bin\Debug\HRSM.DATAMODEL.dll</HintPath>
     </Reference>
+    <Reference Include="HRSM.GLXERP">
+      <HintPath>..\..\HRSM.DATAMODEL\HRSM.GLXERP\bin\Debug\HRSM.GLXERP.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
     <Reference Include="System.Data" />

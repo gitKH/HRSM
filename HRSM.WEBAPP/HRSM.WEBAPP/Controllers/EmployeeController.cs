@@ -4,16 +4,19 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using HRSM.DATAMODEL;
+using HRSM.GLXERP;
 
 namespace HRSM.WEBAPP.Controllers
 {
     public class EmployeeController : Controller
     {
         private HRSMContextContainer database;
+        private GalaxtErpContext erpContext;
 
         public EmployeeController()
         {
             database = new HRSMContextContainer(Properties.Settings.Default.HRSMConnectionString);
+            erpContext = new GalaxtErpContext();
         }
 
         //
@@ -125,6 +128,40 @@ namespace HRSM.WEBAPP.Controllers
             }, JsonRequestBehavior.AllowGet);
         }
 
+        [HttpPost]
+        public JsonResult GetEmployeeByID(string RCODE)
+        {
+            GalaxyEMPLOYEE empGalaxy = erpContext.GetEmployeeById(RCODE);
 
+            return Json(new
+            {
+                RCODE = empGalaxy.RCODE,
+                FIRSTNAME = empGalaxy.FIRSTNAME,
+                LASTNAME = empGalaxy.LASTNAME,
+                ADDRESS = new
+                {
+                    CITY = string.Empty,
+                    STREET = empGalaxy.STREET + " " + empGalaxy.STREETNUMBER,
+                    STATE = string.Empty,
+                    POSTALCODE = empGalaxy.POSTALCODE
+                },
+                CONTACTINFO = new
+                {
+                    PHONE1 = empGalaxy.PHONE1,
+                    PHONE2 = empGalaxy.PHONE2,
+                    EMAIL = empGalaxy.EMAIL
+                },
+                EMPLOYEEDETAIL = new
+                {
+                    AFM = empGalaxy.AFM,
+                    AT = empGalaxy.AT,
+                    BIRTHDATE = (empGalaxy.BIRTHDATE != null) ? empGalaxy.BIRTHDATE.Value.ToShortDateString() : "",
+                    GENDER = empGalaxy.GENDER,
+                    MARITALSTATUS = empGalaxy.MARITALSTATUS,
+                    SECLICEXPDATE = string.Empty,
+                }
+
+            }, JsonRequestBehavior.AllowGet);
+        }
     }
 }
