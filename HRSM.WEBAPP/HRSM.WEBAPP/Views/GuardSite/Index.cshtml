@@ -118,7 +118,7 @@
     $('button[name=delete]').click(function () {
         var guardSiteGuid = $(this).val();
 
-        var r = confirm("Είστε σίγουρος/η για την διαγραφή της φύλαξης της επιχείρισης ");
+        var r = confirm("Είστε σίγουρος για την διαγραφή της φύλαξης;");
 
         if (r == true) {
             $.ajax({
@@ -130,12 +130,12 @@
                     alert(msg);
                 },
                 error: function (msg) {
-                    alert("Απετυχής διαγραφή");
+                    alert("Σφάλμα διαγραφής.");
                 }
             });
         }
         else {
-            alert("Η διαδικασία ακυρώθηκε");
+            alert("Η διαδικασία ακυρώθηκε.");
         }
     });
 

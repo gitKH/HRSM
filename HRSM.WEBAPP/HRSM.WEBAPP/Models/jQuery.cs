@@ -40,5 +40,31 @@ namespace HRSM.WEBAPP.Models
                 return new HtmlString(builder.ToString());
             }
         }
+
+        public static class Ajax
+        {
+            public static HtmlString EmployeeFormWithOutIDs()
+            {
+                StringBuilder builder = new StringBuilder();
+                builder.AppendLine("$(\"#RCODE\").val(data.RCODE);");
+                builder.AppendLine("$(\"#FIRSTNAME\").val(data.FIRSTNAME);");
+                builder.AppendLine("$(\"#LASTNAME\").val(data.LASTNAME);");
+                builder.AppendLine("$(\"#ADDRESS_CITY\").val(data.ADDRESS.CITY);");
+                builder.AppendLine("$(\"#ADDRESS_STREET\").val(data.ADDRESS.STREET);");
+                builder.AppendLine("$(\"#ADDRESS_STATE\").val(data.ADDRESS.STATE);");
+                builder.AppendLine("$(\"#ADDRESS_POSTALCODE\").val(data.ADDRESS.POSTALCODE);");
+                builder.AppendLine("$(\"#CONTACTINFO_PHONE1\").val(data.CONTACTINFO.PHONE1);");
+                builder.AppendLine("$(\"#CONTACTINFO_PHONE2\").val(data.CONTACTINFO.PHONE2);");
+                builder.AppendLine("$(\"#CONTACTINFO_EMAIL\").val(data.CONTACTINFO.EMAIL);");
+                builder.AppendLine("$(\"#EMPLOYEEDETAIL_AT\").val(data.EMPLOYEEDETAIL.AT);");
+                builder.AppendLine("$(\"#EMPLOYEEDETAIL_AFM\").val(data.EMPLOYEEDETAIL.AFM);");
+                builder.AppendLine("$(\"#EMPLOYEEDETAIL_GENDER\").val(data.EMPLOYEEDETAIL.GENDER);");
+                builder.AppendLine("$(\"#EMPLOYEEDETAIL_BIRTHDATE\").val(data.EMPLOYEEDETAIL.BIRTHDATE);");
+                builder.AppendLine("$(\"#EMPLOYEEDETAIL_MARITALSTATUS\").val(data.EMPLOYEEDETAIL.MARITALSTATUS);");
+                builder.AppendLine("$(\"#EMPLOYEEDETAIL_SECLICEXPDATE\").val(data.EMPLOYEEDETAIL.SECLICEXPDATE);");
+
+                return new HtmlString(builder.ToString());
+            }
+        }
     }
 }

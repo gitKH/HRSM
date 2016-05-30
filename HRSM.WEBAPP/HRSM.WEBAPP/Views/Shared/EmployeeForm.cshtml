@@ -77,30 +77,15 @@
                 data: { 'RCODE': empRCODE },
                 dataType: 'json',
                 success: function (data) {
-                    $("#RCODE").val(data.RCODE);
-                    $("#FIRSTNAME").val(data.FIRSTNAME);
-                    $("#LASTNAME").val(data.LASTNAME);
-                    $("#ADDRESS_CITY").val(data.ADDRESS.CITY);
-                    $("#ADDRESS_STREET").val(data.ADDRESS.STREET);
-                    $("#ADDRESS_STATE").val(data.ADDRESS.STATE);
-                    $("#ADDRESS_POSTALCODE").val(data.ADDRESS.POSTALCODE);
-                    $("#CONTACTINFO_PHONE1").val(data.CONTACTINFO.PHONE1);
-                    $("#CONTACTINFO_PHONE2").val(data.CONTACTINFO.PHONE2);
-                    $("#CONTACTINFO_EMAIL").val(data.CONTACTINFO.EMAIL);
-                    $("#EMPLOYEEDETAIL_AT").val(data.EMPLOYEEDETAIL.AT);
-                    $("#EMPLOYEEDETAIL_AFM").val(data.EMPLOYEEDETAIL.AFM);
-                    $("#EMPLOYEEDETAIL_GENDER").val(data.EMPLOYEEDETAIL.GENDER);
-                    $("#EMPLOYEEDETAIL_BIRTHDATE").val(data.EMPLOYEEDETAIL.BIRTHDATE);
-                    $("#EMPLOYEEDETAIL_MARITALSTATUS").val(data.EMPLOYEEDETAIL.MARITALSTATUS);
-                    $("#EMPLOYEEDETAIL_SECLICEXPDATE").val(data.EMPLOYEEDETAIL.SECLICEXPDATE);
 
-                   alert("Imported Sucessfully!");
+                    @HRSM.WEBAPP.Models.jQuery.Ajax.EmployeeFormWithOutIDs()
+
+                   alert("Η εισαγωγή ολοκληρώθηκε.");
                 },
                 error: function ()
                 {
-                    alert("Not Imported");
+                    alert("Ο κωδικός δεν υπάρχει.");
                 }
-                
             });
     });
 </script>
