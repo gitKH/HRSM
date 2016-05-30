@@ -3,11 +3,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{BF9FB60A-B0A5-439C-9576-33C7E27265C6}</ProjectGuid>
+    <ProjectGuid>{0DEE0FDC-7ED1-4636-A42D-247750FCA020}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>HRSRM.GALAXYERPTests</RootNamespace>
-    <AssemblyName>HRSRM.GALAXYERPTests</AssemblyName>
+    <RootNamespace>HRSM.GLXERPTests</RootNamespace>
+    <AssemblyName>HRSM.GLXERPTests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -35,7 +35,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -55,9 +54,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\HRSRM.GALAXYERP\HRSRM.GALAXYERP.csproj">
-      <Project>{2757816F-7E77-4DFF-AD22-E5B252AF8F89}</Project>
-      <Name>HRSRM.GALAXYERP</Name>
+    <ProjectReference Include="..\HRSM.GLXERP\HRSM.GLXERP.csproj">
+      <Project>{7D628632-95E8-401F-AE7B-F111D137FFA3}</Project>
+      <Name>HRSM.GLXERP</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

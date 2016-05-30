@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("HRSRM.GALAXYERPTests")]
+[assembly: AssemblyTitle("HRSM.GLXERPTests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("HRSRM.GALAXYERPTests")]
+[assembly: AssemblyProduct("HRSM.GLXERPTests")]
 [assembly: AssemblyCopyright("Copyright ©  2016")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("14652aaa-97a7-429c-b26c-ec142fa49225")]
+[assembly: Guid("1776c2c9-0993-4697-b9a4-51fce580ba66")]
 
 // Version information for an assembly consists of the following four values:
 //
