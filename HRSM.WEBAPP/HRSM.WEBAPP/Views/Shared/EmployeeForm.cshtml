@@ -51,19 +51,58 @@
         @Html.TextBoxFor(x => x.EMPLOYEEDETAIL.AFM, new { @class = "form-control input-md", @placeholder = "ΑΦΜ" })
         <br />
         @Html.LabelFor(x => x.EMPLOYEEDETAIL.GENDER, new { @class = "control-label" })
-        @Html.DropDownListFor(x => x.EMPLOYEEDETAIL.GENDER, new List<SelectListItem>() { new SelectListItem() { Text = "Άνδρας", Value = "0" }, new SelectListItem() { Text = "Γυναίκα", Value = "1" } }, new { @class = "form-control" })
+        @Html.DropDownListFor(x => x.EMPLOYEEDETAIL.GENDER, new List<SelectListItem>() { new SelectListItem() { Text = "Άνδρας", Value = "1" }, new SelectListItem() { Text = "Γυναίκα", Value = "2" } }, new { @class = "form-control" })
         <br />
         @Html.LabelFor(x => x.EMPLOYEEDETAIL.BIRTHDATE, new { @class = "control-label" })
         @Html.TextBoxFor(x => x.EMPLOYEEDETAIL.BIRTHDATE, new { @class = "form-control input-md", @placeholder = "Ημερομηνία Γέννησης" })
         @Html.ValidationMessageFor(x => x.EMPLOYEEDETAIL.BIRTHDATE, null, new { @class = "val" })
         <br />
         @Html.LabelFor(x => x.EMPLOYEEDETAIL.MARITALSTATUS, new { @class = "control-label" })
-        @Html.DropDownListFor(x => x.EMPLOYEEDETAIL.MARITALSTATUS, new List<SelectListItem>() { new SelectListItem() { Text = "Όχι", Value = "0" }, new SelectListItem() { Text = "Ναι", Value = "1" } }, new { @class = "form-control" })
+        @Html.DropDownListFor(x => x.EMPLOYEEDETAIL.MARITALSTATUS, new List<SelectListItem>() { new SelectListItem() { Text = "Όχι", Value = "1" }, new SelectListItem() { Text = "Ναι", Value = "2" } }, new { @class = "form-control" })
         <br />
         @Html.LabelFor(x => x.EMPLOYEEDETAIL.SECLICEXPDATE, new { @class = "control-label" })
         @Html.TextBoxFor(x => x.EMPLOYEEDETAIL.SECLICEXPDATE, new { @class = "form-control input-md", @placeholder = "Ημερομηνία Λήξης Αδείας" })
         @Html.ValidationMessageFor(x => x.EMPLOYEEDETAIL.SECLICEXPDATE, null, new { @class = "val" })
     </div>
 </div>
+
+<script>
+    $('#erpCheck').on('click', function () {
+        var empRCODE = ($("#RCODE").val());
+
+        $.ajax
+            ({
+                type: "POST",
+                url: "@Url.Content("~/Employee/GetEmployeeByID")",
+                data: { 'RCODE': empRCODE },
+                dataType: 'json',
+                success: function (data) {
+                    $("#RCODE").val(data.RCODE);
+                    $("#FIRSTNAME").val(data.FIRSTNAME);
+                    $("#LASTNAME").val(data.LASTNAME);
+                    $("#ADDRESS_CITY").val(data.ADDRESS.CITY);
+                    $("#ADDRESS_STREET").val(data.ADDRESS.STREET);
+                    $("#ADDRESS_STATE").val(data.ADDRESS.STATE);
+                    $("#ADDRESS_POSTALCODE").val(data.ADDRESS.POSTALCODE);
+                    $("#CONTACTINFO_PHONE1").val(data.CONTACTINFO.PHONE1);
+                    $("#CONTACTINFO_PHONE2").val(data.CONTACTINFO.PHONE2);
+                    $("#CONTACTINFO_EMAIL").val(data.CONTACTINFO.EMAIL);
+                    $("#EMPLOYEEDETAIL_AT").val(data.EMPLOYEEDETAIL.AT);
+                    $("#EMPLOYEEDETAIL_AFM").val(data.EMPLOYEEDETAIL.AFM);
+                    $("#EMPLOYEEDETAIL_GENDER").val(data.EMPLOYEEDETAIL.GENDER);
+                    $("#EMPLOYEEDETAIL_BIRTHDATE").val(data.EMPLOYEEDETAIL.BIRTHDATE);
+                    $("#EMPLOYEEDETAIL_MARITALSTATUS").val(data.EMPLOYEEDETAIL.MARITALSTATUS);
+                    $("#EMPLOYEEDETAIL_SECLICEXPDATE").val(data.EMPLOYEEDETAIL.SECLICEXPDATE);
+
+                   alert("Imported Sucessfully!");
+                },
+                error: function ()
+                {
+                    alert("Not Imported");
+                }
+                
+            });
+    });
+</script>
 
 @HRSM.WEBAPP.Models.jQuery.Mask.Employee()
