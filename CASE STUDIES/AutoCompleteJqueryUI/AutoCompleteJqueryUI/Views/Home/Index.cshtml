@@ -1,0 +1,32 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+    <link href="~/Content/themes/base/base.css" rel="stylesheet" />
+    <link href="~/Content/themes/base/theme.css" rel="stylesheet" />
+    <script src="~/Scripts/jquery-1.9.1.js"></script>
+    <script src="~/Scripts/bootstrap.js"></script>
+    <script src="~/Scripts/jquery-ui-1.11.4.js"></script>
+    <link href="~/Content/bootstrap.css" rel="stylesheet" />
+    <script>
+        $(document).ready(function () {
+
+            $('#src').autocomplete({
+                source : '@Url.Action("Emp","Home")'
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="container">
+        <input class="form-control col-md-2" type="text" id="src" />
+
+    </div>
+</body>
+</html>
