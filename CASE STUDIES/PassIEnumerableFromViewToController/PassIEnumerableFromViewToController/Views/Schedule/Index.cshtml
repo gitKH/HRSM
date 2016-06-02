@@ -1,0 +1,30 @@
+﻿@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+</head>
+<body>
+    <div>
+        @Html.BeginForm()
+        {
+        <input type="text" name="[0].EMID" /><br />
+        <input type="text" name="[0].GSID" /><br />
+        <input type="text" name="[0].From" /><br />
+        <input type="text" name="[0].To" /><br />
+        <br /><br /><br /><br />
+        <input type="text" name="[1].EMID" /><br />
+        <input type="text" name="[1].GSID" /><br />
+        <input type="text" name="[1].From" /><br />
+        <input type="text" name="[1].To" /><br />
+        <br /><br /><br />
+        <input type="submit" value="submit" />
+        }
+    </div>
+</body>
+</html>
