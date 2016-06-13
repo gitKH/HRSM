@@ -6,14 +6,14 @@
     <edmx:Diagrams>
       <Diagram DiagramId="2899432214d84969b1e806e12b8ffcdc" Name="Diagram1" >
         <EntityTypeShape EntityType="HRSMContext.EMPLOYEE" Width="1.5" PointX="1.5" PointY="0.5" />
-        <EntityTypeShape EntityType="HRSMContext.ADDRESS" Width="1.5" PointX="3.25" PointY="4.125" />
+        <EntityTypeShape EntityType="HRSMContext.ADDRESS" Width="1.5" PointX="3.875" PointY="4" />
         <AssociationConnector Association="HRSMContext.EMPLOYEEADDRESS" />
-        <EntityTypeShape EntityType="HRSMContext.CONTACTINFO" Width="1.5" PointX="0.5" PointY="4.25" />
+        <EntityTypeShape EntityType="HRSMContext.CONTACTINFO" Width="1.5" PointX="0.5" PointY="3.875" />
         <AssociationConnector Association="HRSMContext.EMPLOYEECONTACTINFO" />
         <EntityTypeShape EntityType="HRSMContext.EMPLOYEEDETAIL" Width="1.5" PointX="5.125" PointY="0.5" />
         <AssociationConnector Association="HRSMContext.EMPLOYEEEMPLOYEEDETAIL" />
-        <EntityTypeShape EntityType="HRSMContext.GUARDSITE" Width="1.5" PointX="7.5" PointY="3.75" />
-        <EntityTypeShape EntityType="HRSMContext.SITEMANAGER" Width="1.5" PointX="7.375" PointY="6.625" />
+        <EntityTypeShape EntityType="HRSMContext.GUARDSITE" Width="1.75" PointX="8.625" PointY="3.75" />
+        <EntityTypeShape EntityType="HRSMContext.SITEMANAGER" Width="1.5" PointX="6" PointY="6.875" />
         <AssociationConnector Association="HRSMContext.GUARDSITESITEMANAGER" />
         <AssociationConnector Association="HRSMContext.SITEMANAGERCONTACTINFO" />
         <AssociationConnector Association="HRSMContext.GUARDSITEADDRESS" />

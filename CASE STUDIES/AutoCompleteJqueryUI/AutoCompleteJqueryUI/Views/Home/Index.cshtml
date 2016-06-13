@@ -18,7 +18,13 @@
         $(document).ready(function () {
 
             $('#src').autocomplete({
-                source : '@Url.Action("Emp","Home")'
+                source: '@Url.Action("Emp","Home")',
+                select: function(event,ui)
+                {
+                    $('#src').val(ui.item.value + ' - ' + ui.item.label);
+                    $("#empid").val(ui.item.value);
+                    return false;
+                }
             });
         });
     </script>
@@ -26,6 +32,12 @@
 <body>
     <div class="container">
         <input class="form-control col-md-2" type="text" id="src" />
+
+        @using(Html.BeginForm("Create","Home",FormMethod.Post))
+        {
+            <input type="hidden" id="empid" name="empid" />
+            <input type="submit" value="submit" />
+        }
 
     </div>
 </body>

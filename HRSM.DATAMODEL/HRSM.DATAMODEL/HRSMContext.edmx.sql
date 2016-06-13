@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 05/23/2016 13:37:57
+-- Date Created: 06/06/2016 10:52:00
 -- Generated from EDMX file: C:\HRSM\HRSM.DATAMODEL\HRSM.DATAMODEL\HRSMContext.edmx
 -- --------------------------------------------------
 
@@ -35,6 +35,12 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_GUARDSITEADDRESS]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ADDRESSES] DROP CONSTRAINT [FK_GUARDSITEADDRESS];
 GO
+IF OBJECT_ID(N'[dbo].[FK_EMPLOYEESHIFT]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SHIFTS] DROP CONSTRAINT [FK_EMPLOYEESHIFT];
+GO
+IF OBJECT_ID(N'[dbo].[FK_GUARDSITESHIFT]', 'F') IS NOT NULL
+    ALTER TABLE [dbo].[SHIFTS] DROP CONSTRAINT [FK_GUARDSITESHIFT];
+GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -57,6 +63,9 @@ IF OBJECT_ID(N'[dbo].[GUARDSITES]', 'U') IS NOT NULL
 GO
 IF OBJECT_ID(N'[dbo].[SITEMANAGERS]', 'U') IS NOT NULL
     DROP TABLE [dbo].[SITEMANAGERS];
+GO
+IF OBJECT_ID(N'[dbo].[SHIFTS]', 'U') IS NOT NULL
+    DROP TABLE [dbo].[SHIFTS];
 GO
 
 -- --------------------------------------------------
@@ -125,6 +134,18 @@ CREATE TABLE [dbo].[SITEMANAGERS] (
 );
 GO
 
+-- Creating table 'SHIFTS'
+CREATE TABLE [dbo].[SHIFTS] (
+    [RGUID] uniqueidentifier  NOT NULL default newsequentialid(),
+    [SHIFTSTART] datetime  NOT NULL,
+    [SHIFTEND] datetime  NOT NULL,
+    [EMPLOYEERGUID] uniqueidentifier  NOT NULL,
+    [GUARDSITERID] uniqueidentifier  NOT NULL,
+    [EMPLOYEERGUID1] uniqueidentifier  NOT NULL,
+    [GUARDSITERID1] uniqueidentifier  NOT NULL
+);
+GO
+
 -- --------------------------------------------------
 -- Creating all PRIMARY KEY constraints
 -- --------------------------------------------------
@@ -163,6 +184,12 @@ GO
 ALTER TABLE [dbo].[SITEMANAGERS]
 ADD CONSTRAINT [PK_SITEMANAGERS]
     PRIMARY KEY CLUSTERED ([RID] ASC);
+GO
+
+-- Creating primary key on [RGUID] in table 'SHIFTS'
+ALTER TABLE [dbo].[SHIFTS]
+ADD CONSTRAINT [PK_SHIFTS]
+    PRIMARY KEY CLUSTERED ([RGUID] ASC);
 GO
 
 -- --------------------------------------------------
@@ -257,6 +284,36 @@ GO
 CREATE INDEX [IX_FK_GUARDSITEADDRESS]
 ON [dbo].[ADDRESSES]
     ([GUARDSITE_RID]);
+GO
+
+-- Creating foreign key on [EMPLOYEERGUID1] in table 'SHIFTS'
+ALTER TABLE [dbo].[SHIFTS]
+ADD CONSTRAINT [FK_EMPLOYEESHIFT]
+    FOREIGN KEY ([EMPLOYEERGUID1])
+    REFERENCES [dbo].[EMPLOYEES]
+        ([RGUID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_EMPLOYEESHIFT'
+CREATE INDEX [IX_FK_EMPLOYEESHIFT]
+ON [dbo].[SHIFTS]
+    ([EMPLOYEERGUID1]);
+GO
+
+-- Creating foreign key on [GUARDSITERID1] in table 'SHIFTS'
+ALTER TABLE [dbo].[SHIFTS]
+ADD CONSTRAINT [FK_GUARDSITESHIFT]
+    FOREIGN KEY ([GUARDSITERID1])
+    REFERENCES [dbo].[GUARDSITES]
+        ([RID])
+    ON DELETE NO ACTION ON UPDATE NO ACTION;
+GO
+
+-- Creating non-clustered index for FOREIGN KEY 'FK_GUARDSITESHIFT'
+CREATE INDEX [IX_FK_GUARDSITESHIFT]
+ON [dbo].[SHIFTS]
+    ([GUARDSITERID1]);
 GO
 
 -- --------------------------------------------------

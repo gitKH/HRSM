@@ -7,20 +7,24 @@ namespace AutoCompleteJqueryUI.Models
 {
     public class EmployeesRepo
     {
-        public List<string> Query()
+        public List<Employee> Query()
         {
-            return new List<string>()
+            return new List<Employee>()
             {
-                "stathis",
-                "giannis",
-                "kostas",
-                "dimitris",
-                "chris",
-                "vassiliki",
-                "thanasis",
-                "eleni",
-                "gamata"
+                new Employee() { RCODE = "1" , Name = "Chrysikos" },
+                new Employee() { RCODE = "2" , Name = "Spanoudakis" },
+                new Employee() { RCODE = "3" , Name = "Haidari" },
+                new Employee() { RCODE = "4" , Name = "Priftis" },
+                new Employee() { RCODE = "5" , Name = "Dimtrio" },
+                new Employee() { RCODE = "6" , Name = "Piou" },
+                new Employee() { RCODE = "7" , Name = "Naaaaa" },
             };
         }
+    }
+
+    public class Employee
+    {
+        public string RCODE { get; set; }
+        public string Name { get; set; }
     }
 }
