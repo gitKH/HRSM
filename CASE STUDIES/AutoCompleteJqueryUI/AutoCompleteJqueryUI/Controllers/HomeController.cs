@@ -29,7 +29,7 @@ namespace AutoCompleteJqueryUI.Controllers
 
             foreach (var item in result)
             {
-                d.Add(new AutoCompleteData() { label = item.RCODE + " - " + item.Name, value = item.RCODE });
+                d.Add(new AutoCompleteData() { label = item.RCODE + " - " + item.Name, value = item.RCODE , test= "testvalut"});
             }
 
             return Json(d.ToArray(), JsonRequestBehavior.AllowGet);
@@ -47,5 +47,6 @@ namespace AutoCompleteJqueryUI.Controllers
     {
         public string label { get; set; }
         public string value { get; set; }
+        public string test { get; set; }
     }
 }

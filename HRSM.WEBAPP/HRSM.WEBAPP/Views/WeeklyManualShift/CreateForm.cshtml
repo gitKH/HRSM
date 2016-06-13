@@ -1,0 +1,87 @@
+﻿@model IEnumerable<string>
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/Layout.cshtml";
+}
+
+<link href="~/Content/themes/base/base.css" rel="stylesheet" />
+<link href="~/Content/themes/base/theme.css" rel="stylesheet" />
+<script src="~/Scripts/jquery-ui-1.11.4.js"></script>
+<script>
+    $(document).ready(function () {
+
+        $('#ACemployee').autocomplete({
+            source: '@Url.Action("AutoCompleteEmployee", "WeeklyManualShift")',
+            select: function (event, ui) {
+                $("#employeeGuid").val(ui.item.RGUID);
+                $("#ACemployee").val(ui.item.RCODE + " - " + ui.item.LASTNAME + " " + ui.item.FIRSTNAME);
+                return false;
+            }
+        });
+    });
+</script>
+<style>
+    .ui-autocomplete {
+        max-height: 500px;
+        overflow-y: auto;
+        /* prevent horizontal scrollbar */
+        overflow-x: hidden;
+    }
+    /* IE 6 doesn't support max-height
+     * we use height instead, but this forces the menu to always be this tall
+     */
+    * html .ui-autocomplete {
+        height: 500px;
+    }
+</style>
+
+
+<form action="~/WeeklyManualShift/Create" method="post">
+
+    <input id="employeeGuid" name="employeeGuid" type="hidden">
+    <div class="container-fluid">
+        <div class="form-group col-md-3">
+            <label for="ACemployee">Φύλακας</label>
+            <input id="ACemployee" name="ACemployee" class="form-control" type="text" placeholder="Φύλακας" />
+        </div>
+
+        <table class="table table-hover">
+            <thead>
+                <tr style="text-align :center">
+                    <td>Κυριακή</td>
+                    <td>Δευτέρα</td>
+                    <td>Τρίτη</td>
+                    <td>Τετάρτη</td>
+                    <td>Πέμπτη</td>
+                    <td>Παρασκευή</td>
+                    <td>Σάββατο</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    @{
+                        int counter = 0;
+                    }
+                    @foreach (string day in Model)
+                    {
+                        <td>
+                            <input readonly="readonly" type="text" name="[@counter].date" style="text-align:center" class="form-control" value="@day" />
+                        </td>
+                        counter++;
+                    }
+                </tr>
+                <tr>
+                    @for (int i = 0; i < 7; i++)
+                    {
+                        <td>
+                            @Html.Partial("DailyShiftControl", i)
+                        </td>
+                    }
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="form-group">
+        <input type="submit" class="btn btn-primary" value="Αποθήκευση" />
+    </div>
+</form>

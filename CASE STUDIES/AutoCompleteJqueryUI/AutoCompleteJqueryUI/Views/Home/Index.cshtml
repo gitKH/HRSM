@@ -21,7 +21,7 @@
                 source: '@Url.Action("Emp","Home")',
                 select: function(event,ui)
                 {
-                    $('#src').val(ui.item.value + ' - ' + ui.item.label);
+                    $('#src').val(ui.item.value + ' - ' + ui.item.label + " - " + ui.item.test);
                     $("#empid").val(ui.item.value);
                     return false;
                 }
