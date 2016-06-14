@@ -49,8 +49,10 @@ namespace HRSM.WEBAPP.Controllers
         }
 
         [HttpPost]
-        public ActionResult Create(IEnumerable<Shift> shifts,Guid employeeGuid)
+        public string Create(IEnumerable<Shift> shifts,Guid employeeGuid)
         {
+
+            List<DateTime> lst = new List<DateTime>();
 
             foreach (var item in shifts)
             {
@@ -71,8 +73,22 @@ namespace HRSM.WEBAPP.Controllers
                 
 
                 var to = from.Add(result);
+
+                lst.Add(from);
+                lst.Add(to);
+           }
+
+
+
+            string rs = string.Empty;
+            foreach (var item in lst)
+            {
+                rs += item.ToString() + "</br>";
             }
-            return null;
+
+            return rs;
+
+
         }
 
 
