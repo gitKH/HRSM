@@ -58,5 +58,51 @@ namespace HRSM.GLXERP
             }
             return null;
         }
+
+        public List<GalaxyEMPLOYEE> GetAll()
+        {
+            SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder()
+            {
+                DataSource = @"srv-gsto\galaxydb",
+                InitialCatalog = "GlxPower",
+                UserID = "sa",
+                Password = "infosupport"
+            };
+
+            List<GalaxyEMPLOYEE> employees = new List<GalaxyEMPLOYEE>();
+            string query = "select * from HRSMEMPLOYEES";
+            using (SqlConnection connection = new SqlConnection(builder.ConnectionString))
+            {
+                connection.Open();
+                using (SqlCommand command = new SqlCommand(query, connection))
+                {
+                   
+                    using (SqlDataReader dr = command.ExecuteReader())
+                    {
+                        while (dr.Read())
+                        {
+                            employees.Add(new GalaxyEMPLOYEE()
+                            {
+                                RCODE = Convert.ToString(dr["PLCODE"]),
+                                FIRSTNAME = Convert.ToString(dr["PLNAME"]),
+                                LASTNAME = Convert.ToString(dr["PLSURNAME"]),
+                                STREET = Convert.ToString(dr["PLSTREET"]),
+                                STREETNUMBER = Convert.ToString(dr["PLSTREETNUMBER"]),
+                                POSTALCODE = Convert.ToString(dr["PLPOSTALCODE"]),
+                                PHONE1 = Convert.ToString(dr["PLPHONE1"]),
+                                PHONE2 = Convert.ToString(dr["PLCELLPHONE"]),
+                                EMAIL = Convert.ToString(dr["PLEMAIL"]),
+                                AT = Convert.ToString(dr["PLIDENTITYCARDID"]),
+                                AFM = Convert.ToString(dr["PLTIN"]),
+                                GENDER = Convert.ToInt32(dr["PLGENDER"]),
+                                BIRTHDATE = Convert.ToDateTime(dr["PLBIRTHDAY"]),
+                                MARITALSTATUS = Convert.ToInt32(dr["PLMARITALSTATUS"])
+                            });
+                        }
+                    }
+                }
+            }
+            return employees;
+        }
     }
 }
