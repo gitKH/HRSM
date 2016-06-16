@@ -12,12 +12,15 @@ namespace HRSM.DATAMODEL
     using System;
     using System.Collections.Generic;
     
-    public partial class SITEMANAGER
+    public partial class SHIFT
     {
         public System.Guid RGUID { get; set; }
-        public string NAME { get; set; }
+        public System.DateTime FROM { get; set; }
+        public System.DateTime TO { get; set; }
+        public System.Guid EMPLOYEERGUID { get; set; }
+        public System.Guid GUARDSITERGUID { get; set; }
     
+        public virtual EMPLOYEE EMPLOYEE { get; set; }
         public virtual GUARDSITE GUARDSITE { get; set; }
-        public virtual CONTACTINFO CONTACTINFO { get; set; }
     }
 }

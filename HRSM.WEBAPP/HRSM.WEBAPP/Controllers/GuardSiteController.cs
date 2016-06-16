@@ -48,7 +48,7 @@ namespace HRSM.WEBAPP.Controllers
         public string Delete(string RID)
         {
             Guid guardSiteGuid = new Guid(RID);
-            GUARDSITE delGuardSite = database.GUARDSITES.IncludeAll().Single(id => id.RID == guardSiteGuid);
+            GUARDSITE delGuardSite = database.GUARDSITES.IncludeAll().Single(id => id.RGUID == guardSiteGuid);
 
             database.GUARDSITES.Remove(delGuardSite);
 
@@ -59,7 +59,7 @@ namespace HRSM.WEBAPP.Controllers
         [HttpPost]
         public JsonResult Edit(GUARDSITE editedGuardSite)
         {
-            GUARDSITE guardSite = database.GUARDSITES.IncludeAll().Single(x => x.RID == editedGuardSite.RID);
+            GUARDSITE guardSite = database.GUARDSITES.IncludeAll().Single(x => x.RGUID == editedGuardSite.RGUID);
 
             try
             {
@@ -75,7 +75,7 @@ namespace HRSM.WEBAPP.Controllers
 
             return Json(new
             {
-                RID = guardSite.RID,
+                RID = guardSite.RGUID,
                 RCODE = guardSite.RCODE,
                 SITENAME = guardSite.SITENAME,
                 ISACTIVE = guardSite.ISACTIVE,
@@ -86,18 +86,18 @@ namespace HRSM.WEBAPP.Controllers
         public JsonResult Details(string RID)
         {
             Guid guardSiteGuid = new Guid(RID);
-            GUARDSITE detGuardSite = database.GUARDSITES.IncludeAll().Single(x => x.RID == guardSiteGuid);
+            GUARDSITE detGuardSite = database.GUARDSITES.IncludeAll().Single(x => x.RGUID == guardSiteGuid);
 
 
             return Json(new
             {
-                RID = detGuardSite.RID,
+                RID = detGuardSite.RGUID,
                 RCODE = detGuardSite.RCODE,
                 SITENAME = detGuardSite.SITENAME,
                 ISACTIVE = detGuardSite.ISACTIVE,
                 SITEMANAGER = new
                 {
-                    RID = detGuardSite.SITEMANAGER.RID,
+                    RID = detGuardSite.SITEMANAGER.RGUID,
                     NAME = detGuardSite.SITEMANAGER.NAME,
      
                     CONTACTINFO = new 

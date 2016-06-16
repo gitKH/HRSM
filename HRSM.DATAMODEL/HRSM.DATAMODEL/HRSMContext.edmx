@@ -12,6 +12,7 @@
     <EntitySet Name="EMPLOYEEDETAILS" EntityType="HRSMContext.Store.EMPLOYEEDETAILS" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="GUARDSITES" EntityType="HRSMContext.Store.GUARDSITES" store:Type="Tables" Schema="dbo" />
     <EntitySet Name="SITEMANAGERS" EntityType="HRSMContext.Store.SITEMANAGERS" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="SHIFTS" EntityType="HRSMContext.Store.SHIFTS" store:Type="Tables" Schema="dbo" />
     <AssociationSet Name="EMPLOYEEADDRESS" Association="HRSMContext.Store.EMPLOYEEADDRESS">
       <End Role="EMPLOYEE" EntitySet="EMPLOYEES" />
       <End Role="ADDRESS" EntitySet="ADDRESSES" />
@@ -36,7 +37,15 @@
       <End Role="GUARDSITE" EntitySet="GUARDSITES" />
       <End Role="ADDRESS" EntitySet="ADDRESSES" />
     </AssociationSet>
-    </EntityContainer>
+    <AssociationSet Name="EMPLOYEESHIFT" Association="HRSMContext.Store.EMPLOYEESHIFT">
+      <End Role="EMPLOYEE" EntitySet="EMPLOYEES" />
+      <End Role="SHIFT" EntitySet="SHIFTS" />
+    </AssociationSet>
+    <AssociationSet Name="GUARDSITESHIFT" Association="HRSMContext.Store.GUARDSITESHIFT">
+      <End Role="GUARDSITE" EntitySet="GUARDSITES" />
+      <End Role="SHIFT" EntitySet="SHIFTS" />
+    </AssociationSet>
+  </EntityContainer>
   <EntityType Name="EMPLOYEES">
     <Key>
       <PropertyRef Name="RGUID" />
@@ -56,7 +65,7 @@
     <Property Name="STATE" Type="nvarchar(max)" Nullable="true" />
     <Property Name="POSTALCODE" Type="nvarchar(max)" Nullable="true" />
     <Property Name="EMPLOYEE_RGUID" Type="uniqueidentifier" Nullable="true" />
-    <Property Name="GUARDSITE_RID" Type="uniqueidentifier" Nullable="true" />
+    <Property Name="GUARDSITE_RGUID" Type="uniqueidentifier" Nullable="true" />
   </EntityType>
   <EntityType Name="CONTACTINFOS">
     <Key>
@@ -67,7 +76,7 @@
     <Property Name="PHONE2" Type="nvarchar(max)" Nullable="true" />
     <Property Name="EMAIL" Type="nvarchar(max)" Nullable="true" />
     <Property Name="EMPLOYEE_RGUID" Type="uniqueidentifier" Nullable="true" />
-    <Property Name="SITEMANAGER_RID" Type="uniqueidentifier" Nullable="true" />
+    <Property Name="SITEMANAGER_RGUID" Type="uniqueidentifier" Nullable="true" />
   </EntityType>
   <EntityType Name="EMPLOYEEDETAILS">
     <Key>
@@ -84,20 +93,30 @@
   </EntityType>
   <EntityType Name="GUARDSITES">
     <Key>
-      <PropertyRef Name="RID" />
+      <PropertyRef Name="RGUID" />
     </Key>
-    <Property Name="RID" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RGUID" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="RCODE" Type="nvarchar(max)" Nullable="false" />
     <Property Name="SITENAME" Type="nvarchar(max)" Nullable="false" />
     <Property Name="ISACTIVE" Type="int" Nullable="false" />
   </EntityType>
   <EntityType Name="SITEMANAGERS">
     <Key>
-      <PropertyRef Name="RID" />
+      <PropertyRef Name="RGUID" />
     </Key>
-    <Property Name="RID" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="RGUID" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="NAME" Type="nvarchar(max)" Nullable="false" />
-    <Property Name="GUARDSITE_RID" Type="uniqueidentifier" Nullable="true" />
+    <Property Name="GUARDSITE_RGUID" Type="uniqueidentifier" Nullable="true" />
+  </EntityType>
+  <EntityType Name="SHIFTS">
+    <Key>
+      <PropertyRef Name="RGUID" />
+    </Key>
+    <Property Name="RGUID" Type="uniqueidentifier" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="FROM" Type="datetime" Nullable="false" />
+    <Property Name="TO" Type="datetime" Nullable="false" />
+    <Property Name="EMPLOYEERGUID" Type="uniqueidentifier" Nullable="false" />
+    <Property Name="GUARDSITERGUID" Type="uniqueidentifier" Nullable="false" />
   </EntityType>
   <Association Name="EMPLOYEEADDRESS">
     <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="0..1">
@@ -148,10 +167,10 @@
     <End Role="SITEMANAGER" Type="HRSMContext.Store.SITEMANAGERS" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="GUARDSITE">
-        <PropertyRef Name="RID" />
+        <PropertyRef Name="RGUID" />
       </Principal>
       <Dependent Role="SITEMANAGER">
-        <PropertyRef Name="GUARDSITE_RID" />
+        <PropertyRef Name="GUARDSITE_RGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -162,10 +181,10 @@
     <End Role="CONTACTINFO" Type="HRSMContext.Store.CONTACTINFOS" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="SITEMANAGER">
-        <PropertyRef Name="RID" />
+        <PropertyRef Name="RGUID" />
       </Principal>
       <Dependent Role="CONTACTINFO">
-        <PropertyRef Name="SITEMANAGER_RID" />
+        <PropertyRef Name="SITEMANAGER_RGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
@@ -176,14 +195,38 @@
     <End Role="ADDRESS" Type="HRSMContext.Store.ADDRESSES" Multiplicity="*" />
     <ReferentialConstraint>
       <Principal Role="GUARDSITE">
-        <PropertyRef Name="RID" />
+        <PropertyRef Name="RGUID" />
       </Principal>
       <Dependent Role="ADDRESS">
-        <PropertyRef Name="GUARDSITE_RID" />
+        <PropertyRef Name="GUARDSITE_RGUID" />
       </Dependent>
     </ReferentialConstraint>
   </Association>
-  </Schema></edmx:StorageModels>
+  <Association Name="EMPLOYEESHIFT">
+    <End Role="EMPLOYEE" Type="HRSMContext.Store.EMPLOYEES" Multiplicity="1" />
+    <End Role="SHIFT" Type="HRSMContext.Store.SHIFTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EMPLOYEE">
+        <PropertyRef Name="RGUID" />
+      </Principal>
+      <Dependent Role="SHIFT">
+        <PropertyRef Name="EMPLOYEERGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="GUARDSITESHIFT">
+    <End Role="GUARDSITE" Type="HRSMContext.Store.GUARDSITES" Multiplicity="1" />
+    <End Role="SHIFT" Type="HRSMContext.Store.SHIFTS" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="GUARDSITE">
+        <PropertyRef Name="RGUID" />
+      </Principal>
+      <Dependent Role="SHIFT">
+        <PropertyRef Name="GUARDSITERGUID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="HRSMContext" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
@@ -218,6 +261,15 @@
             <End Role="GUARDSITE" EntitySet="GUARDSITES" />
             <End Role="ADDRESS" EntitySet="ADDRESSES" />
           </AssociationSet>
+          <EntitySet Name="SHIFTS" EntityType="HRSMContext.SHIFT" />
+          <AssociationSet Name="EMPLOYEESHIFT" Association="HRSMContext.EMPLOYEESHIFT">
+            <End Role="EMPLOYEE" EntitySet="EMPLOYEES" />
+            <End Role="SHIFT" EntitySet="SHIFTS" />
+          </AssociationSet>
+          <AssociationSet Name="GUARDSITESHIFT" Association="HRSMContext.GUARDSITESHIFT">
+            <End Role="GUARDSITE" EntitySet="GUARDSITES" />
+            <End Role="SHIFT" EntitySet="SHIFTS" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="EMPLOYEE">
           <Key>
@@ -230,6 +282,7 @@
           <NavigationProperty Name="ADDRESS" Relationship="HRSMContext.EMPLOYEEADDRESS" FromRole="EMPLOYEE" ToRole="ADDRESS" />
           <NavigationProperty Name="CONTACTINFO" Relationship="HRSMContext.EMPLOYEECONTACTINFO" FromRole="EMPLOYEE" ToRole="CONTACTINFO" />
           <NavigationProperty Name="EMPLOYEEDETAIL" Relationship="HRSMContext.EMPLOYEEEMPLOYEEDETAIL" FromRole="EMPLOYEE" ToRole="EMPLOYEEDETAIL" />
+          <NavigationProperty Name="SHIFTS" Relationship="HRSMContext.EMPLOYEESHIFT" FromRole="EMPLOYEE" ToRole="SHIFT" />
         </EntityType>
         <EntityType Name="ADDRESS">
           <Key>
@@ -295,14 +348,15 @@
         </EnumType>
         <EntityType Name="GUARDSITE">
           <Key>
-            <PropertyRef Name="RID" />
+            <PropertyRef Name="RGUID" />
           </Key>
-          <Property Name="RID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RGUID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="RCODE" Type="String" Nullable="false" />
           <Property Name="SITENAME" Type="String" Nullable="false" />
           <Property Name="ISACTIVE" Type="HRSMContext.STATUS" Nullable="false" />
           <NavigationProperty Name="SITEMANAGER" Relationship="HRSMContext.GUARDSITESITEMANAGER" FromRole="GUARDSITE" ToRole="SITEMANAGER" />
           <NavigationProperty Name="ADDRESS" Relationship="HRSMContext.GUARDSITEADDRESS" FromRole="GUARDSITE" ToRole="ADDRESS" />
+          <NavigationProperty Name="SHIFTS" Relationship="HRSMContext.GUARDSITESHIFT" FromRole="GUARDSITE" ToRole="SHIFT" />
         </EntityType>
         <EnumType Name="STATUS">
           <Member Name="INACTIVE" Value="0" />
@@ -310,9 +364,9 @@
         </EnumType>
         <EntityType Name="SITEMANAGER">
           <Key>
-            <PropertyRef Name="RID" />
+            <PropertyRef Name="RGUID" />
           </Key>
-          <Property Name="RID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="RGUID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="NAME" Type="String" Nullable="false" />
           <NavigationProperty Name="GUARDSITE" Relationship="HRSMContext.GUARDSITESITEMANAGER" FromRole="SITEMANAGER" ToRole="GUARDSITE" />
           <NavigationProperty Name="CONTACTINFO" Relationship="HRSMContext.SITEMANAGERCONTACTINFO" FromRole="SITEMANAGER" ToRole="CONTACTINFO" />
@@ -334,6 +388,42 @@
             <OnDelete Action="Cascade" />
           </End>
           <End Type="HRSMContext.ADDRESS" Role="ADDRESS" Multiplicity="0..1" />
+        </Association>
+        <EntityType Name="SHIFT">
+          <Key>
+            <PropertyRef Name="RGUID" />
+          </Key>
+          <Property Name="RGUID" Type="Guid" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="FROM" Type="DateTime" Nullable="false" />
+          <Property Name="TO" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="EMPLOYEE" Relationship="HRSMContext.EMPLOYEESHIFT" FromRole="SHIFT" ToRole="EMPLOYEE" />
+          <Property Name="EMPLOYEERGUID" Type="Guid" Nullable="false" />
+          <NavigationProperty Name="GUARDSITE" Relationship="HRSMContext.GUARDSITESHIFT" FromRole="SHIFT" ToRole="GUARDSITE" />
+          <Property Name="GUARDSITERGUID" Type="Guid" Nullable="false" />
+        </EntityType>
+        <Association Name="EMPLOYEESHIFT">
+          <End Type="HRSMContext.EMPLOYEE" Role="EMPLOYEE" Multiplicity="1" />
+          <End Type="HRSMContext.SHIFT" Role="SHIFT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="EMPLOYEE">
+              <PropertyRef Name="RGUID" />
+            </Principal>
+            <Dependent Role="SHIFT">
+              <PropertyRef Name="EMPLOYEERGUID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="GUARDSITESHIFT">
+          <End Type="HRSMContext.GUARDSITE" Role="GUARDSITE" Multiplicity="1" />
+          <End Type="HRSMContext.SHIFT" Role="SHIFT" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="GUARDSITE">
+              <PropertyRef Name="RGUID" />
+            </Principal>
+            <Dependent Role="SHIFT">
+              <PropertyRef Name="GUARDSITERGUID" />
+            </Dependent>
+          </ReferentialConstraint>
         </Association>
       </Schema>
     </edmx:ConceptualModels>
@@ -388,7 +478,7 @@
     <EntitySetMapping Name="GUARDSITES">
       <EntityTypeMapping TypeName="IsTypeOf(HRSMContext.GUARDSITE)">
         <MappingFragment StoreEntitySet="GUARDSITES">
-          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="RGUID" ColumnName="RGUID" />
           <ScalarProperty Name="RCODE" ColumnName="RCODE" />
           <ScalarProperty Name="SITENAME" ColumnName="SITENAME" />
           <ScalarProperty Name="ISACTIVE" ColumnName="ISACTIVE" />
@@ -398,8 +488,19 @@
     <EntitySetMapping Name="SITEMANAGERS">
       <EntityTypeMapping TypeName="IsTypeOf(HRSMContext.SITEMANAGER)">
         <MappingFragment StoreEntitySet="SITEMANAGERS">
-          <ScalarProperty Name="RID" ColumnName="RID" />
+          <ScalarProperty Name="RGUID" ColumnName="RGUID" />
           <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SHIFTS">
+      <EntityTypeMapping TypeName="IsTypeOf(HRSMContext.SHIFT)">
+        <MappingFragment StoreEntitySet="SHIFTS">
+          <ScalarProperty Name="RGUID" ColumnName="RGUID" />
+          <ScalarProperty Name="FROM" ColumnName="FROM" />
+          <ScalarProperty Name="TO" ColumnName="TO" />
+          <ScalarProperty Name="EMPLOYEERGUID" ColumnName="EMPLOYEERGUID" />
+          <ScalarProperty Name="GUARDSITERGUID" ColumnName="GUARDSITERGUID" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
@@ -432,30 +533,30 @@
     </AssociationSetMapping>
     <AssociationSetMapping Name="GUARDSITESITEMANAGER" TypeName="HRSMContext.GUARDSITESITEMANAGER" StoreEntitySet="SITEMANAGERS">
       <EndProperty Name="GUARDSITE">
-        <ScalarProperty Name="RID" ColumnName="GUARDSITE_RID" />
+        <ScalarProperty Name="RGUID" ColumnName="GUARDSITE_RGUID" />
       </EndProperty>
       <EndProperty Name="SITEMANAGER">
-        <ScalarProperty Name="RID" ColumnName="RID" />
+        <ScalarProperty Name="RGUID" ColumnName="RGUID" />
       </EndProperty>
-      <Condition ColumnName="GUARDSITE_RID" IsNull="false" />
+      <Condition ColumnName="GUARDSITE_RGUID" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="SITEMANAGERCONTACTINFO" TypeName="HRSMContext.SITEMANAGERCONTACTINFO" StoreEntitySet="CONTACTINFOS">
       <EndProperty Name="SITEMANAGER">
-        <ScalarProperty Name="RID" ColumnName="SITEMANAGER_RID" />
+        <ScalarProperty Name="RGUID" ColumnName="SITEMANAGER_RGUID" />
       </EndProperty>
       <EndProperty Name="CONTACTINFO">
         <ScalarProperty Name="RGUID" ColumnName="RGUID" />
       </EndProperty>
-      <Condition ColumnName="SITEMANAGER_RID" IsNull="false" />
+      <Condition ColumnName="SITEMANAGER_RGUID" IsNull="false" />
     </AssociationSetMapping>
     <AssociationSetMapping Name="GUARDSITEADDRESS" TypeName="HRSMContext.GUARDSITEADDRESS" StoreEntitySet="ADDRESSES">
       <EndProperty Name="GUARDSITE">
-        <ScalarProperty Name="RID" ColumnName="GUARDSITE_RID" />
+        <ScalarProperty Name="RGUID" ColumnName="GUARDSITE_RGUID" />
       </EndProperty>
       <EndProperty Name="ADDRESS">
         <ScalarProperty Name="RGUID" ColumnName="RGUID" />
       </EndProperty>
-      <Condition ColumnName="GUARDSITE_RID" IsNull="false" />
+      <Condition ColumnName="GUARDSITE_RGUID" IsNull="false" />
     </AssociationSetMapping>
   </EntityContainerMapping>
 </Mapping></edmx:Mappings>

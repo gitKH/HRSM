@@ -10,9 +10,6 @@ namespace HRSM.DATAMODEL
     [MetadataType(typeof(GuardSitesMetaData))]
     public partial class GUARDSITE
     {
-         public GUARDSITE()
-        {
 
-        }
     }
 }

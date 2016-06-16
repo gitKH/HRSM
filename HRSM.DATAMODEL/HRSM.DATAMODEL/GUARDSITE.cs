@@ -14,12 +14,20 @@ namespace HRSM.DATAMODEL
     
     public partial class GUARDSITE
     {
-        public System.Guid RID { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public GUARDSITE()
+        {
+            this.SHIFTS = new HashSet<SHIFT>();
+        }
+    
+        public System.Guid RGUID { get; set; }
         public string RCODE { get; set; }
         public string SITENAME { get; set; }
         public STATUS ISACTIVE { get; set; }
     
         public virtual SITEMANAGER SITEMANAGER { get; set; }
         public virtual ADDRESS ADDRESS { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SHIFT> SHIFTS { get; set; }
     }
 }

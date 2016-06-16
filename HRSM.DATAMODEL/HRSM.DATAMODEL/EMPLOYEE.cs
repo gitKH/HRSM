@@ -14,6 +14,12 @@ namespace HRSM.DATAMODEL
     
     public partial class EMPLOYEE
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public EMPLOYEE()
+        {
+            this.SHIFTS = new HashSet<SHIFT>();
+        }
+    
         public System.Guid RGUID { get; set; }
         public string RCODE { get; set; }
         public string LASTNAME { get; set; }
@@ -22,5 +28,7 @@ namespace HRSM.DATAMODEL
         public virtual ADDRESS ADDRESS { get; set; }
         public virtual CONTACTINFO CONTACTINFO { get; set; }
         public virtual EMPLOYEEDETAIL EMPLOYEEDETAIL { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<SHIFT> SHIFTS { get; set; }
     }
 }

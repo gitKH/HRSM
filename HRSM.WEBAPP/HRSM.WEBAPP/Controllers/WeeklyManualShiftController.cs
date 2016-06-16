@@ -49,46 +49,47 @@ namespace HRSM.WEBAPP.Controllers
         }
 
         [HttpPost]
-        public string Create(IEnumerable<Shift> shifts,Guid employeeGuid)
+        public ActionResult Create(IEnumerable<Shift> shifts, Guid employeeGuid)
         {
+            EMPLOYEE employe = database.EMPLOYEES.Where(x => x.RGUID == employeeGuid).Single();
 
-            List<DateTime> lst = new List<DateTime>();
+            List<SHIFT> lst = new List<SHIFT>();
 
             foreach (var item in shifts)
             {
-                var from = item.date.Add(item.from);
+                if (item.From == item.To)
+                    continue;
+
+                var from = item.Date.Add(item.From);
 
                 TimeSpan result = TimeSpan.Zero;
-                if (item.from < item.to)
+                if (item.From < item.To)
                 {
-                    result = item.from.Subtract(item.to);
+                    result = item.From.Subtract(item.To);
                     result = new TimeSpan(Math.Abs(result.Hours), Math.Abs(result.Minutes), 0);
                 }
 
-                if(item.from > item.to)
+                if (item.From > item.To)
                 {
-                    result = item.from.Subtract(item.to);
+                    result = item.From.Subtract(item.To);
                     result = new TimeSpan(24, 00, 00).Subtract(result);
                 }
-                
 
                 var to = from.Add(result);
 
-                lst.Add(from);
-                lst.Add(to);
-           }
-
-
-
-            string rs = string.Empty;
-            foreach (var item in lst)
-            {
-                rs += item.ToString() + "</br>";
+                lst.Add(new SHIFT()
+                {
+                    EMPLOYEE = employe,
+                    GUARDSITE = database.GUARDSITES.Where(x => x.RGUID == item.GsRGUID).Single(),
+                    FROM = from,
+                    TO = to
+                });
             }
 
-            return rs;
+            database.SHIFTS.AddRange(lst);
+            database.SaveChanges();
 
-
+            return View();
         }
 
 
@@ -118,7 +119,7 @@ namespace HRSM.WEBAPP.Controllers
                 .Select(x => new
                 {
                     label = x.RCODE + " - " + x.SITENAME,
-                    RGUID = x.RID,
+                    RGUID = x.RGUID,
                     RCODE = x.RCODE,
                     SITENAME = x.SITENAME
                 });
@@ -130,9 +131,9 @@ namespace HRSM.WEBAPP.Controllers
 
     public class Shift
     {
-        public DateTime date { get; set; }
-        public TimeSpan from { get; set; }
-        public TimeSpan to { get; set; }
-        public Guid gsRGUID { get; set; }
+        public DateTime Date { get; set; }
+        public TimeSpan From { get; set; }
+        public TimeSpan To { get; set; }
+        public Guid GsRGUID { get; set; }
     }
 }

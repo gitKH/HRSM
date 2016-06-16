@@ -2,7 +2,7 @@
 -- --------------------------------------------------
 -- Entity Designer DDL Script for SQL Server 2005, 2008, 2012 and Azure
 -- --------------------------------------------------
--- Date Created: 06/06/2016 10:52:00
+-- Date Created: 06/16/2016 10:42:43
 -- Generated from EDMX file: C:\HRSM\HRSM.DATAMODEL\HRSM.DATAMODEL\HRSMContext.edmx
 -- --------------------------------------------------
 
@@ -35,12 +35,6 @@ GO
 IF OBJECT_ID(N'[dbo].[FK_GUARDSITEADDRESS]', 'F') IS NOT NULL
     ALTER TABLE [dbo].[ADDRESSES] DROP CONSTRAINT [FK_GUARDSITEADDRESS];
 GO
-IF OBJECT_ID(N'[dbo].[FK_EMPLOYEESHIFT]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SHIFTS] DROP CONSTRAINT [FK_EMPLOYEESHIFT];
-GO
-IF OBJECT_ID(N'[dbo].[FK_GUARDSITESHIFT]', 'F') IS NOT NULL
-    ALTER TABLE [dbo].[SHIFTS] DROP CONSTRAINT [FK_GUARDSITESHIFT];
-GO
 
 -- --------------------------------------------------
 -- Dropping existing tables
@@ -64,9 +58,6 @@ GO
 IF OBJECT_ID(N'[dbo].[SITEMANAGERS]', 'U') IS NOT NULL
     DROP TABLE [dbo].[SITEMANAGERS];
 GO
-IF OBJECT_ID(N'[dbo].[SHIFTS]', 'U') IS NOT NULL
-    DROP TABLE [dbo].[SHIFTS];
-GO
 
 -- --------------------------------------------------
 -- Creating all tables
@@ -89,7 +80,7 @@ CREATE TABLE [dbo].[ADDRESSES] (
     [STATE] nvarchar(max)  NULL,
     [POSTALCODE] nvarchar(max)  NULL,
     [EMPLOYEE_RGUID] uniqueidentifier  NULL,
-    [GUARDSITE_RID] uniqueidentifier  NULL
+    [GUARDSITE_RGUID] uniqueidentifier  NULL
 );
 GO
 
@@ -100,7 +91,7 @@ CREATE TABLE [dbo].[CONTACTINFOS] (
     [PHONE2] nvarchar(max)  NULL,
     [EMAIL] nvarchar(max)  NULL,
     [EMPLOYEE_RGUID] uniqueidentifier  NULL,
-    [SITEMANAGER_RID] uniqueidentifier  NULL
+    [SITEMANAGER_RGUID] uniqueidentifier  NULL
 );
 GO
 
@@ -119,7 +110,7 @@ GO
 
 -- Creating table 'GUARDSITES'
 CREATE TABLE [dbo].[GUARDSITES] (
-    [RID] uniqueidentifier  NOT NULL default newsequentialid(),
+    [RGUID] uniqueidentifier  NOT NULL default newsequentialid(),
     [RCODE] nvarchar(max)  NOT NULL,
     [SITENAME] nvarchar(max)  NOT NULL,
     [ISACTIVE] int  NOT NULL
@@ -128,21 +119,19 @@ GO
 
 -- Creating table 'SITEMANAGERS'
 CREATE TABLE [dbo].[SITEMANAGERS] (
-    [RID] uniqueidentifier  NOT NULL default newsequentialid(),
+    [RGUID] uniqueidentifier  NOT NULL default newsequentialid(),
     [NAME] nvarchar(max)  NOT NULL,
-    [GUARDSITE_RID] uniqueidentifier  NULL
+    [GUARDSITE_RGUID] uniqueidentifier  NULL
 );
 GO
 
 -- Creating table 'SHIFTS'
 CREATE TABLE [dbo].[SHIFTS] (
     [RGUID] uniqueidentifier  NOT NULL default newsequentialid(),
-    [SHIFTSTART] datetime  NOT NULL,
-    [SHIFTEND] datetime  NOT NULL,
+    [FROM] datetime  NOT NULL,
+    [TO] datetime  NOT NULL,
     [EMPLOYEERGUID] uniqueidentifier  NOT NULL,
-    [GUARDSITERID] uniqueidentifier  NOT NULL,
-    [EMPLOYEERGUID1] uniqueidentifier  NOT NULL,
-    [GUARDSITERID1] uniqueidentifier  NOT NULL
+    [GUARDSITERGUID] uniqueidentifier  NOT NULL
 );
 GO
 
@@ -174,16 +163,16 @@ ADD CONSTRAINT [PK_EMPLOYEEDETAILS]
     PRIMARY KEY CLUSTERED ([RGUID] ASC);
 GO
 
--- Creating primary key on [RID] in table 'GUARDSITES'
+-- Creating primary key on [RGUID] in table 'GUARDSITES'
 ALTER TABLE [dbo].[GUARDSITES]
 ADD CONSTRAINT [PK_GUARDSITES]
-    PRIMARY KEY CLUSTERED ([RID] ASC);
+    PRIMARY KEY CLUSTERED ([RGUID] ASC);
 GO
 
--- Creating primary key on [RID] in table 'SITEMANAGERS'
+-- Creating primary key on [RGUID] in table 'SITEMANAGERS'
 ALTER TABLE [dbo].[SITEMANAGERS]
 ADD CONSTRAINT [PK_SITEMANAGERS]
-    PRIMARY KEY CLUSTERED ([RID] ASC);
+    PRIMARY KEY CLUSTERED ([RGUID] ASC);
 GO
 
 -- Creating primary key on [RGUID] in table 'SHIFTS'
@@ -241,55 +230,55 @@ ON [dbo].[EMPLOYEEDETAILS]
     ([EMPLOYEE_RGUID]);
 GO
 
--- Creating foreign key on [GUARDSITE_RID] in table 'SITEMANAGERS'
+-- Creating foreign key on [GUARDSITE_RGUID] in table 'SITEMANAGERS'
 ALTER TABLE [dbo].[SITEMANAGERS]
 ADD CONSTRAINT [FK_GUARDSITESITEMANAGER]
-    FOREIGN KEY ([GUARDSITE_RID])
+    FOREIGN KEY ([GUARDSITE_RGUID])
     REFERENCES [dbo].[GUARDSITES]
-        ([RID])
+        ([RGUID])
     ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_GUARDSITESITEMANAGER'
 CREATE INDEX [IX_FK_GUARDSITESITEMANAGER]
 ON [dbo].[SITEMANAGERS]
-    ([GUARDSITE_RID]);
+    ([GUARDSITE_RGUID]);
 GO
 
--- Creating foreign key on [SITEMANAGER_RID] in table 'CONTACTINFOS'
+-- Creating foreign key on [SITEMANAGER_RGUID] in table 'CONTACTINFOS'
 ALTER TABLE [dbo].[CONTACTINFOS]
 ADD CONSTRAINT [FK_SITEMANAGERCONTACTINFO]
-    FOREIGN KEY ([SITEMANAGER_RID])
+    FOREIGN KEY ([SITEMANAGER_RGUID])
     REFERENCES [dbo].[SITEMANAGERS]
-        ([RID])
+        ([RGUID])
     ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_SITEMANAGERCONTACTINFO'
 CREATE INDEX [IX_FK_SITEMANAGERCONTACTINFO]
 ON [dbo].[CONTACTINFOS]
-    ([SITEMANAGER_RID]);
+    ([SITEMANAGER_RGUID]);
 GO
 
--- Creating foreign key on [GUARDSITE_RID] in table 'ADDRESSES'
+-- Creating foreign key on [GUARDSITE_RGUID] in table 'ADDRESSES'
 ALTER TABLE [dbo].[ADDRESSES]
 ADD CONSTRAINT [FK_GUARDSITEADDRESS]
-    FOREIGN KEY ([GUARDSITE_RID])
+    FOREIGN KEY ([GUARDSITE_RGUID])
     REFERENCES [dbo].[GUARDSITES]
-        ([RID])
+        ([RGUID])
     ON DELETE CASCADE ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_GUARDSITEADDRESS'
 CREATE INDEX [IX_FK_GUARDSITEADDRESS]
 ON [dbo].[ADDRESSES]
-    ([GUARDSITE_RID]);
+    ([GUARDSITE_RGUID]);
 GO
 
--- Creating foreign key on [EMPLOYEERGUID1] in table 'SHIFTS'
+-- Creating foreign key on [EMPLOYEERGUID] in table 'SHIFTS'
 ALTER TABLE [dbo].[SHIFTS]
 ADD CONSTRAINT [FK_EMPLOYEESHIFT]
-    FOREIGN KEY ([EMPLOYEERGUID1])
+    FOREIGN KEY ([EMPLOYEERGUID])
     REFERENCES [dbo].[EMPLOYEES]
         ([RGUID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
@@ -298,22 +287,22 @@ GO
 -- Creating non-clustered index for FOREIGN KEY 'FK_EMPLOYEESHIFT'
 CREATE INDEX [IX_FK_EMPLOYEESHIFT]
 ON [dbo].[SHIFTS]
-    ([EMPLOYEERGUID1]);
+    ([EMPLOYEERGUID]);
 GO
 
--- Creating foreign key on [GUARDSITERID1] in table 'SHIFTS'
+-- Creating foreign key on [GUARDSITERGUID] in table 'SHIFTS'
 ALTER TABLE [dbo].[SHIFTS]
 ADD CONSTRAINT [FK_GUARDSITESHIFT]
-    FOREIGN KEY ([GUARDSITERID1])
+    FOREIGN KEY ([GUARDSITERGUID])
     REFERENCES [dbo].[GUARDSITES]
-        ([RID])
+        ([RGUID])
     ON DELETE NO ACTION ON UPDATE NO ACTION;
 GO
 
 -- Creating non-clustered index for FOREIGN KEY 'FK_GUARDSITESHIFT'
 CREATE INDEX [IX_FK_GUARDSITESHIFT]
 ON [dbo].[SHIFTS]
-    ([GUARDSITERID1]);
+    ([GUARDSITERGUID]);
 GO
 
 -- --------------------------------------------------

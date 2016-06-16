@@ -17,6 +17,9 @@
         <AssociationConnector Association="HRSMContext.GUARDSITESITEMANAGER" />
         <AssociationConnector Association="HRSMContext.SITEMANAGERCONTACTINFO" />
         <AssociationConnector Association="HRSMContext.GUARDSITEADDRESS" />
+        <EntityTypeShape EntityType="HRSMContext.SHIFT" Width="1.5" PointX="9" PointY="0.5" />
+        <AssociationConnector Association="HRSMContext.EMPLOYEESHIFT" />
+        <AssociationConnector Association="HRSMContext.GUARDSITESHIFT" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

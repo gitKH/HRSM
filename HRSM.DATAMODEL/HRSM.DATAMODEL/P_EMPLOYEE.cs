@@ -10,11 +10,6 @@ namespace HRSM.DATAMODEL
     [MetadataType(typeof(EmployeeMetaData))]
     public partial class EMPLOYEE
     {
-        public EMPLOYEE()
-        {
-
-        }
-
         public void Copy(EMPLOYEE copyOjbect)
         {
             copyOjbect.FIRSTNAME = this.FIRSTNAME;
@@ -33,11 +28,6 @@ namespace HRSM.DATAMODEL
             copyOjbect.EMPLOYEEDETAIL.GENDER = this.EMPLOYEEDETAIL.GENDER;
             copyOjbect.EMPLOYEEDETAIL.MARITALSTATUS = this.EMPLOYEEDETAIL.MARITALSTATUS;
             copyOjbect.EMPLOYEEDETAIL.SECLICEXPDATE = this.EMPLOYEEDETAIL.SECLICEXPDATE;
-
-            //This Doen't work
-            //copyOjbect.ADDRESS = this.ADDRESS;
-            //copyOjbect.CONTACTINFO = this.CONTACTINFO;
-            //copyOjbect.EMPLOYEEDETAIL = this.EMPLOYEEDETAIL;
         }
     }
 }

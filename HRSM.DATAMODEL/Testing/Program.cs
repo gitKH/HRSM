@@ -11,10 +11,7 @@ namespace Testing
     {
         static void Main(string[] args)
         {
-            foreach (var item in typeof(EMPLOYEE).GetProperties())
-            {
-                
-            }
+
         }
     }
 }

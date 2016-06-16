@@ -31,5 +31,6 @@ namespace HRSM.DATAMODEL
         public virtual DbSet<EMPLOYEEDETAIL> EMPLOYEEDETAILS { get; set; }
         public virtual DbSet<GUARDSITE> GUARDSITES { get; set; }
         public virtual DbSet<SITEMANAGER> SITEMANAGERS { get; set; }
+        public virtual DbSet<SHIFT> SHIFTS { get; set; }
     }
 }
