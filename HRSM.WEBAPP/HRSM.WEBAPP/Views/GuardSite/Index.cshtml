@@ -27,7 +27,7 @@
         <tbody>
             @foreach (GUARDSITE guardsite in Model)
             {
-                <tr style="cursor: pointer;" id="@guardsite.RID">
+                <tr style="cursor: pointer;" id="@guardsite.RGUID">
                     <td><p>@guardsite.RCODE</p></td>
                     <td><p>@guardsite.SITENAME</p></td>
 
@@ -40,7 +40,7 @@
                         <td><p>Ενεργός</p></td>
                     }
                     <td>
-                        <button id="delete" name="delete" value="@guardsite.RID" type="button" class="btn btn-danger">Διαγραφή</button>
+                        <button id="delete" name="delete" value="@guardsite.RGUID" type="button" class="btn btn-danger">Διαγραφή</button>
                     </td>
                 </tr>
             }
