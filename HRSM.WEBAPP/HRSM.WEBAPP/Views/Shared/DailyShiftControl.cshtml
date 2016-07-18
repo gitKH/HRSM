@@ -1,13 +1,30 @@
 ﻿@model int
 
+    <a id="btnadd-@Model" class="btn btn-primary">
+        <span class="glyphicon glyphicon-plus"></span>
+    </a>
+    <a id="btndelete-@Model" class="btn btn-danger">
+        <span class="glyphicon glyphicon-minus"></span>
+    </a>
+    <a id="btncopy-@Model" class="btn btn-info">
+        <span class="glyphicon glyphicon-chevron-right"></span>
+    </a>
+
+
 <input id="ACguardsite-@Model" name="ACguardsite-@Model" class="form-control" style="text-align:center" type="text" placeholder="Φύλαξη" />
 <input id="[@Model].gsRGUID" name="[@Model].gsRGUID" type="hidden" value="">
-<input id="from" name="[@Model].from" class="form-control" style="text-align:center" type="text" placeholder="00:00" />
-<input id="to" name="[@Model].to" class="form-control" style="text-align:center" type="text" placeholder="00:00" />
-
+<input id="from-@Model" name="[@Model].from" class="form-control" style="text-align:center" type="text" placeholder="00:00" />
+<input id="to-@Model" name="[@Model].to" class="form-control" style="text-align:center" type="text" placeholder="00:00" />
+@*<script src="~/Scripts/jquery-1.9.1.js"></script>*@
 <script>
-    $("input[id^=from]").mask('00:00');
-    $("input[id^=to]").mask('00:00');
+
+    RemoveNameAttributes();
+
+
+
+
+    $("input[id^=from-@Model]").mask('00:00');
+    $("input[id^=to-@Model]").mask('00:00');
 
     $('#ACguardsite-'+@Model).autocomplete({
         source: '@Url.Action("AutoCompleteGuardSite", "WeeklyManualShift")',
@@ -17,4 +34,38 @@
             return false;
         }
     });
+
+
+    $('#btncopy-@Model').click(function(){
+        var model = @Model + 1;
+
+
+        $('input[id^=\\['+model+'\\]]').val($('input[id^=\\[@Model\\]]').val());
+        $('#ACguardsite-'+ model).val($('#ACguardsite-'+@Model).val());
+        $('#from-' + model).val($('#from-' + @Model).val());
+        $('#to-' + model).val($('#to-' + @Model).val());
+    });
+
+    $('#btnadd-@Model').click(function(){
+        var model = @Model + 7;
+
+        $('#btnadd-'+ model).hide();
+        $('#day-'+ model).show();
+    });
+
+
+    function RemoveNameAttributes()
+    {
+        var model = @Model + 7;
+
+        if(model > 6)
+        {
+            $('#ACguardsite-'+ model).removeAttr("name");
+            $('input[id^=\\['+model+'\\]]').removeAttr("name");
+            $('#from-' + model).removeAttr("name");
+            $('#to-' + model).removeAttr("name");
+        }
+    }
+
+
 </script>

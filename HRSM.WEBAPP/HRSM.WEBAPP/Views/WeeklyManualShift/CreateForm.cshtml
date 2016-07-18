@@ -36,6 +36,9 @@
 </style>
 
 
+<label>From: @Model.First()</label><br />
+<label>  To: @Model.Last()</label><br />
+
 <form action="~/WeeklyManualShift/Create" method="post">
 
     <input id="employeeGuid" name="employeeGuid" type="hidden">
@@ -73,8 +76,18 @@
                 <tr>
                     @for (int i = 0; i < 7; i++)
                     {
-                        <td>
+                        <td id="day-@i">
                             @Html.Partial("DailyShiftControl", i)
+                        </td>
+                    }
+                </tr>
+                <tr>
+                    @for (int i = 7; i < 14; i++)
+                    {
+                        <td>
+                            <p id="day-@i" hidden="hidden">
+                                @Html.Partial("DailyShiftControl", i)
+                            </p>
                         </td>
                     }
                 </tr>
