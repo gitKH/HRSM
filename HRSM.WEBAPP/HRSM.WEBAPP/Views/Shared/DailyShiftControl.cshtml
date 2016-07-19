@@ -6,9 +6,11 @@
     <a id="btndelete-@Model" class="btn btn-danger">
         <span class="glyphicon glyphicon-minus"></span>
     </a>
-    <a id="btncopy-@Model" class="btn btn-info">
-        <span class="glyphicon glyphicon-chevron-right"></span>
-    </a>
+   <a id="btncopy-@Model" class="btn btn-info pull-right">
+    <span class="glyphicon glyphicon-chevron-right"></span>
+</a>
+
+
 
 
 <input id="ACguardsite-@Model" name="ACguardsite-@Model" class="form-control" style="text-align:center" type="text" placeholder="Φύλαξη" />
@@ -18,10 +20,7 @@
 @*<script src="~/Scripts/jquery-1.9.1.js"></script>*@
 <script>
 
-    RemoveNameAttributes();
-
-
-
+    // RemoveNameAttributes();
 
     $("input[id^=from-@Model]").mask('00:00');
     $("input[id^=to-@Model]").mask('00:00');
@@ -39,12 +38,12 @@
     $('#btncopy-@Model').click(function(){
         var model = @Model + 1;
 
-
         $('input[id^=\\['+model+'\\]]').val($('input[id^=\\[@Model\\]]').val());
         $('#ACguardsite-'+ model).val($('#ACguardsite-'+@Model).val());
         $('#from-' + model).val($('#from-' + @Model).val());
         $('#to-' + model).val($('#to-' + @Model).val());
     });
+
 
     $('#btnadd-@Model').click(function(){
         var model = @Model + 7;
@@ -54,18 +53,14 @@
     });
 
 
-    function RemoveNameAttributes()
+    @*function RemoveNameAttributes()
     {
-        var model = @Model + 7;
-
-        if(model > 6)
+        if(@Model > 6)
         {
-            $('#ACguardsite-'+ model).removeAttr("name");
-            $('input[id^=\\['+model+'\\]]').removeAttr("name");
-            $('#from-' + model).removeAttr("name");
-            $('#to-' + model).removeAttr("name");
+            $('#ACguardsite-'+ @Model).removeAttr("name");
+            $('input[id^=\\['+@Model+'\\]]').removeAttr("name");
+            $('#from-' + @Model).removeAttr("name");
+            $('#to-' + @Model).removeAttr("name");
         }
-    }
-
-
+    }*@
 </script>
